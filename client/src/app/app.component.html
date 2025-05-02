@@ -1,0 +1,14 @@
+<div class="editor-container">
+  <header class="toolbar">
+    <app-toolbar></app-toolbar>
+  </header>
+
+  <aside class="sidebar">
+    <app-sidebar></app-sidebar>
+  </aside>
+
+  <main class="map-area">
+    <app-map-canvas [mapCanvasData]="mapCanvasData"></app-map-canvas>
+  </main>
+</div>
+<router-outlet />

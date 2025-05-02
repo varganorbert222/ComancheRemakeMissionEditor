@@ -1,0 +1,17 @@
+@for (menuSection of menuSections; track $index) {
+<h2>{{ menuSection.title }}</h2>
+@for (menuSectionButton of menuSection.buttons; track $index) {
+<button
+  type="button"
+  class="button-container"
+  mat-fab
+  extended
+  [matTooltip]="menuSectionButton.tooltip"
+  (click)="onMenuSectionButtonClick(menuSectionButton)"
+>
+  <div class="button-content">
+    <mat-icon>{{ menuSectionButton.icon }}</mat-icon>
+    {{ menuSectionButton.label }}
+  </div>
+</button>
+} }
