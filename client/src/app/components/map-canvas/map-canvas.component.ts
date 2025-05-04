@@ -3,6 +3,7 @@ import {
   ElementRef,
   HostListener,
   Input,
+  OnInit,
   ViewChild,
 } from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -15,10 +16,10 @@ import { RenderMode } from './enums/RenderMode.enum';
   templateUrl: './map-canvas.component.html',
   styleUrl: './map-canvas.component.scss',
 })
-export class MapCanvasComponent {
+export class MapCanvasComponent implements OnInit {
   @Input() mapCanvasData?: IMapCanvasData; // URL of the color map image
 
-  @ViewChild('canvas', { static: true })
+  @ViewChild('id_canvas', { static: true })
   canvasRef!: ElementRef<HTMLCanvasElement>;
 
   private ctx!: CanvasRenderingContext2D;
@@ -31,7 +32,7 @@ export class MapCanvasComponent {
   private lastMouseY = 0;
 
   isLoading = true; // Simulate loading state
-  renderMode = RenderMode.ColorMap; // Default render mode
+  renderMode = RenderMode.COLORMAP; // Default render mode
 
   constructor() {}
 
@@ -40,10 +41,14 @@ export class MapCanvasComponent {
   }
 
   ngOnInit() {
-    this.selectRenderMode(RenderMode.ColorMap); // Set default render mode to ColorMap
+    this.selectRenderMode(RenderMode.COLORMAP); // Set default render mode to ColorMap
+    this.img.onload = (e: Event) => {
+      this.initCanvas();
+      this.isLoading = false;
+    };
   }
 
-  ngAfterViewInit() {
+  initCanvas() {
     this.ctx = this.canvasRef.nativeElement.getContext('2d')!;
     this.draw();
   }
@@ -51,13 +56,11 @@ export class MapCanvasComponent {
   selectRenderMode(renderMode: RenderMode) {
     this.renderMode = renderMode;
 
-    if (this.renderMode === RenderMode.ColorMap) {
+    if (this.renderMode === RenderMode.COLORMAP) {
       this.img.src = this.mapCanvasData?.colorMapUrl!;
-    } else if (this.renderMode === RenderMode.HeightMap) {
+    } else if (this.renderMode === RenderMode.HEIGHTMAP) {
       this.img.src = this.mapCanvasData?.heightMapUrl!;
     }
-
-    this.img.onload = () => this.draw();
   }
 
   draw() {

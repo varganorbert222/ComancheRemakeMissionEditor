@@ -1,4 +1,4 @@
 export enum RenderMode {
-  ColorMap = 'ColorMap',
-  HeightMap = 'HeightMap',
+  COLORMAP = 'colormap',
+  HEIGHTMAP = 'heightmap',
 }

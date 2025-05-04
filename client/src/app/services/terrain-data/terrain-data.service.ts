@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { ITerrainData } from './interfaces/ITerrainData.interface';
 import { TerrainType } from '../mission-data/enums/TerrainType.enum';
-import { ITerrainDataDto } from './interfaces/ITerrainDataDto.interface';
+import { ITerrainDataDto } from './ITerrainDataDto.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -17,16 +17,17 @@ export class TerrainDataService {
 
   constructor(private http: HttpClient) {}
 
-  getTerrainData(): Observable<ITerrainData[] | undefined> {
+  getAll(): Observable<ITerrainData[]> {
     return this.http.get<ITerrainDataDto[]>(this.terrainDataUrl).pipe(
-      map((data) =>
-        data.map((item) => ({
-          terrainType: item.terrainCamo as TerrainType,
-          colorMapUrl: `${this.colorMapUrl}/${item.colorMap}.png`,
-          heightMapUrl: `${this.heightMapUrl}/${item.heightMap}.png`,
-          terrainWidth: 1024,
-          terrainHeight: 1024,
-        }))
+      map(
+        (data) =>
+          data.map((terrainDataDto) => ({
+            terrainType: terrainDataDto.terrainCamo as TerrainType,
+            colorMapUrl: `${this.colorMapUrl}/${terrainDataDto.colorMap}.png`,
+            heightMapUrl: `${this.heightMapUrl}/${terrainDataDto.heightMap}.png`,
+            terrainWidth: 1024,
+            terrainHeight: 1024,
+          })) || []
       )
     );
   }
