@@ -1,4 +1,4 @@
-export enum Status {
+export enum StatusEnum {
   PENDING = 'pending',
   LOADING = 'loading',
   ERROR = 'error',

@@ -7,8 +7,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { IMapCanvasData } from './interfaces/IMapCanvasData.interface';
-import { RenderMode } from './enums/RenderMode.enum';
+import { MapCanvasData } from './interfaces/map-canvas-data.interface';
+import { RenderMode } from './enums/render-mode.enum';
 
 @Component({
   selector: 'app-map-canvas',
@@ -17,7 +17,7 @@ import { RenderMode } from './enums/RenderMode.enum';
   styleUrl: './map-canvas.component.scss',
 })
 export class MapCanvasComponent implements OnInit {
-  @Input() mapCanvasData?: IMapCanvasData; // URL of the color map image
+  @Input() mapCanvasData?: MapCanvasData; // URL of the color map image
 
   @ViewChild('id_canvas', { static: true })
   canvasRef!: ElementRef<HTMLCanvasElement>;

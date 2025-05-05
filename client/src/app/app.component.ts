@@ -3,14 +3,19 @@ import { RouterOutlet } from '@angular/router';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { MapCanvasComponent } from './components/map-canvas/map-canvas.component';
-import { IMapCanvasData } from './components/map-canvas/interfaces/IMapCanvasData.interface';
 import { Observable } from 'rxjs';
-import { ITerrainData } from './services/terrain-data/interfaces/ITerrainData.interface';
 import { Store } from '@ngrx/store';
-import { loadAppDataAction } from './store/terrain-data/terrain-data.actions';
-import { IAppDataState } from './interfaces/IAppDataState.interface';
-import { selectAppData } from './store/terrain-data/terrain-data.selectors';
 import { TerrainDataService } from './services/terrain-data/terrain-data.service';
+import {
+  loadTerrainData,
+  loadTerrainDataSuccess,
+} from './store/terrain-data/terrain-data.actions';
+import { TerrainData } from './services/terrain-data/interfaces/terrain-data.interface';
+import { selectAllTerrainData } from './store/terrain-data/terrain-data.selectors';
+import { AppDataState } from './interfaces/app-data-state.interface';
+import { MapCanvasData } from './components/map-canvas/interfaces/map-canvas-data.interface';
+import { RenderMode } from './components/map-canvas/enums/render-mode.enum';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -26,14 +31,22 @@ import { TerrainDataService } from './services/terrain-data/terrain-data.service
 })
 export class AppComponent implements OnInit {
   title = 'Mission Editor';
-  appData$: Observable<IAppDataState>;
-  mapCanvasData: IMapCanvasData = {};
+
+  terrainData$: Observable<TerrainData[]>;
+
+  mapCanvasData: MapCanvasData = {
+    renderMode: RenderMode.COLORMAP,
+    colorMapUrl: '',
+    heightMapUrl: '',
+    height: 0,
+    width: 0,
+  };
 
   constructor(
-    private store: Store<{ appData: IAppDataState }>,
+    private store: Store<AppDataState>,
     private terrainDataService: TerrainDataService
   ) {
-    this.appData$ = this.store.select(selectAppData);
+    this.terrainData$ = this.store.select(selectAllTerrainData);
   }
 
   ngOnInit() {
@@ -41,6 +54,10 @@ export class AppComponent implements OnInit {
   }
 
   loadAppData() {
-    this.terrainDataService.getAll().subscribe((data) => this.store.dispatch());
+    this.terrainDataService
+      .getAll()
+      .subscribe((data) =>
+        this.store.dispatch(loadTerrainDataSuccess({ data }))
+      );
   }
 }

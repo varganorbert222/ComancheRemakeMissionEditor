@@ -1,6 +1,6 @@
-import { ISidebarMenuItemButton } from './sidebar-menuitem-button.interface';
+import { SidebarMenuItemButton } from './sidebar-menuitem-button.interface';
 
-export interface ISidebarMenuSection {
+export interface SidebarMenuSection {
   title?: string;
-  buttons?: ISidebarMenuItemButton[];
+  buttons?: SidebarMenuItemButton[];
 }

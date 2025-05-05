@@ -1,10 +1,10 @@
 import { createSelector } from '@ngrx/store';
-import { IAppDataState } from '../../interfaces/IAppDataState.interface';
-import { ITerrainDataState } from '../../interfaces/ITerrainDataState.interface';
+import { AppDataState } from '../../interfaces/app-data-state.interface';
+import { TerrainDataState } from '../../interfaces/terrain-data-state.interface';
 
-export const selectTerrainData = (state: IAppDataState) => state.terrainData;
+export const selectTerrainData = (state: AppDataState) => state.terrainData;
 
 export const selectAllTerrainData = createSelector(
   selectTerrainData,
-  (state: ITerrainDataState) => state.data
+  (state: TerrainDataState) => state.data
 );

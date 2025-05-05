@@ -1,6 +1,6 @@
-import { TerrainType } from '../../mission-data/enums/TerrainType.enum';
+import { TerrainType } from '../../mission-data/enums/terrain-type.enum';
 
-export interface ITerrainData {
+export interface TerrainData {
   terrainType: TerrainType;
   colorMapUrl: string;
   heightMapUrl: string;

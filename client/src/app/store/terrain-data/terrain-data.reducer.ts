@@ -1,16 +1,16 @@
 import { createReducer, on } from '@ngrx/store';
-import { Status } from '../../components/map-canvas/enums/Status.enum';
+import { StatusEnum } from '../../interfaces/status.enum';
 import {
   loadTerrainData,
   loadTerrainDataFailure,
   loadTerrainDataSuccess,
 } from './terrain-data.actions';
-import { ITerrainDataState } from '../../interfaces/ITerrainDataState.interface';
+import { TerrainDataState } from '../../interfaces/terrain-data-state.interface';
 
-export const initialState: ITerrainDataState = {
+export const initialState: TerrainDataState = {
   data: [],
   status: {
-    status: Status.PENDING,
+    status: StatusEnum.PENDING,
     errorMessage: '',
   },
 };
@@ -19,15 +19,15 @@ export const terrainDataReducer = createReducer(
   initialState,
   on(loadTerrainData, (state) => ({
     ...state,
-    status: { ...state.status, status: Status.LOADING, errorMessage: '' },
+    status: { ...state.status, status: StatusEnum.LOADING, errorMessage: '' },
   })),
   on(loadTerrainDataSuccess, (state, { data }) => ({
     ...state,
     data: data,
-    status: { ...state.status, status: Status.SUCCESS, errorMessage: '' },
+    status: { ...state.status, status: StatusEnum.SUCCESS, errorMessage: '' },
   })),
   on(loadTerrainDataFailure, (state, { error }) => ({
     ...state,
-    status: { ...state.status, status: Status.ERROR, errorMessage: error },
+    status: { ...state.status, status: StatusEnum.ERROR, errorMessage: error },
   }))
 );

@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { saveAs } from 'file-saver';
-import { IMission } from '../../interfaces/IMission.interface';
-import { IExportResult } from './interfaces/IExportResult.interface';
-import { HttpClient } from '@angular/common/http';
+import { ExportResult } from './interfaces/export-result.interface';
+import { Mission } from '../../interfaces/Mission.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +10,7 @@ import { HttpClient } from '@angular/common/http';
 export class MissionExportService {
   constructor() {}
 
-  exportMission(mission: IMission): Observable<IExportResult> {
+  exportMission(mission: Mission): Observable<ExportResult> {
     try {
       let blobIsSupported = !!new Blob();
 

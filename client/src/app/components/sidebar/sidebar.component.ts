@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { ISidebarMenuSection } from './interfaces/sidebar-menuitem.interface';
+import { SidebarMenuSection } from './interfaces/sidebar-menuitem.interface';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { ISidebarMenuItemButton } from './interfaces/sidebar-menuitem-button.interface';
+import { SidebarMenuItemButton } from './interfaces/sidebar-menuitem-button.interface';
 import { MenuData } from './data/menu-data.data';
 
 @Component({
@@ -12,10 +12,10 @@ import { MenuData } from './data/menu-data.data';
   styleUrl: './sidebar.component.scss',
 })
 export class SidebarComponent {
-  menuSections: ISidebarMenuSection[] = MenuData;
+  menuSections: SidebarMenuSection[] = MenuData;
   isSidebarOpen = true;
 
-  onMenuSectionButtonClick(button: ISidebarMenuItemButton): void {
+  onMenuSectionButtonClick(button: SidebarMenuItemButton): void {
     console.log(button.label);
   }
 }

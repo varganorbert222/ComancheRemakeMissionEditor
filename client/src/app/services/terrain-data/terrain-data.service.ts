@@ -3,9 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
-import { ITerrainData } from './interfaces/ITerrainData.interface';
-import { TerrainType } from '../mission-data/enums/TerrainType.enum';
-import { ITerrainDataDto } from './ITerrainDataDto.interface';
+import { TerrainData } from './interfaces/terrain-data.interface';
+import { TerrainType } from '../mission-data/enums/terrain-type.enum';
+import { TerrainDataDto } from './interfaces/terrain-data-dto.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -17,8 +17,8 @@ export class TerrainDataService {
 
   constructor(private http: HttpClient) {}
 
-  getAll(): Observable<ITerrainData[]> {
-    return this.http.get<ITerrainDataDto[]>(this.terrainDataUrl).pipe(
+  getAll(): Observable<TerrainData[]> {
+    return this.http.get<TerrainDataDto[]>(this.terrainDataUrl).pipe(
       map(
         (data) =>
           data.map((terrainDataDto) => ({

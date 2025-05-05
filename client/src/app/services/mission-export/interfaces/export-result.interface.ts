@@ -1,4 +1,4 @@
-export interface IExportResult {
+export interface ExportResult {
   success: boolean;
   message?: string;
 }

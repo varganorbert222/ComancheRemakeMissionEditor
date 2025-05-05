@@ -1,6 +1,6 @@
-import { ISidebarMenuSection } from '../interfaces/sidebar-menuitem.interface';
+import { SidebarMenuSection } from '../interfaces/sidebar-menuitem.interface';
 
-export const MenuData: ISidebarMenuSection[] = [
+export const MenuData: SidebarMenuSection[] = [
   {
     title: 'File',
     buttons: [

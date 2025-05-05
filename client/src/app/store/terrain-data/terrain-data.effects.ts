@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { EMPTY, from, of } from 'rxjs';
-import { map, exhaustMap, catchError, switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { map, catchError, switchMap } from 'rxjs/operators';
 import { TerrainDataService } from '../../services/terrain-data/terrain-data.service';
-import { IAppDataState } from '../../interfaces/IAppDataState.interface';
-import { Store } from '@ngrx/store';
 import {
   loadTerrainData,
   loadTerrainDataFailure,
@@ -12,10 +10,9 @@ import {
 } from './terrain-data.actions';
 
 @Injectable()
-export class MoviesEffects {
+export class TerrainDataEffects {
   constructor(
     private actions$: Actions,
-    private store: Store<IAppDataState>,
     private terrainDataService: TerrainDataService
   ) {}
 
@@ -24,8 +21,14 @@ export class MoviesEffects {
       ofType(loadTerrainData),
       switchMap(() =>
         this.terrainDataService.getAll().pipe(
-          map((data) => loadTerrainDataSuccess({ data: data })),
-          catchError((error) => of(loadTerrainDataFailure({ error })))
+          map((data) => {
+            console.log(data);
+            return loadTerrainDataSuccess({ data: data });
+          }),
+          catchError((error) => {
+            console.log(error);
+            return of(loadTerrainDataFailure({ error }));
+          })
         )
       )
     );
