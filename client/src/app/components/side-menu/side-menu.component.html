@@ -1,0 +1,30 @@
+@for (menuSection of menuSections; track $index) {
+<h2 class="title">{{ menuSection.title }}</h2>
+@for (menuItem of menuSection.items; track $index) {
+<div class="item">
+  @if (menuItem.type === SideMenuItemType.SEPARATOR) {
+  <mat-divider class="separator"></mat-divider>
+  } @else if (menuItem.type === SideMenuItemType.TOGGLE) {
+  <mat-slide-toggle
+    class="toggle"
+    labelPosition="after"
+    [checked]="true"
+    [disabled]="false"
+    ><span class="toggle-label">{{ menuItem.label }}</span></mat-slide-toggle
+  >} @else {
+  <button
+    type="button"
+    class="button"
+    mat-fab
+    extended
+    [matTooltip]="menuItem.tooltip"
+    (click)="onMenuSectionButtonClick(menuItem)"
+  >
+    <div class="button-content">
+      <mat-icon>{{ menuItem.icon }}</mat-icon>
+      {{ menuItem.label }}
+    </div>
+  </button>
+  }
+</div>
+} }
