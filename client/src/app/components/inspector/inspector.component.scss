@@ -1,0 +1,47 @@
+@use "../../variables";
+
+:host {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.inspector {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+
+  &-title {
+    text-align: center;
+  }
+}
+
+.minimap-section {
+  display: flex;
+  gap: 0.5rem;
+  flex-direction: column;
+}
+
+.zoom-control {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  &-content {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    &-buttons {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+  }
+}

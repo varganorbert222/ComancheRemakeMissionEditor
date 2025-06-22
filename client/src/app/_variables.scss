@@ -1,5 +1,6 @@
 $toolbar-height: 50px;
 $side-menu-width: 240px;
+$inspector-menu-width: 240px;
 $toolbar-height: 50px;
 $footer-height: 50px;
 $border-size: 1px;
@@ -10,3 +11,5 @@ $padding: 0 10px;
 $sidebar-z-index: 999;
 $toolbar-z-index: 1000;
 $footer-z-index: 1000;
+$bar-height: calc(99vh - $toolbar-height - $footer-height - ($border-size * 2));
+$bar-padding: 0.25rem 0.25rem 0.25rem 1rem;

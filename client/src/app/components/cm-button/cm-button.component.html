@@ -1,17 +1,41 @@
+@if (isMini) {
 <button
-  [style.width]="width"
+  matMiniFab
   type="button"
+  (click)="click($event)"
+  [matTooltip]="tooltip"
+  [ariaLabel]="label"
+  [title]="label"
+  [disabled]="isDisabled"
+  [style.width]="width"
+  [style.height]="height"
+>
+  <span class="button-content-icon">
+    <mat-icon>{{ icon }}</mat-icon>
+  </span>
+</button>
+} @else {
+<button
   mat-fab
   extended
-  [matTooltip]="tooltip"
+  type="button"
   (click)="click($event)"
+  [matTooltip]="tooltip"
+  [ariaLabel]="label"
+  [title]="label"
+  [disabled]="isDisabled"
+  [style.width]="width"
+  [style.height]="height"
 >
   <div class="button-content">
+    @if (icon) {
     <span class="button-content-icon">
       <mat-icon>{{ icon }}</mat-icon>
     </span>
+    } @if (label) {
     <span class="button-content-label"
       >{{ label }} @if (shortcut) { ({{ shortcut }}) }</span
-    >
+    >}
   </div>
 </button>
+}

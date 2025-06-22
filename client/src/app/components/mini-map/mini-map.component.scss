@@ -1,0 +1,9 @@
+@use "../../variables";
+
+:host {
+  display: block;
+  width: 200px;
+  height: 200px;
+  border: 1px solid;
+  margin-bottom: 0.85rem;
+}

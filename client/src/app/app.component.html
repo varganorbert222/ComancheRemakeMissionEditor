@@ -11,6 +11,10 @@
     <app-map-canvas [mapCanvasData]="mapCanvasData"></app-map-canvas>
   </main>
 
+  <aside class="inspector">
+    <app-inspector></app-inspector>
+  </aside>
+
   <footer class="footer">
     <app-footer (onThemeModeChanged)="onThemeModeChanged($event)"></app-footer>
   </footer>

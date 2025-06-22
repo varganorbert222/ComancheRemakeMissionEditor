@@ -3,15 +3,14 @@
 .editor-container {
   display: grid;
   grid-template-rows: vars.$toolbar-height auto vars.$footer-height;
-  grid-template-columns: vars.$side-menu-width auto;
+  grid-template-columns: vars.$side-menu-width auto vars.$inspector-menu-width;
   grid-template-areas:
-    "toolbar toolbar"
-    "sidebar map-area"
-    "footer footer";
+    "toolbar toolbar toolbar"
+    "sidebar map-area inspector"
+    "footer footer footer";
   height: 100%;
 
   .toolbar {
-    // background-color: $background-color;
     grid-area: toolbar;
     display: flex;
     align-items: center;
@@ -22,14 +21,10 @@
   }
 
   .sidebar {
-    // background-color: $background-color;
     grid-area: sidebar;
-    padding: 0.25rem 0.25rem 0.25rem 1rem;
+    padding: vars.$bar-padding;
     border-right: vars.$border;
-    height: calc(
-      99vh - vars.$toolbar-height - vars.$footer-height -
-        (vars.$border-size * 2)
-    );
+    height: vars.$bar-height;
     overflow-y: auto;
     scroll-behavior: smooth;
     scrollbar-gutter: stable;
@@ -37,15 +32,20 @@
   }
 
   .map-area {
-    // background-color: $map-area-color;
     grid-area: map-area;
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
+  .inspector {
+    grid-area: inspector;
+    height: vars.$bar-height;
+    padding: 0.25rem 1rem;
+    border-left: vars.$border;
+  }
+
   .footer {
-    // background-color: $background-color;
     grid-area: footer;
     height: vars.$footer-height;
     border-top: vars.$border;

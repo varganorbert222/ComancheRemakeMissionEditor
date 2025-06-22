@@ -18,6 +18,7 @@ import { MapCanvasData } from './components/map-canvas/interfaces/map-canvas-dat
 import { RenderMode } from './components/map-canvas/enums/render-mode.enum';
 import { FooterComponent } from './components/footer/footer.component';
 import { ThemeMode } from './enums/theme-mode.enum';
+import { InspectorComponent } from './components/inspector/inspector.component';
 
 @Component({
   selector: 'app-root',
@@ -26,6 +27,7 @@ import { ThemeMode } from './enums/theme-mode.enum';
     SideMenuComponent,
     MapCanvasComponent,
     FooterComponent,
+    InspectorComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

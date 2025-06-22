@@ -20,7 +20,10 @@ export class CmButtonComponent {
   @Input() label?: string;
   @Input() shortcut?: string;
   @Input() tooltip?: string;
-  @Input() width?: string;
+  @Input() width?: string = 'auto';
+  @Input() height?: string = 'auto';
+  @Input() isMini?: boolean = false;
+  @Input() isDisabled?: boolean = false;
   @Output() onClick = new EventEmitter<void>();
 
   click(event: Event) {
