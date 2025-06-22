@@ -14,3 +14,7 @@
   align-items: center;
   gap: 1rem;
 }
+
+.title {
+  min-width: vars.$side-menu-width;
+}
