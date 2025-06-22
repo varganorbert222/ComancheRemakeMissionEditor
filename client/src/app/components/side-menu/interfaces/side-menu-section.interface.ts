@@ -1,6 +1,6 @@
-import { SideMenuItem } from './side-menu-item.interface';
+import { MenuItem } from '../../interfaces/menu-item.interface';
 
 export interface SideMenuSection {
   title?: string;
-  items?: SideMenuItem[];
+  items?: MenuItem[];
 }

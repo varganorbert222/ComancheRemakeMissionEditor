@@ -1,30 +1,33 @@
 @for (menuSection of menuSections; track $index) {
-<h2 class="title">{{ menuSection.title }}</h2>
-@for (menuItem of menuSection.items; track $index) {
-<div class="item">
-  @if (menuItem.type === SideMenuItemType.SEPARATOR) {
-  <mat-divider class="separator"></mat-divider>
-  } @else if (menuItem.type === SideMenuItemType.TOGGLE) {
-  <mat-slide-toggle
-    class="toggle"
-    labelPosition="after"
-    [checked]="true"
-    [disabled]="false"
-    ><span class="toggle-label">{{ menuItem.label }}</span></mat-slide-toggle
-  >} @else {
-  <button
-    type="button"
-    class="button"
-    mat-fab
-    extended
-    [matTooltip]="menuItem.tooltip"
-    (click)="onMenuSectionButtonClick(menuItem)"
-  >
-    <div class="button-content">
-      <mat-icon>{{ menuItem.icon }}</mat-icon>
-      {{ menuItem.label }}
+<mat-expansion-panel class="panel">
+  <mat-expansion-panel-header>
+    <mat-panel-title>{{ menuSection.title }}</mat-panel-title>
+  </mat-expansion-panel-header>
+  @for (menuItem of menuSection.items; track $index) {
+  <div class="item">
+    @if (menuItem.type === MenuItemType.SEPARATOR) {
+    <div class="separator">
+      <mat-divider></mat-divider>
     </div>
-  </button>
+    } @else if (menuItem.type === MenuItemType.TOGGLE) {
+    <mat-slide-toggle
+      class="toggle"
+      labelPosition="after"
+      [checked]="true"
+      [disabled]="false"
+      [matTooltip]="menuItem.tooltip"
+      ><span class="toggle-label">{{ menuItem.label }}</span></mat-slide-toggle
+    >} @else {
+    <app-cm-button
+      [label]="menuItem.label"
+      [icon]="menuItem.icon"
+      [shortcut]="menuItem.shortcut"
+      [tooltip]="menuItem.tooltip"
+      (onClick)="onMenuSectionButtonClick(menuItem)"
+      [width]="'100%'"
+    ></app-cm-button>
+    }
+  </div>
   }
-</div>
-} }
+</mat-expansion-panel>
+}

@@ -1,4 +1,5 @@
-import { SideMenuItemType } from '../enums/side-menu-item-type.enum';
+import { MenuItemType } from '../../enums/menu-item-type.enum';
+import { MenuItem } from '../../interfaces/menu-item.interface';
 import { SideMenuSection } from '../interfaces/side-menu-section.interface';
 
 export const SideMenuSectionsData: SideMenuSection[] = [
@@ -36,7 +37,7 @@ export const SideMenuSectionsData: SideMenuSection[] = [
         shortcut: 'Ctrl+Shift+S',
       },
       {
-        type: SideMenuItemType.SEPARATOR,
+        type: MenuItemType.SEPARATOR,
       },
       {
         icon: 'description',
@@ -80,7 +81,7 @@ export const SideMenuSectionsData: SideMenuSection[] = [
         shortcut: 'Ctrl+Z',
       },
       {
-        type: SideMenuItemType.SEPARATOR,
+        type: MenuItemType.SEPARATOR,
       },
       {
         icon: 'delete',
@@ -106,12 +107,12 @@ export const SideMenuSectionsData: SideMenuSection[] = [
         shortcut: '-',
       },
       {
-        type: SideMenuItemType.SEPARATOR,
+        type: MenuItemType.SEPARATOR,
       },
       {
         icon: 'refresh',
-        label: 'Redraw screen',
-        tooltip: '',
+        label: 'Refresh screen',
+        tooltip: 'Redraws the map contents on screen',
         shortcut: 'F5',
       },
     ],
@@ -122,83 +123,110 @@ export const SideMenuSectionsData: SideMenuSection[] = [
       {
         icon: '',
         label: 'Show all objects',
-        tooltip: '',
+        tooltip: 'Display all kinds of objects',
         shortcut: '',
-        type: SideMenuItemType.TOGGLE,
+        type: MenuItemType.TOGGLE,
       },
       {
         icon: '',
         label: 'Show static',
-        tooltip: '',
+        tooltip: 'Show only buildings and non-moving targets',
         shortcut: '',
-        type: SideMenuItemType.TOGGLE,
+        type: MenuItemType.TOGGLE,
       },
       {
         icon: '',
         label: 'Show land vehicles',
-        tooltip: '',
+        tooltip: 'Show ground vehicles only',
         shortcut: '',
-        type: SideMenuItemType.TOGGLE,
+        type: MenuItemType.TOGGLE,
       },
       {
         icon: '',
         label: 'Show aircrafts',
-        tooltip: '',
+        tooltip: 'Display fixed-wing aircrafts on the map',
         shortcut: '',
-        type: SideMenuItemType.TOGGLE,
+        type: MenuItemType.TOGGLE,
       },
       {
         icon: '',
         label: 'Show goals',
-        tooltip: '',
+        tooltip: 'Display of objectives required to complete the mission',
         shortcut: '',
-        type: SideMenuItemType.TOGGLE,
+        type: MenuItemType.TOGGLE,
       },
       {
         icon: '',
         label: 'Show waypoints',
-        tooltip: '',
+        tooltip: 'Displaying player and AI routes',
         shortcut: '',
-        type: SideMenuItemType.TOGGLE,
+        type: MenuItemType.TOGGLE,
       },
       {
-        type: SideMenuItemType.SEPARATOR,
+        type: MenuItemType.SEPARATOR,
       },
       {
         icon: '',
         label: 'Show entire world',
-        tooltip: '',
+        tooltip: 'Show the entire playing area',
         shortcut: '',
-        type: SideMenuItemType.TOGGLE,
+        type: MenuItemType.TOGGLE,
       },
       {
         icon: '',
         label: 'Show coords in meters',
-        tooltip: '',
+        tooltip: 'The cursor coordinates are shown in meters',
         shortcut: '',
-        type: SideMenuItemType.TOGGLE,
+        type: MenuItemType.TOGGLE,
       },
       {
         icon: '',
         label: 'Show distance bar',
-        tooltip: '',
+        tooltip: 'We show the reference distance with a measuring bar',
         shortcut: '',
-        type: SideMenuItemType.TOGGLE,
+        type: MenuItemType.TOGGLE,
       },
       {
         icon: '',
         label: 'Show true direction',
-        tooltip: '',
+        tooltip: 'Displaying the orientation of objects',
         shortcut: '',
-        type: SideMenuItemType.TOGGLE,
+        type: MenuItemType.TOGGLE,
       },
       {
         icon: '',
         label: 'Show zoom spot',
-        tooltip: '',
+        tooltip:
+          'Display of the currently visible map detail from the entire playing field',
         shortcut: '',
-        type: SideMenuItemType.TOGGLE,
+        type: MenuItemType.TOGGLE,
       },
     ],
+  },
+];
+
+export const ToolbarMenuData: MenuItem[] = [
+  {
+    icon: 'refresh',
+    label: 'Refresh screen',
+    tooltip: 'Redraws the map contents on screen',
+  },
+  {
+    icon: 'polyline',
+    label: 'Waypoint manager',
+    tooltip: 'Edit Player and AI waypoints',
+  },
+  {
+    icon: 'air',
+    label: 'Wind manager',
+    tooltip: 'Edit wind positions, directions and strengths',
+  },
+  {
+    type: MenuItemType.SEPARATOR,
+  },
+  {
+    label: 'Toggle depth map',
+    type: MenuItemType.TOGGLE,
+    tooltip: 'The editor shows the colormap or heightmap of the map',
   },
 ];

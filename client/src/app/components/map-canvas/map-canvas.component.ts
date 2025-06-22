@@ -6,21 +6,25 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MapCanvasData } from './interfaces/map-canvas-data.interface';
 import { RenderMode } from './enums/render-mode.enum';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-map-canvas',
-  imports: [MatProgressSpinnerModule],
+  imports: [MatProgressSpinnerModule, CommonModule],
   templateUrl: './map-canvas.component.html',
   styleUrl: './map-canvas.component.scss',
 })
 export class MapCanvasComponent implements OnInit {
-  @Input() mapCanvasData?: MapCanvasData; // URL of the color map image
+  @Input() mapCanvasData?: MapCanvasData;
 
   @ViewChild('id_canvas', { static: true })
   canvasRef!: ElementRef<HTMLCanvasElement>;
+
+  hasData$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   private ctx!: CanvasRenderingContext2D;
   private img = new Image();
@@ -31,17 +35,28 @@ export class MapCanvasComponent implements OnInit {
   private lastMouseX = 0;
   private lastMouseY = 0;
 
-  isLoading = true; // Simulate loading state
-  renderMode = RenderMode.COLORMAP; // Default render mode
+  isLoading = true;
+  renderMode = RenderMode.COLORMAP;
 
-  constructor() {}
+  constructor() {
+    this.onMapLoaded();
+  }
 
   onMapLoaded(): void {
-    this.isLoading = false; // Set loading to false when the map is loaded
+    if (
+      this.mapCanvasData &&
+      this.mapCanvasData.colorMapUrl &&
+      this.mapCanvasData.heightMapUrl
+    ) {
+      this.hasData$.next(true);
+    } else {
+      this.hasData$.next(false);
+    }
+    this.isLoading = false;
   }
 
   ngOnInit() {
-    this.selectRenderMode(RenderMode.COLORMAP); // Set default render mode to ColorMap
+    this.selectRenderMode(RenderMode.COLORMAP);
     this.img.onload = (e: Event) => {
       this.initCanvas();
       this.isLoading = false;
@@ -87,7 +102,6 @@ export class MapCanvasComponent implements OnInit {
   @HostListener('mousedown', ['$event'])
   onMouseDown(event: MouseEvent) {
     if (event.button === 2) {
-      // Jobb klikk
       this.dragging = true;
       this.lastMouseX = event.clientX;
       this.lastMouseY = event.clientY;

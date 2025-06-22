@@ -1,36 +1,55 @@
+@use "variables" as vars;
+
 .editor-container {
   display: grid;
-  grid-template-rows: 50px auto;
-  grid-template-columns: 200px auto;
+  grid-template-rows: vars.$toolbar-height auto vars.$footer-height;
+  grid-template-columns: vars.$side-menu-width auto;
   grid-template-areas:
     "toolbar toolbar"
-    "sidebar map-area";
-  height: 100vh;
+    "sidebar map-area"
+    "footer footer";
+  height: 100%;
 
   .toolbar {
+    // background-color: $background-color;
     grid-area: toolbar;
-    background-color: #2c2c3e;
     display: flex;
     align-items: center;
-    padding: 0 10px;
-    border-bottom: 1px solid #444;
-    height: 50px;
+    padding: vars.$padding;
+    border-bottom: vars.$border;
+    height: vars.$toolbar-height;
+    z-index: vars.$toolbar-z-index;
   }
 
   .sidebar {
+    // background-color: $background-color;
     grid-area: sidebar;
-    background-color: #2c2c3e;
-    padding: 10px;
-    border-right: 1px solid #444;
-    height: 100vh;
-    overflow: scroll;
+    padding: 0.25rem 0.25rem 0.25rem 1rem;
+    border-right: vars.$border;
+    height: calc(
+      99vh - vars.$toolbar-height - vars.$footer-height -
+        (vars.$border-size * 2)
+    );
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    scrollbar-gutter: stable;
+    z-index: vars.$sidebar-z-index;
   }
 
   .map-area {
+    // background-color: $map-area-color;
     grid-area: map-area;
-    background-color: #1e1e2f;
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  .footer {
+    // background-color: $background-color;
+    grid-area: footer;
+    height: vars.$footer-height;
+    border-top: vars.$border;
+    padding: vars.$padding;
+    z-index: vars.$footer-z-index;
   }
 }

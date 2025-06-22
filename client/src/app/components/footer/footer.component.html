@@ -1,0 +1,6 @@
+<div class="container">
+  <span>&copy; {{ owner }} | {{ now }} | {{ title }}</span>
+  <span class="theme-label" (click)="onThemeModeClick($event)"
+    >Switch to {{ nextThemeMode$ | async }} mode</span
+  >
+</div>

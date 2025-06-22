@@ -1,26 +1,71 @@
 @use "@angular/material" as mat;
 
 html,
-body {
+body,
+h1 {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
 html {
-  color-scheme: light dark;
+  font-family: sans-serif, "Roboto";
+  color-scheme: light;
   @include mat.theme(
     (
-      color: mat.$orange-palette,
+      color: (
+        primary: mat.$orange-palette,
+        tertiary: mat.$cyan-palette,
+      ),
+      typography: (
+        plain-family: Roboto,
+        brand-family: Open Sans,
+        bold-weight: 900,
+        medium-weight: 500,
+        regular-weight: 300,
+      ),
       density: 0,
     )
   );
-  font-family: sans-serif, "Roboto";
-  height: 100vh;
-  overflow: hidden;
+}
+
+body.dark-mode {
+  color-scheme: dark;
 }
 
 body {
   background: var(--mat-sys-surface);
   color: var(--mat-sys-on-surface);
+}
+
+.mat-expansion-panel {
+  .mat-expansion-panel-header {
+    padding: 0 12px;
+  }
+
+  .mat-expansion-panel-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0 12px 8px;
+
+    .item {
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+  }
+}
+
+.separator {
+  width: 100%;
+  margin: 0.5rem 0;
+
+  &-vertical {
+    height: 30px;
+    margin: 0 0.5rem;
+    width: var(--mat-divider-width, 1px);
+    color: var(--mat-divider-color, var(--mat-sys-outline));
+  }
 }

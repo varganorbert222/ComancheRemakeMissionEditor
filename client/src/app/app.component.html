@@ -10,5 +10,8 @@
   <main class="map-area">
     <app-map-canvas [mapCanvasData]="mapCanvasData"></app-map-canvas>
   </main>
+
+  <footer class="footer">
+    <app-footer (onThemeModeChanged)="onThemeModeChanged($event)"></app-footer>
+  </footer>
 </div>
-<router-outlet />

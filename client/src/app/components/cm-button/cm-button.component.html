@@ -1,0 +1,17 @@
+<button
+  [style.width]="width"
+  type="button"
+  mat-fab
+  extended
+  [matTooltip]="tooltip"
+  (click)="click($event)"
+>
+  <div class="button-content">
+    <span class="button-content-icon">
+      <mat-icon>{{ icon }}</mat-icon>
+    </span>
+    <span class="button-content-label"
+      >{{ label }} @if (shortcut) { ({{ shortcut }}) }</span
+    >
+  </div>
+</button>

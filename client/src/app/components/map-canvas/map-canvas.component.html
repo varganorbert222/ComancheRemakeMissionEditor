@@ -1,5 +1,7 @@
 @if (isLoading) {
 <mat-spinner></mat-spinner>
-} @else {
+} @else if(hasData$ | async) {
 <canvas #id_canvas></canvas>
+} @else {
+<span>No map data.</span>
 }
