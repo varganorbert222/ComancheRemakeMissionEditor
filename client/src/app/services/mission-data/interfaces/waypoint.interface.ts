@@ -1,1 +1,1 @@
-export interface Waypoint {}
+export default interface Waypoint {}

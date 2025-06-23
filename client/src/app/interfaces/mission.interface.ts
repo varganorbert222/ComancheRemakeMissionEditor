@@ -1,6 +1,6 @@
-import { MissionObject } from './mission-object.interface';
+import MissionObject from './mission-object.interface';
 
-export interface Mission {
+export default interface Mission {
   mapName: string;
   time: { hour: number; minute: number };
   missionName: string;

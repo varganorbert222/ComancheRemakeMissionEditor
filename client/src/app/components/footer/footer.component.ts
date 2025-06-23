@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss',
 })
-export class FooterComponent {
+export default class FooterComponent {
   @Output() onThemeModeChanged = new EventEmitter<ThemeMode>();
 
   now: number = new Date().getFullYear();

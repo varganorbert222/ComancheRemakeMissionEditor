@@ -4,21 +4,21 @@ import {
   OnInit,
   Renderer2,
 } from '@angular/core';
-import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import ToolbarComponent from './components/toolbar/toolbar.component';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
-import { MapCanvasComponent } from './components/map-canvas/map-canvas.component';
+import MapCanvasComponent from './components/map-canvas/map-canvas.component';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { TerrainDataService } from './services/terrain-data/terrain-data.service';
-import { loadTerrainDataSuccess } from './store/terrain-data/terrain-data.actions';
-import { TerrainData } from './services/terrain-data/interfaces/terrain-data.interface';
-import { selectAllTerrainData } from './store/terrain-data/terrain-data.selectors';
-import { AppDataState } from './interfaces/app-data-state.interface';
-import { MapCanvasData } from './components/map-canvas/interfaces/map-canvas-data.interface';
+import TerrainDataService from './services/terrain-data/terrain-data.service';
+import TerrainDataActions from './store/terrain-data/terrain-data.actions';
+import TerrainData from './services/terrain-data/interfaces/terrain-data.interface';
+import TerrainDataSelectors from './store/terrain-data/terrain-data.selectors';
+import AppDataState from './interfaces/app-data-state.interface';
+import MapCanvasData from './components/interfaces/map-canvas-data.interface';
 import { RenderMode } from './components/map-canvas/enums/render-mode.enum';
-import { FooterComponent } from './components/footer/footer.component';
+import FooterComponent from './components/footer/footer.component';
 import { ThemeMode } from './enums/theme-mode.enum';
-import { InspectorComponent } from './components/inspector/inspector.component';
+import InspectorComponent from './components/inspector/inspector.component';
 
 @Component({
   selector: 'app-root',
@@ -33,10 +33,10 @@ import { InspectorComponent } from './components/inspector/inspector.component';
   styleUrl: './app.component.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class AppComponent implements OnInit {
+export default class AppComponent implements OnInit {
   title = 'Mission Editor';
 
-  terrainData$: Observable<TerrainData[]>;
+  terrainData$: Observable<TerrainData | undefined>;
 
   mapCanvasData: MapCanvasData = {
     renderMode: RenderMode.COLORMAP,
@@ -51,19 +51,19 @@ export class AppComponent implements OnInit {
     private readonly terrainDataService: TerrainDataService,
     private readonly renderer: Renderer2
   ) {
-    this.terrainData$ = this.store.select(selectAllTerrainData);
+    this.terrainData$ = this.store.select(
+      TerrainDataSelectors.selectTerrainData('C1M1')
+    );
   }
 
   ngOnInit() {
-    // this.loadAppData();
+    this.loadAppData();
   }
 
   loadAppData() {
-    this.terrainDataService
-      .getAll()
-      .subscribe((data) =>
-        this.store.dispatch(loadTerrainDataSuccess({ data }))
-      );
+    this.terrainDataService.getAll().subscribe((data) => {
+      this.store.dispatch(TerrainDataActions.loadTerrainDataSuccess({ data }));
+    });
   }
 
   private setBodyClass(className: string) {

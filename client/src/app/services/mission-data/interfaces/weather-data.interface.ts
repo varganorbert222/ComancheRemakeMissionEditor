@@ -1,1 +1,1 @@
-export interface WeatherData {}
+export default interface WeatherData {}

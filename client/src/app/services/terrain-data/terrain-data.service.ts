@@ -3,14 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
-import { TerrainData } from './interfaces/terrain-data.interface';
+import TerrainData from './interfaces/terrain-data.interface';
 import { TerrainType } from '../mission-data/enums/terrain-type.enum';
-import { TerrainDataDto } from './interfaces/terrain-data-dto.interface';
+import TerrainDataDto from './interfaces/terrain-data-dto.interface';
 
 @Injectable({
   providedIn: 'root',
 })
-export class TerrainDataService {
+export default class TerrainDataService {
   private readonly terrainDataUrl: string = environment.terrainDataUrl;
   private readonly colorMapUrl: string = environment.colorMapUrl;
   private readonly heightMapUrl: string = environment.heightMapUrl;
@@ -23,6 +23,7 @@ export class TerrainDataService {
         (data) =>
           data.map((terrainDataDto) => ({
             terrainType: terrainDataDto.terrainCamo as TerrainType,
+            name: terrainDataDto.colorMap.replace('_C', ''),
             colorMapUrl: `${this.colorMapUrl}/${terrainDataDto.colorMap}.png`,
             heightMapUrl: `${this.heightMapUrl}/${terrainDataDto.heightMap}.png`,
             terrainWidth: 1024,

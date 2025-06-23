@@ -14,7 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
   templateUrl: './cm-button.component.html',
   styleUrl: './cm-button.component.scss',
 })
-export class CmButtonComponent {
+export default class CmButtonComponent {
   @HostBinding('class.cm-button') isButton = true;
   @Input() icon?: string;
   @Input() label?: string;

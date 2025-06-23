@@ -1,10 +1,10 @@
-import { ObjectsData } from './objects-data.interface';
-import { PlayerData } from './player-data.interface';
-import { TerrainData } from '../../terrain-data/interfaces/terrain-data.interface';
-import { Waypoint } from './waypoint.interface';
-import { WeatherData } from './weather-data.interface';
+import ObjectsData from './objects-data.interface';
+import PlayerData from './player-data.interface';
+import TerrainData from '../../terrain-data/interfaces/terrain-data.interface';
+import Waypoint from './waypoint.interface';
+import WeatherData from './weather-data.interface';
 
-export interface MissionData {
+export default interface MissionData {
   missionName: string; // Name of the mission
   missionDescription?: string; // Description of the mission
   waypoints?: Waypoint[]; // Array of waypoints associated with the mission

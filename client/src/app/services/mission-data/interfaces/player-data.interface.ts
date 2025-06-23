@@ -1,1 +1,1 @@
-export interface PlayerData {}
+export default interface PlayerData {}

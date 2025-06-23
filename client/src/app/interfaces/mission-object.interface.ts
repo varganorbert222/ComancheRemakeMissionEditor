@@ -1,4 +1,4 @@
-export interface MissionObject {
+export default interface MissionObject {
   id: string;
   type: string;
   position: { x: number; y: number; z: number };
