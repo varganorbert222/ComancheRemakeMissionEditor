@@ -8,8 +8,8 @@ import TerrainDataActions from './terrain-data.actions';
 @Injectable()
 export default class TerrainDataEffects {
   constructor(
-    private actions$: Actions,
-    private terrainDataService: TerrainDataService
+    private readonly actions$: Actions,
+    private readonly terrainDataService: TerrainDataService
   ) {}
 
   loadTerrainData$ = createEffect(() => {

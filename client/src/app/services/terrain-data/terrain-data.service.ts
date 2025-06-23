@@ -19,8 +19,8 @@ export default class TerrainDataService {
 
   getAll(): Observable<TerrainData[]> {
     return this.http.get<TerrainDataDto[]>(this.terrainDataUrl).pipe(
-      map(
-        (data) =>
+      map((data) => {
+        return (
           data.map((terrainDataDto) => ({
             terrainType: terrainDataDto.terrainCamo as TerrainType,
             name: terrainDataDto.colorMap.replace('_C', ''),
@@ -29,7 +29,8 @@ export default class TerrainDataService {
             terrainWidth: 1024,
             terrainHeight: 1024,
           })) || []
-      )
+        );
+      })
     );
   }
 }

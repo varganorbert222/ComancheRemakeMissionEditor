@@ -2,17 +2,19 @@ import { createAction, props } from '@ngrx/store';
 import TerrainData from '../../services/terrain-data/interfaces/terrain-data.interface';
 
 export default class TerrainDataActions {
+  private static readonly actionsName: string = '[TerrainDataActions]';
+
   static readonly loadTerrainData = createAction(
-    '[App Component] Load Terrain Data'
+    `${TerrainDataActions.actionsName} Load Terrain Data`
   );
 
   static readonly loadTerrainDataSuccess = createAction(
-    '[App Component] Load Terrain Data Success',
+    `${TerrainDataActions.actionsName} Load Terrain Data Success`,
     props<{ data: TerrainData[] }>()
   );
 
   static readonly loadTerrainDataFailure = createAction(
-    '[App Component] Load Terrain Data Failure',
+    `${TerrainDataActions.actionsName} Load Terrain Data Failure`,
     props<{ error: string }>()
   );
 }

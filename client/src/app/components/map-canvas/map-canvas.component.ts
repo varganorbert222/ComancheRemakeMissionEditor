@@ -19,7 +19,7 @@ import { BehaviorSubject } from 'rxjs';
   styleUrl: './map-canvas.component.scss',
 })
 export default class MapCanvasComponent implements OnInit {
-  @Input() mapCanvasData?: MapCanvasData;
+  @Input() mapCanvasData?: MapCanvasData | undefined | null;
 
   @ViewChild('id_canvas', { static: true })
   canvasRef!: ElementRef<HTMLCanvasElement>;

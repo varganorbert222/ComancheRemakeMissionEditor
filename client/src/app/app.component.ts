@@ -7,9 +7,8 @@ import {
 import ToolbarComponent from './components/toolbar/toolbar.component';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
 import MapCanvasComponent from './components/map-canvas/map-canvas.component';
-import { Observable } from 'rxjs';
+import { distinctUntilChanged, map, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import TerrainDataService from './services/terrain-data/terrain-data.service';
 import TerrainDataActions from './store/terrain-data/terrain-data.actions';
 import TerrainData from './services/terrain-data/interfaces/terrain-data.interface';
 import TerrainDataSelectors from './store/terrain-data/terrain-data.selectors';
@@ -19,10 +18,12 @@ import { RenderMode } from './components/map-canvas/enums/render-mode.enum';
 import FooterComponent from './components/footer/footer.component';
 import { ThemeMode } from './enums/theme-mode.enum';
 import InspectorComponent from './components/inspector/inspector.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   imports: [
+    CommonModule,
     ToolbarComponent,
     SideMenuComponent,
     MapCanvasComponent,
@@ -37,22 +38,26 @@ export default class AppComponent implements OnInit {
   title = 'Mission Editor';
 
   terrainData$: Observable<TerrainData | undefined>;
-
-  mapCanvasData: MapCanvasData = {
-    renderMode: RenderMode.COLORMAP,
-    colorMapUrl: '',
-    heightMapUrl: '',
-    height: 0,
-    width: 0,
-  };
+  mapCanvasData$: Observable<MapCanvasData>;
 
   constructor(
     private readonly store: Store<AppDataState>,
-    private readonly terrainDataService: TerrainDataService,
     private readonly renderer: Renderer2
   ) {
     this.terrainData$ = this.store.select(
       TerrainDataSelectors.selectTerrainData('C1M1')
+    );
+    this.mapCanvasData$ = this.terrainData$.pipe(
+      distinctUntilChanged(),
+      map((terrainData) => {
+        return {
+          renderMode: RenderMode.COLORMAP,
+          colorMapUrl: terrainData?.colorMapUrl ?? '',
+          heightMapUrl: terrainData?.heightMapUrl ?? '',
+          height: terrainData?.terrainHeight ?? 0,
+          width: terrainData?.terrainWidth ?? 0,
+        };
+      })
     );
   }
 
@@ -61,9 +66,7 @@ export default class AppComponent implements OnInit {
   }
 
   loadAppData() {
-    this.terrainDataService.getAll().subscribe((data) => {
-      this.store.dispatch(TerrainDataActions.loadTerrainDataSuccess({ data }));
-    });
+    this.store.dispatch(TerrainDataActions.loadTerrainData());
   }
 
   private setBodyClass(className: string) {

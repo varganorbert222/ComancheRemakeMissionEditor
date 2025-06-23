@@ -4,7 +4,7 @@ import TerrainDataState from '../../interfaces/terrain-data-state.interface';
 import { StatusEnum } from '../../interfaces/status.enum';
 
 export default class TerrainDataReducer {
-  private static readonly initialState: TerrainDataState = {
+  static readonly initialState: TerrainDataState = {
     data: [],
     status: {
       status: StatusEnum.PENDING,
