@@ -12,7 +12,6 @@ import { Store } from '@ngrx/store';
 import TerrainDataActions from './store/terrain-data/terrain-data.actions';
 import TerrainData from './services/terrain-data/interfaces/terrain-data.interface';
 import TerrainDataSelectors from './store/terrain-data/terrain-data.selectors';
-import AppDataState from './interfaces/app-data-state.interface';
 import MapCanvasData from './components/interfaces/map-canvas-data.interface';
 import { RenderMode } from './components/map-canvas/enums/render-mode.enum';
 import FooterComponent from './components/footer/footer.component';
@@ -39,9 +38,33 @@ export default class AppComponent implements OnInit {
 
   terrainData$: Observable<TerrainData | undefined>;
   mapCanvasData$: Observable<MapCanvasData>;
+  minimapCanvasData$: Observable<MapCanvasData>;
+
+  private canvasCalcSizeFunc = (): { width: number; height: number } => {
+    const sidebarWidth = document
+      .getElementsByClassName('sidebar')[0]
+      .getBoundingClientRect().width;
+    const inspectorWidth = document
+      .getElementsByClassName('inspector')[0]
+      .getBoundingClientRect().width;
+    const toolbarHeight = document
+      .getElementsByTagName('header')[0]
+      .getBoundingClientRect().height;
+    const footerHeight = document
+      .getElementsByTagName('app-footer')[0]
+      .getBoundingClientRect().height;
+
+    const width = window.innerWidth - sidebarWidth - inspectorWidth;
+    const height = window.innerHeight - toolbarHeight - footerHeight;
+
+    return {
+      width: width,
+      height: height,
+    };
+  };
 
   constructor(
-    private readonly store: Store<AppDataState>,
+    private readonly store: Store<{ terrainData: TerrainData }>,
     private readonly renderer: Renderer2
   ) {
     this.terrainData$ = this.store.select(
@@ -56,6 +79,21 @@ export default class AppComponent implements OnInit {
           heightMapUrl: terrainData?.heightMapUrl ?? '',
           height: terrainData?.terrainHeight ?? 0,
           width: terrainData?.terrainWidth ?? 0,
+          calcSizeFunc: this.canvasCalcSizeFunc,
+        };
+      })
+    );
+    this.minimapCanvasData$ = this.terrainData$.pipe(
+      distinctUntilChanged(),
+      map((terrainData) => {
+        return {
+          renderMode: RenderMode.COLORMAP,
+          colorMapUrl: terrainData?.colorMapUrl ?? '',
+          heightMapUrl: terrainData?.heightMapUrl ?? '',
+          height: terrainData?.terrainHeight ?? 0,
+          width: terrainData?.terrainWidth ?? 0,
+          canvasWidth: 200,
+          canvasHeight: 200,
         };
       })
     );

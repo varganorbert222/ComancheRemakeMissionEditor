@@ -6,4 +6,7 @@ export default interface MapCanvasData {
   width: number;
   height: number;
   renderMode: RenderMode;
+  canvasWidth?: number;
+  canvasHeight?: number;
+  calcSizeFunc?: () => { width: number; height: number };
 }

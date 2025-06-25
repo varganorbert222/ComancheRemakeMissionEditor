@@ -1,5 +1,20 @@
 @use "@angular/material" as mat;
 
+@property --_w {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 100vw;
+}
+@property --_h {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 100vh;
+}
+:root {
+  --w: tan(atan2(var(--_w), 1px)); /* screen width */
+  --h: tan(atan2(var(--_h), 1px)); /* screen height */
+}
+
 html,
 body,
 h1 {

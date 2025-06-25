@@ -11,5 +11,7 @@ $padding: 0 10px;
 $sidebar-z-index: 999;
 $toolbar-z-index: 1000;
 $footer-z-index: 1000;
-$bar-height: calc(99vh - $toolbar-height - $footer-height - ($border-size * 2));
+$bar-height: calc(
+  var(--h) - $toolbar-height - $footer-height - ($border-size * 2)
+);
 $bar-padding: 0.25rem 0.25rem 0.25rem 1rem;

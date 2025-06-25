@@ -1,13 +1,13 @@
-import { createSelector } from '@ngrx/store';
-import AppDataState from '../../interfaces/app-data-state.interface';
+import { createFeatureSelector, createSelector } from '@ngrx/store';
 import TerrainDataState from '../../interfaces/terrain-data-state.interface';
 import TerrainData from '../../services/terrain-data/interfaces/terrain-data.interface';
 
 export default class TerrainDataSelectors {
-  static readonly terrainDataState = (state: AppDataState) => state.terrainData;
+  static readonly selectTerrainDataState =
+    createFeatureSelector<TerrainDataState>('terrainData');
 
   static readonly selectAllTerrainData = createSelector(
-    this.terrainDataState,
+    this.selectTerrainDataState,
     (state: TerrainDataState) => state.data
   );
 
