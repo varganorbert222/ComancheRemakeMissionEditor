@@ -1,9 +1,9 @@
-@use "../../variables";
+@use "../../variables" as vars;
 
 :host {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid;
+  border: vars.$border;
   margin-bottom: 0.85rem;
 }

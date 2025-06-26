@@ -1,1 +1,1 @@
-export default interface ObjectsData {}
+export interface ObjectsData {}

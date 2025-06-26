@@ -1,9 +1,9 @@
 import { createReducer, on } from '@ngrx/store';
-import TerrainDataActions from './terrain-data.actions';
-import TerrainDataState from '../../interfaces/terrain-data-state.interface';
+import { TerrainDataActions } from './terrain-data.actions';
+import { TerrainDataState } from '../../interfaces/terrain-data-state.interface';
 import { StatusEnum } from '../../interfaces/status.enum';
 
-export default class TerrainDataReducer {
+export class TerrainDataReducer {
   static readonly initialState: TerrainDataState = {
     data: [],
     status: {

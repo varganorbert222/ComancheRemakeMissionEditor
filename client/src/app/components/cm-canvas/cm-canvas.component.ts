@@ -23,6 +23,8 @@ export class CmCanvasComponent implements AfterViewInit {
 
   private ctx!: CanvasRenderingContext2D;
 
+  constructor() {}
+
   ngAfterViewInit(): void {
     this.ctx = this.canvas.nativeElement.getContext('2d')!;
     this.ctx.fillStyle = 'green';

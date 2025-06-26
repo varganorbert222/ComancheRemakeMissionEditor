@@ -1,15 +1,17 @@
 @let isLoading = isLoading$ | async; @let hasData = hasData$ | async;
 
-<div [classList]="isLoading && !hasData ? 'd-block' : 'd-none'">
-  <mat-spinner [diameter]="50"></mat-spinner>
-</div>
-<div [classList]="hasData && !isLoading ? 'd-flex' : 'd-none'">
-  <app-cm-canvas
-    [calcSizeFunc]="mapCanvasData?.calcSizeFunc"
-    [width]="mapCanvasData?.canvasWidth"
-    [height]="mapCanvasData?.canvasHeight"
-  ></app-cm-canvas>
-</div>
-<div [classList]="!hasData && !isLoading ? 'd-block' : 'd-none'">
-  <span>No map data.</span>
+<div #container class="container">
+  <div [classList]="isLoading && !hasData ? 'd-block' : 'd-none'">
+    <mat-spinner [diameter]="50"></mat-spinner>
+  </div>
+  <div [classList]="hasData && !isLoading ? 'd-flex' : 'd-none'">
+    <app-cm-canvas
+      [calcSizeFunc]="mapCanvasData?.calcSizeFunc"
+      [width]="mapCanvasData?.canvasWidth"
+      [height]="mapCanvasData?.canvasHeight"
+    ></app-cm-canvas>
+  </div>
+  <div [classList]="!hasData && !isLoading ? 'd-block' : 'd-none'">
+    <span>No map data.</span>
+  </div>
 </div>

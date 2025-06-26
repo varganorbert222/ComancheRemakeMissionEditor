@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import MapCanvasComponent from '../map-canvas/map-canvas.component';
-import MapCanvasData from '../interfaces/map-canvas-data.interface';
+import { MapCanvasComponent } from '../map-canvas/map-canvas.component';
+import { MapCanvasData } from '../interfaces/map-canvas-data.interface';
 
 @Component({
   selector: 'app-mini-map',
@@ -8,7 +8,7 @@ import MapCanvasData from '../interfaces/map-canvas-data.interface';
   templateUrl: './mini-map.component.html',
   styleUrl: './mini-map.component.scss',
 })
-export default class MiniMapComponent {
+export class MiniMapComponent {
   @Input() mapCanvasData?: MapCanvasData | null | undefined;
 
   constructor() {}

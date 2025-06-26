@@ -1,6 +1,6 @@
 import { MenuItemType } from '../enums/menu-item-type.enum';
 
-export default interface MenuItem {
+export interface MenuItem {
   icon?: string;
   label?: string;
   tooltip?: string;

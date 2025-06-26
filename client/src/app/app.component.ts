@@ -4,19 +4,19 @@ import {
   OnInit,
   Renderer2,
 } from '@angular/core';
-import ToolbarComponent from './components/toolbar/toolbar.component';
+import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
-import MapCanvasComponent from './components/map-canvas/map-canvas.component';
-import { distinctUntilChanged, map, Observable } from 'rxjs';
+import { MapCanvasComponent } from './components/map-canvas/map-canvas.component';
+import { BehaviorSubject, distinctUntilChanged, map, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import TerrainDataActions from './store/terrain-data/terrain-data.actions';
-import TerrainData from './services/terrain-data/interfaces/terrain-data.interface';
-import TerrainDataSelectors from './store/terrain-data/terrain-data.selectors';
-import MapCanvasData from './components/interfaces/map-canvas-data.interface';
+import { TerrainDataActions } from './store/terrain-data/terrain-data.actions';
+import { TerrainData } from './services/terrain-data/interfaces/terrain-data.interface';
+import { TerrainDataSelectors } from './store/terrain-data/terrain-data.selectors';
+import { MapCanvasData } from './components/interfaces/map-canvas-data.interface';
 import { RenderMode } from './components/map-canvas/enums/render-mode.enum';
-import FooterComponent from './components/footer/footer.component';
+import { FooterComponent } from './components/footer/footer.component';
 import { ThemeMode } from './enums/theme-mode.enum';
-import InspectorComponent from './components/inspector/inspector.component';
+import { InspectorComponent } from './components/inspector/inspector.component';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -33,12 +33,8 @@ import { CommonModule } from '@angular/common';
   styleUrl: './app.component.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export default class AppComponent implements OnInit {
+export class AppComponent implements OnInit {
   title = 'Mission Editor';
-
-  terrainData$: Observable<TerrainData | undefined>;
-  mapCanvasData$: Observable<MapCanvasData>;
-  minimapCanvasData$: Observable<MapCanvasData>;
 
   private canvasCalcSizeFunc = (): { width: number; height: number } => {
     const sidebarWidth = document
@@ -63,6 +59,17 @@ export default class AppComponent implements OnInit {
     };
   };
 
+  terrainData$: Observable<TerrainData | undefined>;
+
+  mapCanvasData$ = new BehaviorSubject<MapCanvasData>({
+    calcSizeFunc: this.canvasCalcSizeFunc,
+  });
+
+  minimapCanvasData$ = new BehaviorSubject<MapCanvasData>({
+    canvasWidth: 200,
+    canvasHeight: 200,
+  });
+
   constructor(
     private readonly store: Store<{ terrainData: TerrainData }>,
     private readonly renderer: Renderer2
@@ -70,31 +77,39 @@ export default class AppComponent implements OnInit {
     this.terrainData$ = this.store.select(
       TerrainDataSelectors.selectTerrainData('C1M1')
     );
-    this.mapCanvasData$ = this.terrainData$.pipe(
+
+    this.terrainData$.pipe(
       distinctUntilChanged(),
       map((terrainData) => {
         return {
           renderMode: RenderMode.COLORMAP,
-          colorMapUrl: terrainData?.colorMapUrl ?? '',
-          heightMapUrl: terrainData?.heightMapUrl ?? '',
-          height: terrainData?.terrainHeight ?? 0,
-          width: terrainData?.terrainWidth ?? 0,
+          colorMapUrl: terrainData?.colorMapUrl,
+          heightMapUrl: terrainData?.heightMapUrl,
+          height: terrainData?.terrainHeight,
+          width: terrainData?.terrainWidth,
           calcSizeFunc: this.canvasCalcSizeFunc,
         };
+      }),
+      map((canvasData) => {
+        this.mapCanvasData$.next(canvasData);
       })
     );
-    this.minimapCanvasData$ = this.terrainData$.pipe(
+
+    this.terrainData$.pipe(
       distinctUntilChanged(),
       map((terrainData) => {
         return {
           renderMode: RenderMode.COLORMAP,
-          colorMapUrl: terrainData?.colorMapUrl ?? '',
-          heightMapUrl: terrainData?.heightMapUrl ?? '',
-          height: terrainData?.terrainHeight ?? 0,
-          width: terrainData?.terrainWidth ?? 0,
+          colorMapUrl: terrainData?.colorMapUrl,
+          heightMapUrl: terrainData?.heightMapUrl,
+          height: terrainData?.terrainHeight,
+          width: terrainData?.terrainWidth,
           canvasWidth: 200,
           canvasHeight: 200,
         };
+      }),
+      map((canvasData) => {
+        this.minimapCanvasData$.next(canvasData);
       })
     );
   }

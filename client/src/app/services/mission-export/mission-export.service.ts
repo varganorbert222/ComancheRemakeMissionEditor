@@ -7,7 +7,7 @@ import Mission from '../../interfaces/mission.interface';
 @Injectable({
   providedIn: 'root',
 })
-export default class MissionExportService {
+export class MissionExportService {
   constructor() {}
 
   exportMission(mission: Mission): Observable<ExportResult> {

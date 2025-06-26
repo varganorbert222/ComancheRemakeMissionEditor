@@ -4,7 +4,6 @@ import {
   ElementRef,
   HostListener,
   Input,
-  OnChanges,
   OnDestroy,
   OnInit,
   SimpleChanges,
@@ -12,7 +11,7 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import MapCanvasData from '../interfaces/map-canvas-data.interface';
+import { MapCanvasData } from '../interfaces/map-canvas-data.interface';
 import { RenderMode } from './enums/render-mode.enum';
 import { BehaviorSubject, interval, Subscription } from 'rxjs';
 import { CmCanvasComponent } from '../cm-canvas/cm-canvas.component';
@@ -23,9 +22,9 @@ import { CmCanvasComponent } from '../cm-canvas/cm-canvas.component';
   templateUrl: './map-canvas.component.html',
   styleUrl: './map-canvas.component.scss',
 })
-export default class MapCanvasComponent implements OnInit, OnDestroy {
-  // @ViewChild('canvas', { static: false })
-  // canvasRef!: ElementRef<HTMLCanvasElement>;
+export class MapCanvasComponent implements OnInit, OnDestroy, AfterViewInit {
+  @ViewChild('container', { static: false })
+  containerRef!: ElementRef<HTMLElement>;
 
   @Input() mapCanvasData?: MapCanvasData | null | undefined;
 
@@ -69,9 +68,9 @@ export default class MapCanvasComponent implements OnInit, OnDestroy {
     }
   }
 
-  // ngAfterViewInit(): void {
-  //   this.canvas = this.canvasRef.nativeElement!;
-  // }
+  ngAfterViewInit(): void {
+    this.resize();
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes) {
@@ -154,12 +153,37 @@ export default class MapCanvasComponent implements OnInit, OnDestroy {
   //   this.draw();
   // }
 
-  // private resize() {
-  //   if (this.ctx) {
-  //     this.ctx.canvas.width = 500;
-  //     this.ctx.canvas.height = 500;
+  private resizeCanvas(
+    elementRef: ElementRef<HTMLElement>,
+    width: number,
+    height: number
+  ) {
+    const canvasElement = elementRef.nativeElement;
 
-  //     this.draw();
-  //   }
-  // }
+    canvasElement.style.width = `${width}px`;
+    canvasElement.style.height = `${height}px`;
+  }
+
+  private resize() {
+    if (this.mapCanvasData) {
+      const { calcSizeFunc, canvasWidth, canvasHeight } = this.mapCanvasData;
+
+      if (calcSizeFunc) {
+        const { width, height } = calcSizeFunc();
+        this.resizeCanvas(this.containerRef, width, height);
+        return;
+      }
+
+      this.resizeCanvas(
+        this.containerRef,
+        canvasWidth ?? 100,
+        canvasHeight ?? 100
+      );
+    }
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event): void {
+    this.resize();
+  }
 }

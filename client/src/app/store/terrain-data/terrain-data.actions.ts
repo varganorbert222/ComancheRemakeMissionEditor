@@ -1,7 +1,7 @@
 import { createAction, props } from '@ngrx/store';
-import TerrainData from '../../services/terrain-data/interfaces/terrain-data.interface';
+import { TerrainData } from '../../services/terrain-data/interfaces/terrain-data.interface';
 
-export default class TerrainDataActions {
+export class TerrainDataActions {
   private static readonly actionsName: string = '[TerrainDataActions]';
 
   static readonly loadTerrainData = createAction(

@@ -1,6 +1,6 @@
 import { StatusEnum } from './status.enum';
 
-export default interface Status {
+export interface Status {
   status: StatusEnum;
   errorMessage?: string;
 }

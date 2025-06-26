@@ -3,6 +3,6 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root',
 })
-export default class MissionDataService {
+export class MissionDataService {
   constructor() {}
 }

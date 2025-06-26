@@ -1,4 +1,4 @@
-export default interface TerrainDataDto {
+export interface TerrainDataDto {
   name: string;
   colorMap: string;
   heightMap: string;

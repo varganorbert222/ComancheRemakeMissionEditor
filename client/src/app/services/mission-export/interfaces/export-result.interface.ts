@@ -1,4 +1,4 @@
-export default interface ExportResult {
+export interface ExportResult {
   success: boolean;
   message?: string;
 }

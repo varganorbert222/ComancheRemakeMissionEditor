@@ -1,8 +1,8 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import TerrainDataState from '../../interfaces/terrain-data-state.interface';
-import TerrainData from '../../services/terrain-data/interfaces/terrain-data.interface';
+import { TerrainDataState } from '../../interfaces/terrain-data-state.interface';
+import { TerrainData } from '../../services/terrain-data/interfaces/terrain-data.interface';
 
-export default class TerrainDataSelectors {
+export class TerrainDataSelectors {
   static readonly selectTerrainDataState =
     createFeatureSelector<TerrainDataState>('terrainData');
 
