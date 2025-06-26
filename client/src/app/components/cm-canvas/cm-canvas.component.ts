@@ -27,17 +27,24 @@ export class CmCanvasComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.ctx = this.canvas.nativeElement.getContext('2d')!;
-    this.ctx.fillStyle = 'green';
     this.resize();
   }
 
-  private draw() {
+  draw() {
     this.ctx.fillRect(
       0,
       0,
       this.canvas.nativeElement.width,
       this.canvas.nativeElement.height
     );
+  }
+
+  setFillStyle(fillStyle: string | CanvasGradient | CanvasPattern) {
+    this.ctx.fillStyle = fillStyle;
+  }
+
+  setImage(img: CanvasImageSource) {
+    this.setFillStyle(this.ctx.createPattern(img, 'repeat') as CanvasPattern);
   }
 
   private resizeCanvas(width: number, height: number) {

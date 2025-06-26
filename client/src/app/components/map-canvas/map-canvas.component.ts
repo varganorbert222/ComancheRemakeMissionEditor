@@ -26,6 +26,9 @@ export class MapCanvasComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('container', { static: false })
   containerRef!: ElementRef<HTMLElement>;
 
+  @ViewChild('cmcanvas', { static: false })
+  cmcanvas!: CmCanvasComponent;
+
   @Input() mapCanvasData?: MapCanvasData | null | undefined;
 
   isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
@@ -34,23 +37,58 @@ export class MapCanvasComponent implements OnInit, OnDestroy, AfterViewInit {
   private renderMode = RenderMode.COLORMAP;
   private img = new Image();
   private subscription!: Subscription;
-  // private canvas?: HTMLCanvasElement;
-  // private ctx?: CanvasRenderingContext2D;
-  // private offsetX = 0;
-  // private offsetY = 0;
-  // private scale = 1;
-  // private dragging = false;
-  // private lastMouseX = 0;
-  // private lastMouseY = 0;
+  private offsetX = 0;
+  private offsetY = 0;
+  private scale = 1;
+  private dragging = false;
+  private lastMouseX = 0;
+  private lastMouseY = 0;
 
   constructor() {}
 
+  private setCmCanvasImage(img: HTMLImageElement) {
+    if (this.cmcanvas) {
+      this.cmcanvas.setImage(img);
+    }
+  }
+
+  private resizeElement(
+    elementRef: ElementRef<HTMLElement>,
+    width: number,
+    height: number
+  ) {
+    const element = elementRef.nativeElement;
+
+    element.style.width = `${width}px`;
+    element.style.height = `${height}px`;
+  }
+
+  private resize() {
+    if (this.mapCanvasData) {
+      const { calcSizeFunc, canvasWidth, canvasHeight } = this.mapCanvasData;
+
+      if (calcSizeFunc) {
+        const { width, height } = calcSizeFunc();
+        this.resizeElement(this.containerRef, width, height);
+        return;
+      }
+
+      this.resizeElement(
+        this.containerRef,
+        canvasWidth ?? 100,
+        canvasHeight ?? 100
+      );
+    }
+  }
+
   ngOnInit() {
-    this.img.onload = (e: Event) => {
-      // this.initCanvas();
+    this.img.addEventListener('load', (e: Event) => {
+      this.setCmCanvasImage(this.img);
+      this.draw();
+
       this.isLoading$.next(false);
       this.hasData$.next(true);
-    };
+    });
 
     this.subscription = interval(3000).subscribe(() => {
       if (this.hasData$.getValue()) {
@@ -74,19 +112,9 @@ export class MapCanvasComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes) {
-      this.selectRenderMode(RenderMode.COLORMAP);
+      this.selectRenderMode(this.renderMode);
     }
   }
-
-  // private initCanvas() {
-  //   if (this.canvas) {
-  //     this.ctx = this.canvas.getContext('2d')!;
-  //     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-  //     this.ctx.fillStyle = this.ctx.createPattern(this.img, 'repeat')!;
-  //     this.resize();
-  //     this.draw();
-  //   }
-  // }
 
   selectRenderMode(renderMode: RenderMode) {
     this.renderMode = renderMode;
@@ -98,88 +126,62 @@ export class MapCanvasComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  // draw() {
-  //   if (this.ctx && this.canvas) {
-  //     this.ctx.setTransform(
-  //       this.scale,
-  //       0,
-  //       0,
-  //       this.scale,
-  //       this.offsetX,
-  //       this.offsetY
-  //     );
+  draw() {
+    if (this.cmcanvas) {
+      this.cmcanvas.draw();
+    }
+    // if (this.ctx && this.canvas) {
+    //   this.ctx.setTransform(
+    //     this.scale,
+    //     0,
+    //     0,
+    //     this.scale,
+    //     this.offsetX,
+    //     this.offsetY
+    //   );
 
-  //     this.ctx.fillRect(
-  //       -this.canvas.width,
-  //       -this.canvas.height,
-  //       this.canvas.width * 3,
-  //       this.canvas.height * 3
-  //     );
-  //   }
-  // }
-
-  // @HostListener('mousedown', ['$event'])
-  // onMouseDown(event: MouseEvent) {
-  //   if (event.button === 2) {
-  //     this.dragging = true;
-  //     this.lastMouseX = event.clientX;
-  //     this.lastMouseY = event.clientY;
-  //   }
-  // }
-
-  // @HostListener('mouseup')
-  // onMouseUp() {
-  //   this.dragging = false;
-  // }
-
-  // @HostListener('mousemove', ['$event'])
-  // onMouseMove(event: MouseEvent) {
-  //   if (this.dragging) {
-  //     const dx = event.clientX - this.lastMouseX;
-  //     const dy = event.clientY - this.lastMouseY;
-  //     this.offsetX += dx;
-  //     this.offsetY += dy;
-  //     this.lastMouseX = event.clientX;
-  //     this.lastMouseY = event.clientY;
-  //     this.draw();
-  //   }
-  // }
-
-  // @HostListener('wheel', ['$event'])
-  // onWheel(event: WheelEvent) {
-  //   const zoomFactor = 0.1;
-  //   this.scale += event.deltaY > 0 ? -zoomFactor : zoomFactor;
-  //   this.scale = Math.max(0.5, Math.min(3, this.scale)); // Limitáljuk a zoomot
-  //   this.draw();
-  // }
-
-  private resizeCanvas(
-    elementRef: ElementRef<HTMLElement>,
-    width: number,
-    height: number
-  ) {
-    const canvasElement = elementRef.nativeElement;
-
-    canvasElement.style.width = `${width}px`;
-    canvasElement.style.height = `${height}px`;
+    //   this.ctx.fillRect(
+    //     -this.canvas.width,
+    //     -this.canvas.height,
+    //     this.canvas.width * 3,
+    //     this.canvas.height * 3
+    //   );
+    // }
   }
 
-  private resize() {
-    if (this.mapCanvasData) {
-      const { calcSizeFunc, canvasWidth, canvasHeight } = this.mapCanvasData;
-
-      if (calcSizeFunc) {
-        const { width, height } = calcSizeFunc();
-        this.resizeCanvas(this.containerRef, width, height);
-        return;
-      }
-
-      this.resizeCanvas(
-        this.containerRef,
-        canvasWidth ?? 100,
-        canvasHeight ?? 100
-      );
+  @HostListener('mousedown', ['$event'])
+  onMouseDown(event: MouseEvent) {
+    if (event.button === 2) {
+      this.dragging = true;
+      this.lastMouseX = event.clientX;
+      this.lastMouseY = event.clientY;
     }
+  }
+
+  @HostListener('mouseup')
+  onMouseUp() {
+    this.dragging = false;
+  }
+
+  @HostListener('mousemove', ['$event'])
+  onMouseMove(event: MouseEvent) {
+    if (this.dragging) {
+      const dx = event.clientX - this.lastMouseX;
+      const dy = event.clientY - this.lastMouseY;
+      this.offsetX += dx;
+      this.offsetY += dy;
+      this.lastMouseX = event.clientX;
+      this.lastMouseY = event.clientY;
+      this.draw();
+    }
+  }
+
+  @HostListener('wheel', ['$event'])
+  onWheel(event: WheelEvent) {
+    const zoomFactor = 0.1;
+    this.scale += event.deltaY > 0 ? -zoomFactor : zoomFactor;
+    this.scale = Math.max(0.5, Math.min(3, this.scale));
+    this.draw();
   }
 
   @HostListener('window:resize', ['$event'])

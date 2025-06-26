@@ -6,6 +6,7 @@
   </div>
   <div [classList]="hasData && !isLoading ? 'd-flex' : 'd-none'">
     <app-cm-canvas
+      #cmcanvas
       [calcSizeFunc]="mapCanvasData?.calcSizeFunc"
       [width]="mapCanvasData?.canvasWidth"
       [height]="mapCanvasData?.canvasHeight"
