@@ -1,10 +1,10 @@
-@let isLoading = isLoading$ | async; @let hasData = hasData$ | async;
+@let isLoading = isLoading$ | async; @let imageIsLoaded = imageIsLoaded$ | async;
 
 <div #container class="container">
-  <div [classList]="isLoading && !hasData ? 'd-block' : 'd-none'">
+  <div [classList]="isLoading && !imageIsLoaded ? 'd-block' : 'd-none'">
     <mat-spinner [diameter]="50"></mat-spinner>
   </div>
-  <div [classList]="hasData && !isLoading ? 'd-flex' : 'd-none'">
+  <div [classList]="imageIsLoaded && !isLoading ? 'd-flex' : 'd-none'">
     <app-cm-canvas
       #cmcanvas
       [calcSizeFunc]="mapCanvasData?.calcSizeFunc"
@@ -12,7 +12,7 @@
       [height]="mapCanvasData?.canvasHeight"
     ></app-cm-canvas>
   </div>
-  <div [classList]="!hasData && !isLoading ? 'd-block' : 'd-none'">
+  <div [classList]="!imageIsLoaded && !isLoading ? 'd-block' : 'd-none'">
     <span>No map data.</span>
   </div>
 </div>

@@ -4,6 +4,7 @@ import {
   ElementRef,
   HostListener,
   Input,
+  OnChanges,
   OnDestroy,
   OnInit,
   SimpleChanges,
@@ -22,7 +23,9 @@ import { CmCanvasComponent } from '../cm-canvas/cm-canvas.component';
   templateUrl: './map-canvas.component.html',
   styleUrl: './map-canvas.component.scss',
 })
-export class MapCanvasComponent implements OnInit, OnDestroy, AfterViewInit {
+export class MapCanvasComponent
+  implements OnInit, OnDestroy, OnChanges, AfterViewInit
+{
   @ViewChild('container', { static: false })
   containerRef!: ElementRef<HTMLElement>;
 
@@ -31,10 +34,10 @@ export class MapCanvasComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @Input() mapCanvasData?: MapCanvasData | null | undefined;
 
-  isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
-  hasData$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  isLoading$ = new BehaviorSubject<boolean>(true);
+  imageIsLoaded$ = new BehaviorSubject<boolean>(false);
+  renderMode$ = new BehaviorSubject<RenderMode>(RenderMode.Empty);
 
-  private renderMode = RenderMode.Colormap;
   private img = new Image();
   private subscription!: Subscription;
   private offsetX = 0;
@@ -87,16 +90,30 @@ export class MapCanvasComponent implements OnInit, OnDestroy, AfterViewInit {
       this.draw();
 
       this.isLoading$.next(false);
-      this.hasData$.next(true);
+      this.imageIsLoaded$.next(true);
     });
 
     this.subscription = interval(3000).subscribe(() => {
-      if (this.hasData$.getValue()) {
+      if (this.imageIsLoaded$.getValue()) {
         return;
       }
       this.isLoading$.next(false);
-      this.hasData$.next(false);
+      this.imageIsLoaded$.next(false);
       this.subscription.unsubscribe();
+    });
+
+    this.renderMode$.subscribe((renderMode) => {
+      if (
+        this.mapCanvasData &&
+        this.mapCanvasData.colorMapUrl &&
+        this.mapCanvasData.heightMapUrl
+      ) {
+        if (renderMode === RenderMode.Colormap) {
+          this.img.src = this.mapCanvasData.colorMapUrl;
+        } else if (renderMode === RenderMode.Heightmap) {
+          this.img.src = this.mapCanvasData.heightMapUrl;
+        }
+      }
     });
   }
 
@@ -112,41 +129,22 @@ export class MapCanvasComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes) {
-      this.selectRenderMode(this.renderMode);
+      this.selectRenderMode(RenderMode.Colormap);
     }
   }
 
   selectRenderMode(renderMode: RenderMode) {
-    this.renderMode = renderMode;
-
-    if (this.renderMode === RenderMode.Colormap) {
-      this.img.src = this.mapCanvasData?.colorMapUrl!;
-    } else if (this.renderMode === RenderMode.Heightmap) {
-      this.img.src = this.mapCanvasData?.heightMapUrl!;
-    }
+    this.renderMode$.next(renderMode);
   }
 
   draw() {
     if (this.cmcanvas) {
-      this.cmcanvas.draw();
+      this.cmcanvas.draw({
+        scale: this.scale,
+        offsetX: this.offsetX,
+        offsetY: this.offsetY,
+      });
     }
-    // if (this.ctx && this.canvas) {
-    //   this.ctx.setTransform(
-    //     this.scale,
-    //     0,
-    //     0,
-    //     this.scale,
-    //     this.offsetX,
-    //     this.offsetY
-    //   );
-
-    //   this.ctx.fillRect(
-    //     -this.canvas.width,
-    //     -this.canvas.height,
-    //     this.canvas.width * 3,
-    //     this.canvas.height * 3
-    //   );
-    // }
   }
 
   @HostListener('mousedown', ['$event'])

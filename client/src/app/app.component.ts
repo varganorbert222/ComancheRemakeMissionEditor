@@ -78,40 +78,42 @@ export class AppComponent implements OnInit {
       TerrainDataSelectors.selectTerrainData('C1M1')
     );
 
-    this.terrainData$.pipe(
-      distinctUntilChanged(),
-      map((terrainData) => {
-        return {
-          renderMode: RenderMode.Colormap,
-          colorMapUrl: terrainData?.colorMapUrl,
-          heightMapUrl: terrainData?.heightMapUrl,
-          height: terrainData?.terrainHeight,
-          width: terrainData?.terrainWidth,
-          calcSizeFunc: this.canvasCalcSizeFunc,
-        };
-      }),
-      map((canvasData) => {
+    this.terrainData$
+      .pipe(
+        distinctUntilChanged(),
+        map((terrainData) => {
+          return {
+            renderMode: RenderMode.Colormap,
+            colorMapUrl: terrainData?.colorMapUrl,
+            heightMapUrl: terrainData?.heightMapUrl,
+            height: terrainData?.terrainHeight,
+            width: terrainData?.terrainWidth,
+            calcSizeFunc: this.canvasCalcSizeFunc,
+          };
+        })
+      )
+      .subscribe((canvasData) => {
         this.mapCanvasData$.next(canvasData);
-      })
-    );
+      });
 
-    this.terrainData$.pipe(
-      distinctUntilChanged(),
-      map((terrainData) => {
-        return {
-          renderMode: RenderMode.Colormap,
-          colorMapUrl: terrainData?.colorMapUrl,
-          heightMapUrl: terrainData?.heightMapUrl,
-          height: terrainData?.terrainHeight,
-          width: terrainData?.terrainWidth,
-          canvasWidth: 200,
-          canvasHeight: 200,
-        };
-      }),
-      map((canvasData) => {
+    this.terrainData$
+      .pipe(
+        distinctUntilChanged(),
+        map((terrainData) => {
+          return {
+            renderMode: RenderMode.Colormap,
+            colorMapUrl: terrainData?.colorMapUrl,
+            heightMapUrl: terrainData?.heightMapUrl,
+            height: terrainData?.terrainHeight,
+            width: terrainData?.terrainWidth,
+            canvasWidth: 200,
+            canvasHeight: 200,
+          };
+        })
+      )
+      .subscribe((canvasData) => {
         this.minimapCanvasData$.next(canvasData);
-      })
-    );
+      });
   }
 
   ngOnInit() {

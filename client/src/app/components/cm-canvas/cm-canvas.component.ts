@@ -22,6 +22,7 @@ export class CmCanvasComponent implements AfterViewInit {
   @Input() calcSizeFunc?: () => { width: number; height: number };
 
   private ctx!: CanvasRenderingContext2D;
+  private img!: CanvasImageSource;
 
   constructor() {}
 
@@ -30,21 +31,71 @@ export class CmCanvasComponent implements AfterViewInit {
     this.resize();
   }
 
-  draw() {
-    this.ctx.fillRect(
-      0,
-      0,
-      this.canvas.nativeElement.width,
-      this.canvas.nativeElement.height
-    );
-  }
+  draw(
+    transform: {
+      scale?: number;
+      offsetX?: number;
+      offsetY?: number;
+    } = {}
+  ) {
+    const canvas = this.canvas.nativeElement;
+    const ctx = this.ctx;
 
-  setFillStyle(fillStyle: string | CanvasGradient | CanvasPattern) {
-    this.ctx.fillStyle = fillStyle;
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    if (!this.img) return;
+
+    const imgEl = this.img as HTMLImageElement;
+
+    const scale = transform.scale ?? 1;
+    const panX = transform.offsetX ?? 0;
+    const panY = transform.offsetY ?? 0;
+
+    const pattern = ctx.createPattern(this.img, 'repeat');
+    if (!pattern) return;
+
+    ctx.fillStyle = pattern;
+
+    if (this.width && this.height) {
+      const scaleX = this.width / imgEl.width;
+      const scaleY = this.height / imgEl.height;
+      const baseScale = Math.min(scaleX, scaleY) * scale;
+
+      const offsetX = canvas.width / 2 + panX;
+      const offsetY = canvas.height / 2 + panY;
+
+      ctx.setTransform(baseScale, 0, 0, baseScale, offsetX, offsetY);
+
+      const fillW = canvas.width / baseScale;
+      const fillH = canvas.height / baseScale;
+
+      ctx.fillRect(-offsetX / baseScale, -offsetY / baseScale, fillW, fillH);
+    } else {
+      const imgWidth2 = imgEl.width / 2;
+      const imgHeight2 = imgEl.height / 2;
+
+      const offsetX = canvas.width / 2 + imgWidth2 + panX;
+      const offsetY = canvas.height / 2 + imgHeight2 + panY;
+
+      ctx.setTransform(scale, 0, 0, scale, offsetX, offsetY);
+
+      const fillW = canvas.width / scale;
+      const fillH = canvas.height / scale;
+
+      ctx.fillRect(-offsetX / scale, -offsetY / scale, fillW, fillH);
+    }
   }
 
   setImage(img: CanvasImageSource) {
-    this.setFillStyle(this.ctx.createPattern(img, 'repeat') as CanvasPattern);
+    this.img = img;
+
+    const canvasPattern = this.ctx.createPattern(
+      img,
+      'repeat'
+    ) as CanvasPattern;
+
+    this.ctx.fillStyle = canvasPattern;
   }
 
   private resizeCanvas(width: number, height: number) {
@@ -52,6 +103,10 @@ export class CmCanvasComponent implements AfterViewInit {
 
     canvasElement.width = width;
     canvasElement.height = height;
+
+    if (this.img) {
+      this.setImage(this.img);
+    }
 
     this.draw();
   }
