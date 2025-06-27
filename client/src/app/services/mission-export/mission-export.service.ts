@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { saveAs } from 'file-saver';
-import ExportResult from './interfaces/export-result.interface';
-import Mission from '../../interfaces/mission.interface';
+import { ExportResult } from './interfaces/export-result.interface';
+import { Mission } from '../../interfaces/mission.interface';
 
 @Injectable({
   providedIn: 'root',

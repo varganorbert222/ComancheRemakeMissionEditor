@@ -82,7 +82,7 @@ export class AppComponent implements OnInit {
       distinctUntilChanged(),
       map((terrainData) => {
         return {
-          renderMode: RenderMode.COLORMAP,
+          renderMode: RenderMode.Colormap,
           colorMapUrl: terrainData?.colorMapUrl,
           heightMapUrl: terrainData?.heightMapUrl,
           height: terrainData?.terrainHeight,
@@ -99,7 +99,7 @@ export class AppComponent implements OnInit {
       distinctUntilChanged(),
       map((terrainData) => {
         return {
-          renderMode: RenderMode.COLORMAP,
+          renderMode: RenderMode.Colormap,
           colorMapUrl: terrainData?.colorMapUrl,
           heightMapUrl: terrainData?.heightMapUrl,
           height: terrainData?.terrainHeight,
@@ -131,7 +131,7 @@ export class AppComponent implements OnInit {
   }
 
   onThemeModeChanged(mode: ThemeMode) {
-    if (mode === ThemeMode.DARK) {
+    if (mode === ThemeMode.Dark) {
       this.setBodyClass('dark-mode');
     } else {
       this.removeBodyClass('dark-mode');

@@ -1,5 +1,5 @@
 export enum TerrainType {
-  DESERT = 'DESERT',
-  GREEN = 'GREEN',
-  SNOW = 'SNOW',
+  Desert = 'DESERT',
+  Green = 'GREEN',
+  Snow = 'SNOW',
 }

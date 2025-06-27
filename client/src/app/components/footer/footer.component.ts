@@ -15,18 +15,18 @@ export class FooterComponent {
   now: number = new Date().getFullYear();
   title: string = 'Comanche Remake Mission Editor';
   owner: string = 'varganorbert222';
-  themeMode: ThemeMode = ThemeMode.LIGHT;
+  themeMode: ThemeMode = ThemeMode.Light;
   nextThemeMode$: BehaviorSubject<ThemeMode> = new BehaviorSubject<ThemeMode>(
-    ThemeMode.DARK
+    ThemeMode.Dark
   );
 
   onThemeModeClick(event: Event) {
-    if (this.themeMode === ThemeMode.LIGHT) {
-      this.themeMode = ThemeMode.DARK;
-      this.nextThemeMode$.next(ThemeMode.LIGHT);
+    if (this.themeMode === ThemeMode.Light) {
+      this.themeMode = ThemeMode.Dark;
+      this.nextThemeMode$.next(ThemeMode.Light);
     } else {
-      this.themeMode = ThemeMode.LIGHT;
-      this.nextThemeMode$.next(ThemeMode.DARK);
+      this.themeMode = ThemeMode.Light;
+      this.nextThemeMode$.next(ThemeMode.Dark);
     }
     this.onThemeModeChanged.emit(this.themeMode);
   }

@@ -34,7 +34,7 @@ export class MapCanvasComponent implements OnInit, OnDestroy, AfterViewInit {
   isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   hasData$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  private renderMode = RenderMode.COLORMAP;
+  private renderMode = RenderMode.Colormap;
   private img = new Image();
   private subscription!: Subscription;
   private offsetX = 0;
@@ -119,9 +119,9 @@ export class MapCanvasComponent implements OnInit, OnDestroy, AfterViewInit {
   selectRenderMode(renderMode: RenderMode) {
     this.renderMode = renderMode;
 
-    if (this.renderMode === RenderMode.COLORMAP) {
+    if (this.renderMode === RenderMode.Colormap) {
       this.img.src = this.mapCanvasData?.colorMapUrl!;
-    } else if (this.renderMode === RenderMode.HEIGHTMAP) {
+    } else if (this.renderMode === RenderMode.Heightmap) {
       this.img.src = this.mapCanvasData?.heightMapUrl!;
     }
   }

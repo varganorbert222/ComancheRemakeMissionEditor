@@ -7,7 +7,7 @@ export class TerrainDataReducer {
   static readonly initialState: TerrainDataState = {
     data: [],
     status: {
-      status: StatusEnum.PENDING,
+      status: StatusEnum.Pending,
       errorMessage: '',
     },
   };
@@ -17,20 +17,20 @@ export class TerrainDataReducer {
 
     on(TerrainDataActions.loadTerrainData, (state) => ({
       ...state,
-      status: { ...state.status, status: StatusEnum.LOADING, errorMessage: '' },
+      status: { ...state.status, status: StatusEnum.Loading, errorMessage: '' },
     })),
 
     on(TerrainDataActions.loadTerrainDataSuccess, (state, { data }) => ({
       ...state,
       data: data,
-      status: { ...state.status, status: StatusEnum.SUCCESS, errorMessage: '' },
+      status: { ...state.status, status: StatusEnum.Success, errorMessage: '' },
     })),
 
     on(TerrainDataActions.loadTerrainDataFailure, (state, { error }) => ({
       ...state,
       status: {
         ...state.status,
-        status: StatusEnum.ERROR,
+        status: StatusEnum.Error,
         errorMessage: error,
       },
     }))
