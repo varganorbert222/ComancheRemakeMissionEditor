@@ -1,5 +1,5 @@
 export enum MenuItemType {
-  SEPARATOR = 'separator',
-  ITEM = 'item',
-  TOGGLE = 'toggle',
+  Separator = "separator",
+  Item = "item",
+  Toggle = "toggle",
 }

@@ -3,7 +3,7 @@
 </div>
 <div class="items">
   @for (menuItem of menuData; track $index) { @if (menuItem.type ===
-  MenuItemType.TOGGLE) {
+  MenuItemType.Toggle) {
   <mat-slide-toggle
     class="toggle"
     labelPosition="after"
@@ -12,7 +12,7 @@
     [matTooltip]="menuItem.tooltip"
     ><span class="toggle-label">{{ menuItem.label }}</span></mat-slide-toggle
   >
-  } @else if (menuItem.type === MenuItemType.SEPARATOR) {
+  } @else if (menuItem.type === MenuItemType.Separator) {
   <div class="separator-vertical"></div>
   } @else {
   <app-cm-button

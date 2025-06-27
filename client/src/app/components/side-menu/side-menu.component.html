@@ -5,11 +5,11 @@
   </mat-expansion-panel-header>
   @for (menuItem of menuSection.items; track $index) {
   <div class="item">
-    @if (menuItem.type === MenuItemType.SEPARATOR) {
+    @if (menuItem.type === MenuItemType.Separator) {
     <div class="separator">
       <mat-divider></mat-divider>
     </div>
-    } @else if (menuItem.type === MenuItemType.TOGGLE) {
+    } @else if (menuItem.type === MenuItemType.Toggle) {
     <mat-slide-toggle
       class="toggle"
       labelPosition="after"
