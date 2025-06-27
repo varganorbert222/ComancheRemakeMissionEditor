@@ -1,6 +1,7 @@
 import {
   Component,
   CUSTOM_ELEMENTS_SCHEMA,
+  HostListener,
   OnInit,
   Renderer2,
 } from '@angular/core';
@@ -138,5 +139,11 @@ export class AppComponent implements OnInit {
     } else {
       this.removeBodyClass('dark-mode');
     }
+  }
+
+  @HostListener('window:contextmenu', ['$event'])
+  onContextmenu(event: Event): void {
+    event.preventDefault();
+    event.stopPropagation();
   }
 }

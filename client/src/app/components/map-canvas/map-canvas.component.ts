@@ -15,11 +15,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MapCanvasData } from '../interfaces/map-canvas-data.interface';
 import { RenderMode } from './enums/render-mode.enum';
 import { BehaviorSubject, interval, Subscription } from 'rxjs';
-import { CmCanvasComponent } from '../cm-canvas/cm-canvas.component';
+import { PanZoomCanvasComponent } from '../pan-zoom-canvas/pan-zoom-canvas.component';
 
 @Component({
   selector: 'app-map-canvas',
-  imports: [MatProgressSpinnerModule, CommonModule, CmCanvasComponent],
+  imports: [MatProgressSpinnerModule, CommonModule, PanZoomCanvasComponent],
   templateUrl: './map-canvas.component.html',
   styleUrl: './map-canvas.component.scss',
 })
@@ -29,8 +29,8 @@ export class MapCanvasComponent
   @ViewChild('container', { static: false })
   containerRef!: ElementRef<HTMLElement>;
 
-  @ViewChild('cmcanvas', { static: false })
-  cmcanvas!: CmCanvasComponent;
+  @ViewChild('canvas', { static: false })
+  cmcanvas!: PanZoomCanvasComponent;
 
   @Input() mapCanvasData?: MapCanvasData | null | undefined;
 
@@ -40,14 +40,6 @@ export class MapCanvasComponent
 
   private img = new Image();
   private subscription!: Subscription;
-  private offsetX = 0;
-  private offsetY = 0;
-  private scale = 1;
-  private dragging = false;
-  private lastMouseX = 0;
-  private lastMouseY = 0;
-
-  constructor() {}
 
   private setCmCanvasImage(img: HTMLImageElement) {
     if (this.cmcanvas) {
@@ -139,47 +131,8 @@ export class MapCanvasComponent
 
   draw() {
     if (this.cmcanvas) {
-      this.cmcanvas.draw({
-        scale: this.scale,
-        offsetX: this.offsetX,
-        offsetY: this.offsetY,
-      });
+      this.cmcanvas.draw();
     }
-  }
-
-  @HostListener('mousedown', ['$event'])
-  onMouseDown(event: MouseEvent) {
-    if (event.button === 2) {
-      this.dragging = true;
-      this.lastMouseX = event.clientX;
-      this.lastMouseY = event.clientY;
-    }
-  }
-
-  @HostListener('mouseup')
-  onMouseUp() {
-    this.dragging = false;
-  }
-
-  @HostListener('mousemove', ['$event'])
-  onMouseMove(event: MouseEvent) {
-    if (this.dragging) {
-      const dx = event.clientX - this.lastMouseX;
-      const dy = event.clientY - this.lastMouseY;
-      this.offsetX += dx;
-      this.offsetY += dy;
-      this.lastMouseX = event.clientX;
-      this.lastMouseY = event.clientY;
-      this.draw();
-    }
-  }
-
-  @HostListener('wheel', ['$event'])
-  onWheel(event: WheelEvent) {
-    const zoomFactor = 0.1;
-    this.scale += event.deltaY > 0 ? -zoomFactor : zoomFactor;
-    this.scale = Math.max(0.5, Math.min(3, this.scale));
-    this.draw();
   }
 
   @HostListener('window:resize', ['$event'])

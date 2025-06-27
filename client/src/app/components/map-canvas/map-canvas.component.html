@@ -1,16 +1,17 @@
-@let isLoading = isLoading$ | async; @let imageIsLoaded = imageIsLoaded$ | async;
+@let isLoading = isLoading$ | async; @let imageIsLoaded = imageIsLoaded$ |
+async;
 
 <div #container class="container">
   <div [classList]="isLoading && !imageIsLoaded ? 'd-block' : 'd-none'">
     <mat-spinner [diameter]="50"></mat-spinner>
   </div>
   <div [classList]="imageIsLoaded && !isLoading ? 'd-flex' : 'd-none'">
-    <app-cm-canvas
-      #cmcanvas
+    <app-pan-zoom-canvas
+      #canvas
       [calcSizeFunc]="mapCanvasData?.calcSizeFunc"
       [width]="mapCanvasData?.canvasWidth"
       [height]="mapCanvasData?.canvasHeight"
-    ></app-cm-canvas>
+    ></app-pan-zoom-canvas>
   </div>
   <div [classList]="!imageIsLoaded && !isLoading ? 'd-block' : 'd-none'">
     <span>No map data.</span>
