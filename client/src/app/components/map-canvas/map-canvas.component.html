@@ -11,6 +11,7 @@ async;
       [calcSizeFunc]="mapCanvasData?.calcSizeFunc"
       [width]="mapCanvasData?.canvasWidth"
       [height]="mapCanvasData?.canvasHeight"
+      [disableMouseEvents]="disableMouseEvents"
     ></app-pan-zoom-canvas>
   </div>
   <div [classList]="!imageIsLoaded && !isLoading ? 'd-block' : 'd-none'">

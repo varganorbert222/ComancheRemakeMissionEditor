@@ -28,11 +28,11 @@ export class MapCanvasComponent
 {
   @ViewChild('container', { static: false })
   containerRef!: ElementRef<HTMLElement>;
-
   @ViewChild('canvas', { static: false })
   cmcanvas!: PanZoomCanvasComponent;
 
   @Input() mapCanvasData?: MapCanvasData | null | undefined;
+  @Input() disableMouseEvents?: boolean = false;
 
   isLoading$ = new BehaviorSubject<boolean>(true);
   imageIsLoaded$ = new BehaviorSubject<boolean>(false);

@@ -18,10 +18,13 @@ export class PanZoomCanvasComponent implements AfterViewInit {
 
   @Input() width?: number;
   @Input() height?: number;
+  @Input() disableMouseEvents?: boolean = false;
   @Input() calcSizeFunc?: () => { width: number; height: number };
 
   private img!: CanvasImageSource;
   private ctx!: CanvasRenderingContext2D;
+  private cachedPattern?: CanvasPattern;
+
   private scale: number = 1;
   private wx: number = 0;
   private wy: number = 0;
@@ -41,6 +44,12 @@ export class PanZoomCanvasComponent implements AfterViewInit {
     this.resize();
   }
 
+  private applyTransform(ctx: CanvasRenderingContext2D): void {
+    const dx = this.sx - this.scale * this.wx;
+    const dy = this.sy - this.scale * this.wy;
+    ctx.setTransform(this.scale, 0, 0, this.scale, dx, dy);
+  }
+
   private zoomedXInv(screenX: number): number {
     return (screenX - this.sx) / this.scale + this.wx;
   }
@@ -52,22 +61,17 @@ export class PanZoomCanvasComponent implements AfterViewInit {
   draw(): void {
     const canvas = this.canvasRef.nativeElement;
     const ctx = this.ctx;
-
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.imageSmoothingEnabled = false;
 
     if (!this.img) return;
-    const img = this.img as HTMLImageElement;
+    if (!this.cachedPattern) {
+      const pattern = ctx.createPattern(this.img, 'repeat');
+      if (!pattern) return;
+      this.cachedPattern = pattern;
+      ctx.fillStyle = this.cachedPattern;
+    }
 
-    const pattern = ctx.createPattern(img, 'repeat');
-    if (!pattern) return;
-    ctx.fillStyle = pattern;
-
-    // Transzformációs mátrix alkalmazása
-    const dx = this.sx - this.scale * this.wx;
-    const dy = this.sy - this.scale * this.wy;
-    ctx.setTransform(this.scale, 0, 0, this.scale, dx, dy);
+    this.applyTransform(ctx);
 
     // Nézetméret világkoordinátában
     const viewWidth = canvas.width / this.scale;
@@ -89,39 +93,31 @@ export class PanZoomCanvasComponent implements AfterViewInit {
 
   setImage(img: CanvasImageSource) {
     this.img = img;
+    this.cachedPattern = undefined;
 
     const canvas = this.canvasRef.nativeElement;
-    const ctx = this.ctx;
     const image = img as HTMLImageElement;
 
-    // 1. Kiszámoljuk a skálát, hogy a kép pontosan kitöltse a canvas-t
     const scaleX = canvas.width / image.naturalWidth;
     const scaleY = canvas.height / image.naturalHeight;
-    this.scale = Math.min(scaleX, scaleY); // arányosan kitölt
+    this.scale = Math.min(scaleX, scaleY);
 
-    // 2. A kép világközéppontját állítjuk középre
     this.wx = image.naturalWidth / 2;
     this.wy = image.naturalHeight / 2;
 
-    // 3. A képernyő középpont a canvas közepe legyen
     this.sx = canvas.width / 2;
     this.sy = canvas.height / 2;
-
-    // 4. Frissítjük a mintázatot
-    const canvasPattern = ctx.createPattern(image, 'repeat');
-    if (canvasPattern) ctx.fillStyle = canvasPattern;
 
     this.draw();
   }
 
   private resizeCanvas(width: number, height: number) {
     const canvasElement = this.canvasRef.nativeElement;
-
     canvasElement.width = width;
     canvasElement.height = height;
 
     if (this.img) {
-      this.setImage(this.img);
+      this.setImage(this.img); // újraszámolja a scale-t és redraw
     }
 
     this.draw();
@@ -131,27 +127,27 @@ export class PanZoomCanvasComponent implements AfterViewInit {
     if (this.calcSizeFunc) {
       const { width, height } = this.calcSizeFunc();
       this.resizeCanvas(width, height);
-      return;
+    } else {
+      this.resizeCanvas(this.width ?? 100, this.height ?? 100);
     }
-    this.resizeCanvas(this.width ?? 100, this.height ?? 100);
   }
 
   @HostListener('wheel', ['$event'])
   onWheel(event: WheelEvent) {
+    if (this.disableMouseEvents) {
+      return;
+    }
+
     const canvas = this.canvasRef.nativeElement;
     const bounds = canvas.getBoundingClientRect();
-
     this.mouse.x = event.clientX - bounds.left;
     this.mouse.y = event.clientY - bounds.top;
 
-    // Frissítjük az aktuális világkoordinátákat
     this.mouse.rx = this.zoomedXInv(this.mouse.x);
     this.mouse.ry = this.zoomedYInv(this.mouse.y);
 
-    // Zoom logika
     const zoomFactor = event.deltaY < 0 ? 1.1 : 1 / 1.1;
-    const newScale = this.scale * zoomFactor;
-    this.scale = Math.max(0.1, Math.min(10, newScale));
+    this.scale = Math.max(0.1, Math.min(10, this.scale * zoomFactor));
 
     this.wx = this.mouse.rx;
     this.wy = this.mouse.ry;
@@ -167,6 +163,9 @@ export class PanZoomCanvasComponent implements AfterViewInit {
 
   @HostListener('mousedown', ['$event'])
   onMouseDown(event: MouseEvent) {
+    if (this.disableMouseEvents) {
+      return;
+    }
     this.mouse.down = true;
     this.updateMousePosition(event);
   }
@@ -174,12 +173,17 @@ export class PanZoomCanvasComponent implements AfterViewInit {
   @HostListener('mouseup')
   @HostListener('mouseleave')
   onMouseUp() {
+    if (this.disableMouseEvents) {
+      return;
+    }
     this.mouse.down = false;
   }
 
   @HostListener('mousemove', ['$event'])
   onMouseMove(event: MouseEvent) {
-    if (!this.mouse.down) return;
+    if (this.disableMouseEvents || !this.mouse.down) {
+      return;
+    }
 
     const lastRx = this.mouse.rx;
     const lastRy = this.mouse.ry;
@@ -196,7 +200,7 @@ export class PanZoomCanvasComponent implements AfterViewInit {
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event: Event): void {
+  onResize(_: Event): void {
     this.resize();
   }
 }
