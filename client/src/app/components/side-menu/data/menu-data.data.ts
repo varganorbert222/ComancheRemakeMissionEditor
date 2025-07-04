@@ -1,3 +1,5 @@
+import { PreferenceIds } from '../../../enums/preference-ids.enum';
+import { SideMenuSectionIds } from '../../../enums/side-menu-section-ids.enum';
 import { MenuItemType } from '../../enums/menu-item-type.enum';
 import { MenuItem } from '../../interfaces/menu-item.interface';
 import { SideMenuSection } from '../interfaces/side-menu-section.interface';
@@ -118,9 +120,11 @@ export const SideMenuSectionsData: SideMenuSection[] = [
     ],
   },
   {
+    id: SideMenuSectionIds.Preferences,
     title: 'Preferences',
     items: [
       {
+        id: PreferenceIds.ShowAllObjects,
         icon: '',
         label: 'Show all objects',
         tooltip: 'Display all kinds of objects',
@@ -128,6 +132,7 @@ export const SideMenuSectionsData: SideMenuSection[] = [
         type: MenuItemType.Toggle,
       },
       {
+        id: PreferenceIds.ShowStatic,
         icon: '',
         label: 'Show static',
         tooltip: 'Show only buildings and non-moving targets',
@@ -135,6 +140,7 @@ export const SideMenuSectionsData: SideMenuSection[] = [
         type: MenuItemType.Toggle,
       },
       {
+        id: PreferenceIds.ShowLandVehicles,
         icon: '',
         label: 'Show land vehicles',
         tooltip: 'Show ground vehicles only',
@@ -142,6 +148,7 @@ export const SideMenuSectionsData: SideMenuSection[] = [
         type: MenuItemType.Toggle,
       },
       {
+        id: PreferenceIds.ShowAircrafts,
         icon: '',
         label: 'Show aircrafts',
         tooltip: 'Display fixed-wing aircrafts on the map',
@@ -149,6 +156,7 @@ export const SideMenuSectionsData: SideMenuSection[] = [
         type: MenuItemType.Toggle,
       },
       {
+        id: PreferenceIds.ShowGoals,
         icon: '',
         label: 'Show goals',
         tooltip: 'Display of objectives required to complete the mission',
@@ -156,6 +164,7 @@ export const SideMenuSectionsData: SideMenuSection[] = [
         type: MenuItemType.Toggle,
       },
       {
+        id: PreferenceIds.ShowWaypoints,
         icon: '',
         label: 'Show waypoints',
         tooltip: 'Displaying player and AI routes',
@@ -166,6 +175,7 @@ export const SideMenuSectionsData: SideMenuSection[] = [
         type: MenuItemType.Separator,
       },
       {
+        id: PreferenceIds.ShowEntireWorld,
         icon: '',
         label: 'Show entire world',
         tooltip: 'Show the entire playing area',
@@ -173,6 +183,7 @@ export const SideMenuSectionsData: SideMenuSection[] = [
         type: MenuItemType.Toggle,
       },
       {
+        id: PreferenceIds.ShowCoordsInMeters,
         icon: '',
         label: 'Show coords in meters',
         tooltip: 'The cursor coordinates are shown in meters',
@@ -180,6 +191,7 @@ export const SideMenuSectionsData: SideMenuSection[] = [
         type: MenuItemType.Toggle,
       },
       {
+        id: PreferenceIds.ShowDistanceBar,
         icon: '',
         label: 'Show distance bar',
         tooltip: 'We show the reference distance with a measuring bar',
@@ -187,6 +199,7 @@ export const SideMenuSectionsData: SideMenuSection[] = [
         type: MenuItemType.Toggle,
       },
       {
+        id: PreferenceIds.ShowTrueDirection,
         icon: '',
         label: 'Show true direction',
         tooltip: 'Displaying the orientation of objects',
@@ -194,6 +207,7 @@ export const SideMenuSectionsData: SideMenuSection[] = [
         type: MenuItemType.Toggle,
       },
       {
+        id: PreferenceIds.ShowZoomSpot,
         icon: '',
         label: 'Show zoom spot',
         tooltip:

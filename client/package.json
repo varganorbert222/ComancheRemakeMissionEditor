@@ -4,9 +4,10 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "npm run check:menu-ids && ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "check:menu-ids": "npx ts-node scripts/check-duplicate-menu-ids.ts"
   },
   "private": true,
   "dependencies": {

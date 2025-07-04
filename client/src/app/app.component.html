@@ -4,7 +4,7 @@
   </header>
 
   <aside class="sidebar">
-    <app-side-menu></app-side-menu>
+    <app-side-menu [sideMenuData]="sideMenuData$ | async"></app-side-menu>
   </aside>
 
   <main class="map-area">

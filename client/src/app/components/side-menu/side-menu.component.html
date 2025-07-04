@@ -1,4 +1,4 @@
-@for (menuSection of menuSections; track $index) {
+@for (menuSection of sideMenuData?.sections; track $index) {
 <mat-expansion-panel class="panel">
   <mat-expansion-panel-header>
     <mat-panel-title>{{ menuSection.title }}</mat-panel-title>
@@ -13,7 +13,7 @@
     <mat-slide-toggle
       class="toggle"
       labelPosition="after"
-      [checked]="true"
+      [checked]="sideMenuData?.values?.[menuItem?.id ?? 'unknown_id'] ?? true"
       [disabled]="false"
       [matTooltip]="menuItem.tooltip"
       ><span class="toggle-label">{{ menuItem.label }}</span></mat-slide-toggle

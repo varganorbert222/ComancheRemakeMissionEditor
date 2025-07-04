@@ -1,6 +1,4 @@
-import { Component } from '@angular/core';
-import { SideMenuSection } from './interfaces/side-menu-section.interface';
-import { SideMenuSectionsData } from './data/menu-data.data';
+import { Component, Input } from '@angular/core';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -8,6 +6,7 @@ import { MenuItemType } from '../enums/menu-item-type.enum';
 import { MenuItem } from '../interfaces/menu-item.interface';
 import { CmButtonComponent } from '../cm-button/cm-button.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { SideMenuData } from './interfaces/side-menu-data.interface';
 
 @Component({
   selector: 'app-side-menu',
@@ -24,7 +23,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 export class SideMenuComponent {
   MenuItemType = MenuItemType;
 
-  menuSections: SideMenuSection[] = SideMenuSectionsData;
+  @Input() sideMenuData?: SideMenuData | undefined | null;
+
   isSidebarOpen = true;
 
   onMenuSectionButtonClick(item: MenuItem): void {

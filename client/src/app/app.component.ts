@@ -19,6 +19,10 @@ import { FooterComponent } from './components/footer/footer.component';
 import { ThemeMode } from './enums/theme-mode.enum';
 import { InspectorComponent } from './components/inspector/inspector.component';
 import { CommonModule } from '@angular/common';
+import { SideMenuData } from './components/side-menu/interfaces/side-menu-data.interface';
+import { PreferencesSelectors } from './store/preferences/preferences.selectors';
+import { SideMenuSectionsData } from './components/side-menu/data/menu-data.data';
+import { Preferences } from './interfaces/preferences.interface';
 
 @Component({
   selector: 'app-root',
@@ -60,6 +64,8 @@ export class AppComponent implements OnInit {
     };
   };
 
+  sideMenuData$: Observable<SideMenuData | undefined>;
+
   terrainData$: Observable<TerrainData | undefined>;
 
   mapCanvasData$ = new BehaviorSubject<MapCanvasData>({
@@ -75,6 +81,17 @@ export class AppComponent implements OnInit {
     private readonly store: Store<{ terrainData: TerrainData }>,
     private readonly renderer: Renderer2
   ) {
+    this.sideMenuData$ = this.store
+      .select(PreferencesSelectors.selectPreferences)
+      .pipe(
+        map((preferences: Preferences) => {
+          return {
+            sections: SideMenuSectionsData,
+            values: preferences,
+          };
+        })
+      );
+
     this.terrainData$ = this.store.select(
       TerrainDataSelectors.selectTerrainData('C1M1')
     );

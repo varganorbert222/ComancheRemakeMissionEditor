@@ -1,4 +1,4 @@
-import MissionObject from './mission-object.interface';
+import { MissionObject } from './mission-object.interface';
 
 export interface Mission {
   mapName: string;

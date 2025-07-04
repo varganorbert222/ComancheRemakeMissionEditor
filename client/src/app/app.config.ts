@@ -6,14 +6,21 @@ import { provideEffects } from '@ngrx/effects';
 import { provideHttpClient } from '@angular/common/http';
 import { TerrainDataReducer } from './store/terrain-data/terrain-data.reducer';
 import { TerrainDataEffects } from './store/terrain-data/terrain-data.effects';
+import { PreferencesEffects } from './store/preferences/preferences.effects';
+import { PreferencesReducer } from './store/preferences/preferences.reducer';
+
+const appStateProviders = [
+  provideState('terrainData', TerrainDataReducer.terrainDataReducer),
+  provideState('preferences', PreferencesReducer.preferencesReducer),
+];
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideStore(),
-    provideState('terrainData', TerrainDataReducer.terrainDataReducer),
-    provideEffects(TerrainDataEffects),
     provideHttpClient(),
+    provideEffects([TerrainDataEffects, PreferencesEffects]),
+    ...appStateProviders,
   ],
 };
