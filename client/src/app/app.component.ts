@@ -32,6 +32,8 @@ import { ToolbarData } from './components/toolbar/interfaces/toolbar-data.interf
 import { ToolbarMenuData } from './components/toolbar/data/toolbar-data.data';
 import { MenuItemIds } from './enums/menu-item-ids.enum';
 import { MiniMapComponent } from './components/mini-map/mini-map.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -43,6 +45,7 @@ import { MiniMapComponent } from './components/mini-map/mini-map.component';
     FooterComponent,
     InspectorComponent,
     MiniMapComponent,
+    TranslateModule,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
@@ -53,8 +56,6 @@ export class AppComponent implements OnInit, AfterViewInit {
   mapCanvases?: QueryList<MapCanvasComponent>;
 
   ThemeMode = ThemeMode;
-
-  title = 'Mission Editor';
 
   private canvasCalcSizeFunc = (): { width: number; height: number } => {
     const sidebarWidth = document
@@ -104,8 +105,11 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   constructor(
     private readonly store: Store<{ terrainData: TerrainData }>,
-    private readonly renderer: Renderer2
+    private readonly renderer: Renderer2,
+    private translate: TranslateService
   ) {
+    this.initLanguage();
+
     this.sideMenuData$ = this.store
       .select(PreferencesSelectors.selectPreferences)
       .pipe(
@@ -160,6 +164,9 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.translate.get('editor-title').subscribe((text) => {
+      this.setDocTitle(text);
+    });
     this.loadAppData();
   }
 
@@ -172,12 +179,24 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.store.dispatch(PreferencesActions.loadPreferences());
   }
 
+  private initLanguage() {
+    const osLang = navigator.language.substring(0, 2) || 'en';
+
+    this.translate.addLangs(['en', 'hu']);
+    this.translate.setDefaultLang(osLang);
+    this.translate.use(osLang);
+  }
+
   private setBodyClass(className: string) {
     this.renderer.addClass(document.body, className);
   }
 
   private removeBodyClass(className: string) {
     this.renderer.removeClass(document.body, className);
+  }
+
+  private setDocTitle(title: string) {
+    document.getElementsByTagName('title')[0].textContent = title;
   }
 
   private setRenderMode(isDepthMap: boolean) {

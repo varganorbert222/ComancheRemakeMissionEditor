@@ -9,6 +9,7 @@ import {
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ToolbarData } from './interfaces/toolbar-data.interface';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-toolbar',
@@ -17,6 +18,7 @@ import { ToolbarData } from './interfaces/toolbar-data.interface';
     MatSlideToggleModule,
     MatDividerModule,
     MatTooltipModule,
+    TranslateModule,
   ],
   templateUrl: './toolbar.component.html',
   styleUrl: './toolbar.component.scss',
@@ -32,8 +34,6 @@ export class ToolbarComponent {
   }>();
 
   MenuItemType = MenuItemType;
-
-  title = 'Mission Editor';
 
   onButtonClick(item: MenuItem) {
     this.onToolbarButtonClick.emit({ item: item });
