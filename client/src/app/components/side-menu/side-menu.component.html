@@ -16,6 +16,7 @@
       [checked]="sideMenuData?.values?.[menuItem?.id ?? 'unknown_id'] ?? true"
       [disabled]="false"
       [matTooltip]="menuItem.tooltip"
+      (change)="onToggleChange($event, menuItem)"
       ><span class="toggle-label">{{ menuItem.label }}</span></mat-slide-toggle
     >} @else {
     <app-cm-button
@@ -23,7 +24,7 @@
       [icon]="menuItem.icon"
       [shortcut]="menuItem.shortcut"
       [tooltip]="menuItem.tooltip"
-      (onClick)="onMenuSectionButtonClick(menuItem)"
+      (onClick)="onButtonClick(menuItem)"
       [width]="'100%'"
     ></app-cm-button>
     }

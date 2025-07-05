@@ -8,7 +8,7 @@ import {
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
 import { MapCanvasComponent } from './components/map-canvas/map-canvas.component';
-import { BehaviorSubject, distinctUntilChanged, map, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { TerrainDataActions } from './store/terrain-data/terrain-data.actions';
 import { TerrainData } from './services/terrain-data/interfaces/terrain-data.interface';
@@ -23,6 +23,8 @@ import { SideMenuData } from './components/side-menu/interfaces/side-menu-data.i
 import { PreferencesSelectors } from './store/preferences/preferences.selectors';
 import { SideMenuSectionsData } from './components/side-menu/data/menu-data.data';
 import { Preferences } from './interfaces/preferences.interface';
+import { MenuItem } from './components/interfaces/menu-item.interface';
+import { PreferencesActions } from './store/preferences/preferences.actions';
 
 @Component({
   selector: 'app-root',
@@ -39,6 +41,8 @@ import { Preferences } from './interfaces/preferences.interface';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppComponent implements OnInit {
+  ThemeMode = ThemeMode;
+
   title = 'Mission Editor';
 
   private canvasCalcSizeFunc = (): { width: number; height: number } => {
@@ -63,6 +67,8 @@ export class AppComponent implements OnInit {
       height: height,
     };
   };
+
+  themeMode$: Observable<ThemeMode>;
 
   sideMenuData$: Observable<SideMenuData | undefined>;
 
@@ -98,7 +104,6 @@ export class AppComponent implements OnInit {
 
     this.terrainData$
       .pipe(
-        distinctUntilChanged(),
         map((terrainData) => {
           return {
             renderMode: RenderMode.Colormap,
@@ -116,7 +121,6 @@ export class AppComponent implements OnInit {
 
     this.terrainData$
       .pipe(
-        distinctUntilChanged(),
         map((terrainData) => {
           return {
             renderMode: RenderMode.Colormap,
@@ -132,6 +136,8 @@ export class AppComponent implements OnInit {
       .subscribe((canvasData) => {
         this.minimapCanvasData$.next(canvasData);
       });
+
+    this.themeMode$ = this.store.select(PreferencesSelectors.selectTheme);
   }
 
   ngOnInit() {
@@ -140,6 +146,7 @@ export class AppComponent implements OnInit {
 
   loadAppData() {
     this.store.dispatch(TerrainDataActions.loadTerrainData());
+    this.store.dispatch(PreferencesActions.loadPreferences());
   }
 
   private setBodyClass(className: string) {
@@ -156,6 +163,24 @@ export class AppComponent implements OnInit {
     } else {
       this.removeBodyClass('dark-mode');
     }
+    this.store.dispatch(
+      PreferencesActions.setTheme({
+        theme: mode,
+      })
+    );
+  }
+
+  onMenuItemButtonClick(params: { item: MenuItem }) {
+    console.log(params);
+  }
+
+  onMenuItemToggleChange(params: { checked: boolean; item: MenuItem }) {
+    this.store.dispatch(
+      PreferencesActions.setPreference({
+        id: params.item.id!,
+        value: params.checked,
+      })
+    );
   }
 
   @HostListener('window:contextmenu', ['$event'])

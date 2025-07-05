@@ -1,6 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDividerModule } from '@angular/material/divider';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import {
+  MatSlideToggleChange,
+  MatSlideToggleModule,
+} from '@angular/material/slide-toggle';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MenuItemType } from '../enums/menu-item-type.enum';
 import { MenuItem } from '../interfaces/menu-item.interface';
@@ -24,10 +27,21 @@ export class SideMenuComponent {
   MenuItemType = MenuItemType;
 
   @Input() sideMenuData?: SideMenuData | undefined | null;
+  @Output() onMenuItemButtonClick = new EventEmitter<{
+    item: MenuItem;
+  }>();
+  @Output() onMenuItemToggleChange = new EventEmitter<{
+    checked: boolean;
+    item: MenuItem;
+  }>();
 
   isSidebarOpen = true;
 
-  onMenuSectionButtonClick(item: MenuItem): void {
-    console.log(item);
+  onToggleChange(e: MatSlideToggleChange, item: MenuItem): void {
+    this.onMenuItemToggleChange.emit({ checked: e.checked, item: item });
+  }
+
+  onButtonClick(item: MenuItem): void {
+    this.onMenuItemButtonClick.emit({ item: item });
   }
 }

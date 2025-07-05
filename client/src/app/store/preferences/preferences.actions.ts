@@ -1,5 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import { Preferences } from '../../interfaces/preferences.interface';
+import { PreferenceIds } from '../../enums/preference-ids.enum';
+import { ThemeMode } from '../../enums/theme-mode.enum';
 
 export class PreferencesActions {
   private static readonly actionsName: string = '[PreferencesActions]';
@@ -19,8 +21,7 @@ export class PreferencesActions {
   );
 
   static readonly savePreferences = createAction(
-    `${PreferencesActions.actionsName} Save Preferences`,
-    props<{ data: Preferences }>()
+    `${PreferencesActions.actionsName} Save Preferences`
   );
 
   static readonly savePreferencesSuccess = createAction(
@@ -30,5 +31,15 @@ export class PreferencesActions {
   static readonly savePreferencesFailure = createAction(
     `${PreferencesActions.actionsName} Save Preferences Failure`,
     props<{ error: string }>()
+  );
+
+  static readonly setPreference = createAction(
+    `${PreferencesActions.actionsName} Set Preference`,
+    props<{ id: PreferenceIds; value: boolean }>()
+  );
+
+  static readonly setTheme = createAction(
+    `${PreferencesActions.actionsName} Set Theme`,
+    props<{ theme: ThemeMode }>()
   );
 }

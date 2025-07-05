@@ -1,35 +1,41 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { PreferencesActions } from './preferences.actions';
 import { LocalStorageService } from '../../services/local-storage/local-storage.service';
 import { Preferences } from '../../interfaces/preferences.interface';
 import { of } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { PreferencesSelectors } from './preferences.selectors';
 
 @Injectable()
 export class PreferencesEffects {
   constructor(
     private readonly actions$: Actions,
-    private readonly localStorageService: LocalStorageService
+    private readonly localStorageService: LocalStorageService,
+    private readonly store: Store<{ preferences: Preferences }>
   ) {}
 
   loadPreferences$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(PreferencesActions.loadPreferences),
-      switchMap(() => {
-        const preferences =
+      withLatestFrom(this.store.select(PreferencesSelectors.selectPreferences)),
+      switchMap(([_, preferences]) => {
+        const storedPreferences =
           this.localStorageService.getItem<Preferences>('preferences');
-        return of(preferences).pipe(
-          map((preferences) => {
-            if (preferences) {
-              return PreferencesActions.loadPreferencesSuccess({
-                data: preferences as Preferences,
-              });
-            }
 
-            return PreferencesActions.loadPreferencesFailure({
-              error: 'A beállítások betöltése sikertelen.',
-            });
+        if (storedPreferences) {
+          return of(
+            PreferencesActions.loadPreferencesSuccess({
+              data: storedPreferences,
+            })
+          );
+        }
+
+        return of(
+          PreferencesActions.savePreferences(),
+          PreferencesActions.loadPreferencesSuccess({
+            data: preferences,
           })
         );
       })
@@ -38,12 +44,17 @@ export class PreferencesEffects {
 
   savePreferences$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(PreferencesActions.savePreferences),
-      switchMap((preferences) => {
+      ofType(
+        PreferencesActions.savePreferences,
+        PreferencesActions.setPreference,
+        PreferencesActions.setTheme
+      ),
+      withLatestFrom(this.store.select(PreferencesSelectors.selectPreferences)),
+      switchMap(([_, preferences]) => {
         const isSuccess: boolean =
           this.localStorageService.setItem<Preferences>(
             'preferences',
-            preferences.data
+            preferences
           );
         return of(isSuccess).pipe(
           map((isSuccess) => {
@@ -52,7 +63,7 @@ export class PreferencesEffects {
             }
 
             return PreferencesActions.savePreferencesFailure({
-              error: 'A beállítások mentése sikertelen.',
+              error: 'Nem sikerült a beállításokat menteni.',
             });
           })
         );

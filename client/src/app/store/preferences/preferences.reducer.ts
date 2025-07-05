@@ -36,7 +36,7 @@ export class PreferencesReducer {
 
     on(PreferencesActions.loadPreferencesSuccess, (state, { data }) => ({
       ...state,
-      data: data,
+      preferences: data,
       status: { ...state.status, status: StatusEnum.Success, errorMessage: '' },
     })),
 
@@ -46,6 +46,22 @@ export class PreferencesReducer {
         ...state.status,
         status: StatusEnum.Error,
         errorMessage: error,
+      },
+    })),
+
+    on(PreferencesActions.setPreference, (state, { id, value }) => ({
+      ...state,
+      preferences: {
+        ...state.preferences,
+        [id]: value,
+      },
+    })),
+
+    on(PreferencesActions.setTheme, (state, { theme }) => ({
+      ...state,
+      preferences: {
+        ...state.preferences,
+        theme: theme,
       },
     }))
   );
