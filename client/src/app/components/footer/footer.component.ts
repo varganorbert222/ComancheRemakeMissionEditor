@@ -38,7 +38,7 @@ export class FooterComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.themeMode = changes['themeMode'].currentValue as ThemeMode;
-    this.onThemeModeChanged.emit(this.themeMode);
+    // this.onThemeModeChanged.emit(this.themeMode);
     this.nextThemeMode$.next(this.getNextThemeMode(this.themeMode));
   }
 

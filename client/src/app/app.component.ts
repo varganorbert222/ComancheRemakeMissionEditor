@@ -160,7 +160,12 @@ export class AppComponent implements OnInit, AfterViewInit {
         this.minimapCanvasData$.next(canvasData);
       });
 
-    this.themeMode$ = this.store.select(PreferencesSelectors.selectTheme);
+    this.themeMode$ = this.store.select(PreferencesSelectors.selectTheme).pipe(
+      map((mode) => {
+        this.setThemeMode(mode);
+        return mode;
+      })
+    );
   }
 
   ngOnInit() {
@@ -209,12 +214,16 @@ export class AppComponent implements OnInit, AfterViewInit {
     );
   }
 
-  onThemeModeChanged(mode: ThemeMode) {
+  private setThemeMode(mode: ThemeMode) {
     if (mode === ThemeMode.Dark) {
       this.setBodyClass('dark-mode');
-    } else {
-      this.removeBodyClass('dark-mode');
+      return;
     }
+    this.removeBodyClass('dark-mode');
+  }
+
+  onThemeModeChanged(mode: ThemeMode) {
+    this.setThemeMode(mode);
     this.store.dispatch(
       PreferencesActions.setTheme({
         theme: mode,
