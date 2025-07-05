@@ -2,6 +2,7 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  HostBinding,
   HostListener,
   Input,
   ViewChild,
@@ -13,14 +14,17 @@ import {
   styleUrls: ['./pan-zoom-canvas.component.scss'],
 })
 export class PanZoomCanvasComponent implements AfterViewInit {
+  @HostBinding('class.panning') isPanning = false;
+
   @ViewChild('canvas', { static: true })
   canvasRef!: ElementRef<HTMLCanvasElement>;
 
   @Input() width?: number;
   @Input() height?: number;
-  @Input() disableMouseEvents?: boolean = false;
+  @Input() disableMouseEvents?: boolean = true;
   @Input() calcSizeFunc?: () => { width: number; height: number };
 
+  private spaceIsPressed: boolean = false;
   private img!: CanvasImageSource;
   private ctx!: CanvasRenderingContext2D;
   private cachedPattern?: CanvasPattern;
@@ -161,8 +165,35 @@ export class PanZoomCanvasComponent implements AfterViewInit {
     event.preventDefault();
   }
 
+  @HostListener('window:keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent) {
+    if (event.code === 'F12') {
+      return;
+    }
+
+    event.stopPropagation();
+    event.preventDefault();
+
+    if (event.code === 'Space') {
+      this.spaceIsPressed = true;
+      this.isPanning = !this.disableMouseEvents;
+    }
+  }
+
+  @HostListener('window:keyup', ['$event'])
+  onKeyUp(event: KeyboardEvent) {
+    if (event.code === 'Space') {
+      this.spaceIsPressed = false;
+      this.isPanning = false;
+    }
+  }
+
   @HostListener('mousedown', ['$event'])
   onMouseDown(event: MouseEvent) {
+    if (event.button !== 0 || !this.spaceIsPressed) {
+      return;
+    }
+
     if (this.disableMouseEvents) {
       return;
     }
@@ -181,7 +212,7 @@ export class PanZoomCanvasComponent implements AfterViewInit {
 
   @HostListener('mousemove', ['$event'])
   onMouseMove(event: MouseEvent) {
-    if (this.disableMouseEvents || !this.mouse.down) {
+    if (this.disableMouseEvents || !this.mouse.down || !this.spaceIsPressed) {
       return;
     }
 

@@ -1,15 +1,14 @@
 import { Component, Input } from '@angular/core';
 import { MapCanvasComponent } from '../map-canvas/map-canvas.component';
 import { MapCanvasData } from '../interfaces/map-canvas-data.interface';
+import { CmButtonComponent } from '../cm-button/cm-button.component';
 
 @Component({
   selector: 'app-mini-map',
-  imports: [MapCanvasComponent],
+  imports: [MapCanvasComponent, CmButtonComponent],
   templateUrl: './mini-map.component.html',
   styleUrl: './mini-map.component.scss',
 })
 export class MiniMapComponent {
   @Input() mapCanvasData?: MapCanvasData | null | undefined;
-
-  constructor() {}
 }

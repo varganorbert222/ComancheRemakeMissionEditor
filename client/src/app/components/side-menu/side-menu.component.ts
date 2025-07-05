@@ -26,7 +26,7 @@ import { SideMenuData } from './interfaces/side-menu-data.interface';
 export class SideMenuComponent {
   MenuItemType = MenuItemType;
 
-  @Input() sideMenuData?: SideMenuData | undefined | null;
+  @Input() sideMenuData?: SideMenuData | null | undefined;
   @Output() onMenuItemButtonClick = new EventEmitter<{
     item: MenuItem;
   }>();

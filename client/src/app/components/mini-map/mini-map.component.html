@@ -1,4 +1,29 @@
+<div class="zoom-control">
+  <div class="zoom-control-title">
+    <span>Zoom control</span>
+  </div>
+  <div class="zoom-control-content">
+    <div class="zoom-control-content-buttons">
+      <app-cm-button
+        [icon]="'add'"
+        [isMini]="true"
+        [tooltip]="'Zoom in'"
+      ></app-cm-button>
+      <app-cm-button
+        [icon]="'remove'"
+        [isMini]="true"
+        [tooltip]="'Zoom out'"
+      ></app-cm-button>
+    </div>
+    <app-cm-button
+      [height]="'31px'"
+      [isDisabled]="true"
+      [label]="'1.000X'"
+    ></app-cm-button>
+  </div>
+</div>
 <app-map-canvas
+  #miniMapCanvas
   [disableMouseEvents]="true"
   [mapCanvasData]="mapCanvasData"
 ></app-map-canvas>

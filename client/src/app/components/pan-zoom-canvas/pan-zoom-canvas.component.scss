@@ -1,3 +1,11 @@
 :host {
   display: flex;
 }
+
+:host.panning:hover {
+  cursor: grab;
+}
+
+:host.panning:active {
+  cursor: grabbing;
+}

@@ -2,14 +2,15 @@
   <h1>{{ title }}</h1>
 </div>
 <div class="items">
-  @for (menuItem of menuData; track $index) { @if (menuItem.type ===
+  @for (menuItem of toolbarData?.items; track $index) { @if (menuItem.type ===
   MenuItemType.Toggle) {
   <mat-slide-toggle
     class="toggle"
     labelPosition="after"
-    [checked]="true"
+    [checked]="toolbarData?.values?.[menuItem?.id ?? 'unknown_id'] ?? true"
     [disabled]="false"
     [matTooltip]="menuItem.tooltip"
+    (change)="onToggleChange($event, menuItem)"
     ><span class="toggle-label">{{ menuItem.label }}</span></mat-slide-toggle
   >
   } @else if (menuItem.type === MenuItemType.Separator) {
@@ -20,7 +21,7 @@
     [icon]="menuItem.icon"
     [shortcut]="menuItem.shortcut"
     [tooltip]="menuItem.tooltip"
-    (onClick)="onToolbarButtonClick(menuItem)"
+    (onClick)="onButtonClick(menuItem)"
     [width]="'100px'"
   ></app-cm-button>
   } }

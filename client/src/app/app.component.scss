@@ -36,6 +36,8 @@
   }
 
   .inspector {
+    display: flex;
+    flex-direction: column;
     grid-area: inspector;
     height: vars.$bar-height;
     padding: 0.25rem 1rem;

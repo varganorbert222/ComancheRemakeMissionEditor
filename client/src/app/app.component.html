@@ -1,6 +1,10 @@
 <div class="editor-container">
   <header class="toolbar">
-    <app-toolbar></app-toolbar>
+    <app-toolbar
+      [toolbarData]="toolbarData"
+      (onToolbarButtonClick)="onToolbarButtonClick($event)"
+      (onToolbarToggleChange)="onToolbarToggleChange($event)"
+    ></app-toolbar>
   </header>
 
   <aside class="sidebar">
@@ -12,11 +16,15 @@
   </aside>
 
   <main class="map-area">
-    <app-map-canvas [mapCanvasData]="mapCanvasData$ | async"></app-map-canvas>
+    <app-map-canvas
+      #mapCanvas
+      [mapCanvasData]="mapCanvasData$ | async"
+    ></app-map-canvas>
   </main>
 
   <aside class="inspector">
-    <app-inspector [mapCanvasData]="minimapCanvasData$ | async"></app-inspector>
+    <app-inspector></app-inspector>
+    <app-mini-map [mapCanvasData]="minimapCanvasData$ | async"></app-mini-map>
   </aside>
 
   <footer class="footer">

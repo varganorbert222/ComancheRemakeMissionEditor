@@ -1,9 +1,12 @@
 import {
+  AfterViewInit,
   Component,
   CUSTOM_ELEMENTS_SCHEMA,
   HostListener,
   OnInit,
+  QueryList,
   Renderer2,
+  ViewChildren,
 } from '@angular/core';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
@@ -25,6 +28,10 @@ import { SideMenuSectionsData } from './components/side-menu/data/menu-data.data
 import { Preferences } from './interfaces/preferences.interface';
 import { MenuItem } from './components/interfaces/menu-item.interface';
 import { PreferencesActions } from './store/preferences/preferences.actions';
+import { ToolbarData } from './components/toolbar/interfaces/toolbar-data.interface';
+import { ToolbarMenuData } from './components/toolbar/data/toolbar-data.data';
+import { MenuItemIds } from './enums/menu-item-ids.enum';
+import { MiniMapComponent } from './components/mini-map/mini-map.component';
 
 @Component({
   selector: 'app-root',
@@ -35,12 +42,16 @@ import { PreferencesActions } from './store/preferences/preferences.actions';
     MapCanvasComponent,
     FooterComponent,
     InspectorComponent,
+    MiniMapComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
+  @ViewChildren(MapCanvasComponent)
+  mapCanvases?: QueryList<MapCanvasComponent>;
+
   ThemeMode = ThemeMode;
 
   title = 'Mission Editor';
@@ -66,6 +77,14 @@ export class AppComponent implements OnInit {
       width: width,
       height: height,
     };
+  };
+  private renderMode: RenderMode = RenderMode.Empty;
+
+  toolbarData: ToolbarData = {
+    items: ToolbarMenuData,
+    values: {
+      [MenuItemIds.ToggleDepthMap]: this.renderMode === RenderMode.Heightmap,
+    },
   };
 
   themeMode$: Observable<ThemeMode>;
@@ -144,6 +163,10 @@ export class AppComponent implements OnInit {
     this.loadAppData();
   }
 
+  ngAfterViewInit() {
+    this.setRenderMode(false);
+  }
+
   loadAppData() {
     this.store.dispatch(TerrainDataActions.loadTerrainData());
     this.store.dispatch(PreferencesActions.loadPreferences());
@@ -155,6 +178,16 @@ export class AppComponent implements OnInit {
 
   private removeBodyClass(className: string) {
     this.renderer.removeClass(document.body, className);
+  }
+
+  private setRenderMode(isDepthMap: boolean) {
+    this.renderMode = {
+      ['false']: RenderMode.Colormap,
+      ['true']: RenderMode.Heightmap,
+    }[`${isDepthMap}`];
+    this.mapCanvases?.forEach((canvas) =>
+      canvas.selectRenderMode(this.renderMode)
+    );
   }
 
   onThemeModeChanged(mode: ThemeMode) {
@@ -177,10 +210,18 @@ export class AppComponent implements OnInit {
   onMenuItemToggleChange(params: { checked: boolean; item: MenuItem }) {
     this.store.dispatch(
       PreferencesActions.setPreference({
-        id: params.item.id!,
+        id: params.item.preferenceId!,
         value: params.checked,
       })
     );
+  }
+
+  onToolbarButtonClick(params: { item: MenuItem }) {
+    console.log(params);
+  }
+
+  onToolbarToggleChange(params: { checked: boolean; item: MenuItem }) {
+    this.setRenderMode(params.checked);
   }
 
   @HostListener('window:contextmenu', ['$event'])

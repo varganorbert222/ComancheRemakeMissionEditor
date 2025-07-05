@@ -1,8 +1,10 @@
+import { MenuItemIds } from '../../enums/menu-item-ids.enum';
 import { PreferenceIds } from '../../enums/preference-ids.enum';
 import { MenuItemType } from '../enums/menu-item-type.enum';
 
 export interface MenuItem {
-  id?: PreferenceIds;
+  id?: MenuItemIds;
+  preferenceId?: PreferenceIds;
   icon?: string;
   label?: string;
   tooltip?: string;
