@@ -1,3 +1,4 @@
+import { MenuItemIds } from '../../../enums/menu-item-ids.enum';
 import { PreferenceIds } from '../../../enums/preference-ids.enum';
 import { SideMenuSectionIds } from '../../../enums/side-menu-section-ids.enum';
 import { MenuItemType } from '../../enums/menu-item-type.enum';
@@ -9,30 +10,35 @@ export const SideMenuSectionsData: SideMenuSection[] = [
     title: 'Mission',
     items: [
       {
+        id: MenuItemIds.NewMission,
         icon: 'add_circle_outline',
         label: 'New',
         tooltip: 'Create a new mission',
         shortcut: 'Ctrl+N',
       },
       {
+        id: MenuItemIds.FileOpen,
         icon: 'file_open',
         label: 'Open',
         tooltip: 'Open an existing mission',
         shortcut: 'Ctrl+O',
       },
       {
+        id: MenuItemIds.CloseMission,
         icon: 'close',
         label: 'Close',
         tooltip: 'Close mission',
         shortcut: 'Ctrl+Q',
       },
       {
+        id: MenuItemIds.SaveMission,
         icon: 'save',
         label: 'Save',
         tooltip: 'Save mission',
         shortcut: 'Ctrl+S',
       },
       {
+        id: MenuItemIds.ExportMission,
         icon: 'archive',
         label: 'Save as',
         tooltip: 'Save mission to a disk',
@@ -42,12 +48,14 @@ export const SideMenuSectionsData: SideMenuSection[] = [
         type: MenuItemType.Separator,
       },
       {
+        id: MenuItemIds.EditMission,
         icon: 'description',
         label: 'Edit mission',
         tooltip: 'Edit mission parameters',
         shortcut: 'Ctrl+E',
       },
       {
+        id: MenuItemIds.ExportMissionData,
         icon: 'launch',
         label: 'Export data',
         tooltip: 'Export mission data to game',

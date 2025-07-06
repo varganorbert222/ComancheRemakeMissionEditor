@@ -1,0 +1,34 @@
+@use "../../variables" as vars;
+
+.form-section {
+  position: relative;
+  border: vars.$border;
+  padding: 1rem;
+
+  &-title {
+    position: absolute;
+    margin: 0;
+    padding: 0 0.5rem;
+    top: -10px;
+    background-color: var(--mat-sys-surface);
+  }
+}
+
+.radio-group {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: end;
+
+  &-label {
+    margin-right: 0.5rem;
+  }
+}
+
+h4 {
+  margin: 0;
+}
+
+.form-input {
+  display: flex;
+}

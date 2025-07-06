@@ -34,6 +34,10 @@ import { MenuItemIds } from './enums/menu-item-ids.enum';
 import { MiniMapComponent } from './components/mini-map/mini-map.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { TranslateService } from '@ngx-translate/core';
+import { ModalComponent } from './components/modal/modal.component';
+import { MatDialogModule, MatDialog } from '@angular/material/dialog';
+import { ModalData } from './components/modal/interfaces/modal-data.interface';
+import { NewMissionModalComponent } from './components/new-mission-modal/new-mission-modal.component';
 
 @Component({
   selector: 'app-root',
@@ -46,6 +50,7 @@ import { TranslateService } from '@ngx-translate/core';
     InspectorComponent,
     MiniMapComponent,
     TranslateModule,
+    MatDialogModule,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
@@ -106,7 +111,8 @@ export class AppComponent implements OnInit, AfterViewInit {
   constructor(
     private readonly store: Store<{ terrainData: TerrainData }>,
     private readonly renderer: Renderer2,
-    private translate: TranslateService
+    private readonly translate: TranslateService,
+    private readonly dialog: MatDialog
   ) {
     this.initLanguage();
 
@@ -222,6 +228,10 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.removeBodyClass('dark-mode');
   }
 
+  private onNewMission() {
+    console.log('New mission created.');
+  }
+
   onThemeModeChanged(mode: ThemeMode) {
     this.setThemeMode(mode);
     this.store.dispatch(
@@ -232,7 +242,45 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   onMenuItemButtonClick(params: { item: MenuItem }) {
-    console.log(params);
+    const id: MenuItemIds = params.item.id ?? MenuItemIds.Unknown;
+    const item: MenuItem = params.item;
+
+    if (id === MenuItemIds.NewMission) {
+      this.dialog.open(ModalComponent, {
+        data: {
+          title: 'New Mission',
+          contentComponent: NewMissionModalComponent,
+          buttons: [
+            {
+              label: 'Ok',
+              color: 'primary',
+              action: () => this.onNewMission(),
+            },
+            { label: 'Cancel', color: 'warn', closeOnClick: true },
+          ],
+        },
+      } as ModalData);
+
+      return;
+    }
+    if (id === MenuItemIds.FileOpen) {
+      return;
+    }
+    if (id === MenuItemIds.CloseMission) {
+      return;
+    }
+    if (id === MenuItemIds.SaveMission) {
+      return;
+    }
+    if (id === MenuItemIds.ExportMission) {
+      return;
+    }
+    if (id === MenuItemIds.EditMission) {
+      return;
+    }
+    if (id === MenuItemIds.ExportMissionData) {
+      return;
+    }
   }
 
   onMenuItemToggleChange(params: { checked: boolean; item: MenuItem }) {

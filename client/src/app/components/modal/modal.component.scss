@@ -1,0 +1,13 @@
+@use "../../variables" as vars;
+
+.buttons {
+  gap: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+button {
+  padding: 0.25rem;
+  min-width: 100px;
+  max-width: fit-content;
+}

@@ -1,0 +1,17 @@
+@if (modalData.title) {
+<h2 mat-dialog-title>{{ modalData.title }}</h2>
+}
+
+<mat-dialog-content>
+  <ng-container
+    *ngComponentOutlet="modalData.contentComponent; injector: modalData.data"
+  ></ng-container>
+</mat-dialog-content>
+
+<mat-dialog-actions class="buttons">
+  @for (button of modalData.buttons || defaultButtons; track $index) {
+  <button mat-button type="button" (click)="onButtonClick(button)">
+    {{ button.label }}
+  </button>
+  }
+</mat-dialog-actions>
