@@ -1,39 +1,49 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { InputGroupData } from '../radio-group/interfaces/input-group-data.interface';
+import { RadioGroupComponent } from '../radio-group/radio-group.component';
 import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatRadioModule } from '@angular/material/radio';
+import { SelectGroupComponent } from '../select-group/select-group.component';
 
 @Component({
   selector: 'app-new-mission-modal',
-  imports: [
-    MatFormFieldModule,
-    MatSelectModule,
-    MatInputModule,
-    FormsModule,
-    MatRadioModule,
-  ],
+  imports: [RadioGroupComponent, MatInputModule, SelectGroupComponent],
   templateUrl: './new-mission-modal.component.html',
   styleUrl: './new-mission-modal.component.scss',
 })
 export class NewMissionModalComponent {
-  mapTypeData = [
-    { value: 'green-cropland', viewValue: 'Green Cropland' },
-    { value: 'green-isle', viewValue: 'Green Isle' },
-    { value: 'green-hills', viewValue: 'Green Hills' },
-    { value: 'snow-mountains', viewValue: 'Snow Mountains' },
-    { value: 'snow-isle', viewValue: 'Snow Isle' },
-    { value: 'desert-dunes', viewValue: 'Desert Dunes' },
-    { value: 'desert-plateau', viewValue: 'Desert Plateau' },
-    { value: 'guantanamo-bay', viewValue: 'Guantanamo Bay' },
-  ];
-
-  realisticLoadoutData = {
-    selected: 'yes',
-    values: [
-      { value: 'yes', viewValue: 'Yes' },
-      { value: 'no', viewValue: 'No' },
+  mapTypeData: InputGroupData = {
+    id: 'terrain-type',
+    label: 'Terrain Type',
+    data: [
+      { value: 'green-cropland', name: 'Green Cropland' },
+      { value: 'green-isle', name: 'Green Isle' },
+      { value: 'green-hills', name: 'Green Hills' },
+      { value: 'snow-mountains', name: 'Snow Mountains' },
+      { value: 'snow-isle', name: 'Snow Isle' },
+      { value: 'desert-dunes', name: 'Desert Dunes' },
+      { value: 'desert-plateau', name: 'Desert Plateau' },
+      { value: 'guantanamo-bay', name: 'Guantanamo Bay' },
     ],
+    value: '',
+  };
+
+  realisticLoadoutData: InputGroupData = {
+    id: 'realistic-loadout',
+    label: 'Realistic Loadout',
+    data: [
+      { value: 'yes', name: 'Yes' },
+      { value: 'no', name: 'No' },
+    ],
+    value: 'yes',
+  };
+
+  efamsData: InputGroupData = {
+    id: 'efams',
+    label: 'EFAMS',
+    data: [
+      { value: 'yes', name: 'Yes' },
+      { value: 'no', name: 'No' },
+    ],
+    value: 'no',
   };
 }

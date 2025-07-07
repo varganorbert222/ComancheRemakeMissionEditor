@@ -9,12 +9,12 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-  selector: 'app-cm-button',
+  selector: 'app-button',
   imports: [MatTooltipModule, MatIconModule],
-  templateUrl: './cm-button.component.html',
-  styleUrl: './cm-button.component.scss',
+  templateUrl: './button.component.html',
+  styleUrl: './button.component.scss',
 })
-export class CmButtonComponent {
+export class ButtonComponent {
   @HostBinding('class.cm-button') isButton = true;
   @Input() icon?: string;
   @Input() label?: string;

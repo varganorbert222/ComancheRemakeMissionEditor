@@ -16,13 +16,13 @@
   } @else if (menuItem.type === MenuItemType.Separator) {
   <div class="separator-vertical"></div>
   } @else {
-  <app-cm-button
+  <app-button
     [label]="menuItem.label"
     [icon]="menuItem.icon"
     [shortcut]="menuItem.shortcut"
     [tooltip]="menuItem.tooltip"
     (onClick)="onButtonClick(menuItem)"
     [width]="'100px'"
-  ></app-cm-button>
+  ></app-button>
   } }
 </div>

@@ -19,14 +19,14 @@
       (change)="onToggleChange($event, menuItem)"
       ><span class="toggle-label">{{ menuItem.label }}</span></mat-slide-toggle
     >} @else {
-    <app-cm-button
+    <app-button
       [label]="menuItem.label"
       [icon]="menuItem.icon"
       [shortcut]="menuItem.shortcut"
       [tooltip]="menuItem.tooltip"
       (onClick)="onButtonClick(menuItem)"
       [width]="'100%'"
-    ></app-cm-button>
+    ></app-button>
     }
   </div>
   }

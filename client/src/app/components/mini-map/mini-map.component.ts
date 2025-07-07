@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { MapCanvasComponent } from '../map-canvas/map-canvas.component';
 import { MapCanvasData } from '../interfaces/map-canvas-data.interface';
-import { CmButtonComponent } from '../cm-button/cm-button.component';
+import { ButtonComponent } from '../button/button.component';
 
 @Component({
   selector: 'app-mini-map',
-  imports: [MapCanvasComponent, CmButtonComponent],
+  imports: [MapCanvasComponent, ButtonComponent],
   templateUrl: './mini-map.component.html',
   styleUrl: './mini-map.component.scss',
 })

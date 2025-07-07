@@ -1,37 +1,10 @@
 <h4>Selected Terrain Type</h4>
-<mat-form-field>
-  <mat-label>Terrain Type</mat-label>
-  <mat-select>
-    @for (mapType of mapTypeData; track $index) {
-    <mat-option [value]="mapType.value">{{ mapType.viewValue }}</mat-option>
-    }
-  </mat-select>
-</mat-form-field>
+<app-select-group [inputGroupData]="mapTypeData"></app-select-group>
 
 <div class="form-section">
   <h3 class="form-section-title">Load Out Variables</h3>
-  <div class="radio-group">
-    <label class="radio-group-label" id="realistic-loadout-label"
-      >Realistic Loadout</label
-    >
-    <mat-radio-group
-      aria-labelledby="realistic-loadout-label"
-      [(ngModel)]="realisticLoadoutData.selected"
-    >
-      @for (item of realisticLoadoutData.values; track $index) {
-      <mat-radio-button [value]="item.value">{{
-        item.viewValue
-      }}</mat-radio-button>
-      }
-    </mat-radio-group>
-  </div>
-  <div class="radio-group">
-    <h4 class="radio-group-label">EFAMS</h4>
-    <mat-radio-group aria-label="EFAMS">
-      <mat-radio-button value="'yes'">Yes</mat-radio-button>
-      <mat-radio-button value="'no'">No</mat-radio-button>
-    </mat-radio-group>
-  </div>
+  <app-radio-group [inputGroupData]="realisticLoadoutData"></app-radio-group>
+  <app-radio-group [inputGroupData]="efamsData"></app-radio-group>
   <mat-form-field class="form-input">
     <mat-label>8</mat-label>
     <input aria-label="Hard Points Available" matInput disabled="true" />

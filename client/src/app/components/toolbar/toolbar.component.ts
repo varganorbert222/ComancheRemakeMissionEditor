@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CmButtonComponent } from '../cm-button/cm-button.component';
+import { ButtonComponent } from '../button/button.component';
 import { MenuItem } from '../interfaces/menu-item.interface';
 import { MenuItemType } from '../enums/menu-item-type.enum';
 import {
@@ -14,7 +14,7 @@ import { TranslateModule } from '@ngx-translate/core';
 @Component({
   selector: 'app-toolbar',
   imports: [
-    CmButtonComponent,
+    ButtonComponent,
     MatSlideToggleModule,
     MatDividerModule,
     MatTooltipModule,

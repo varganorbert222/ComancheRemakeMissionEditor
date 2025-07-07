@@ -1,0 +1,11 @@
+<mat-form-field>
+  <mat-label [id]="inputGroupData.id">{{ inputGroupData.label }}</mat-label>
+  <mat-select
+    [aria-label]="inputGroupData.id"
+    [(ngModel)]="inputGroupData.value"
+  >
+    @for (item of inputGroupData.data; track $index) {
+    <mat-option [value]="item.value">{{ item.name }}</mat-option>
+    }
+  </mat-select>
+</mat-form-field>

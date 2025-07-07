@@ -7,7 +7,7 @@ import {
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MenuItemType } from '../enums/menu-item-type.enum';
 import { MenuItem } from '../interfaces/menu-item.interface';
-import { CmButtonComponent } from '../cm-button/cm-button.component';
+import { ButtonComponent } from '../button/button.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SideMenuData } from './interfaces/side-menu-data.interface';
 
@@ -17,7 +17,7 @@ import { SideMenuData } from './interfaces/side-menu-data.interface';
     MatDividerModule,
     MatSlideToggleModule,
     MatExpansionModule,
-    CmButtonComponent,
+    ButtonComponent,
     MatTooltipModule,
   ],
   templateUrl: './side-menu.component.html',
