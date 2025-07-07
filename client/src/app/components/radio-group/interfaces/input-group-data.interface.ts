@@ -4,6 +4,8 @@ export interface InputGroupData {
   data?: {
     value: any;
     name: string;
+    disabled?: boolean;
   }[];
   value: any;
+  disabled?: boolean;
 }

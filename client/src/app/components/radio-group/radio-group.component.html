@@ -5,9 +5,10 @@
   <mat-radio-group
     [ariaLabel]="inputGroupData.id"
     [(ngModel)]="inputGroupData.value"
+    [disabled]="inputGroupData.disabled ?? false"
   >
     @for (item of inputGroupData.data; track $index) {
-    <mat-radio-button [value]="item.value">{{ item.name }}</mat-radio-button>
+    <mat-radio-button [disabled]="item.disabled" [value]="item.value">{{ item.name }}</mat-radio-button>
     }
   </mat-radio-group>
 </div>

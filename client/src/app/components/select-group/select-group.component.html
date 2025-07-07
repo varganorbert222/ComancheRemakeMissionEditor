@@ -3,9 +3,10 @@
   <mat-select
     [aria-label]="inputGroupData.id"
     [(ngModel)]="inputGroupData.value"
+    [disabled]="inputGroupData.disabled ?? false"
   >
     @for (item of inputGroupData.data; track $index) {
-    <mat-option [value]="item.value">{{ item.name }}</mat-option>
+    <mat-option [disabled]="item.disabled" [value]="item.value">{{ item.name }}</mat-option>
     }
   </mat-select>
 </mat-form-field>
