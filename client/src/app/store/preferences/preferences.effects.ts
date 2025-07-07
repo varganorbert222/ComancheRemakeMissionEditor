@@ -45,9 +45,9 @@ export class PreferencesEffects {
   savePreferences$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(
-        PreferencesActions.savePreferences,
+        PreferencesActions.setTheme,
         PreferencesActions.setPreference,
-        PreferencesActions.setTheme
+        PreferencesActions.savePreferences
       ),
       withLatestFrom(this.store.select(PreferencesSelectors.selectPreferences)),
       switchMap(([_, preferences]) => {

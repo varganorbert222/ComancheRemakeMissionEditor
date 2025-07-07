@@ -19,11 +19,13 @@
     <app-map-canvas
       #mapCanvas
       [mapCanvasData]="mapCanvasData$ | async"
+      (onZoomChange)="onZoomChangeHandler($event)"
     ></app-map-canvas>
   </main>
 
   <aside class="inspector">
     <app-inspector></app-inspector>
+    <app-zoom-control [mapCanvas]="mapCanvas"></app-zoom-control>
     <app-mini-map [mapCanvasData]="minimapCanvasData$ | async"></app-mini-map>
   </aside>
 

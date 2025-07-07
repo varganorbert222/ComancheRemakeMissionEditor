@@ -5,28 +5,7 @@
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.85rem;
-}
-
-.zoom-control {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-
-  &-content {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-
-    &-buttons {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-  }
+  margin: 0.85rem 0 0.85rem 0;
 }
 
 app-map-canvas {

@@ -12,6 +12,7 @@ async;
       [width]="mapCanvasData?.canvasWidth"
       [height]="mapCanvasData?.canvasHeight"
       [disableMouseEvents]="disableMouseEvents"
+      (onZoomChange)="onZoomChangeHandler($event)"
     ></app-pan-zoom-canvas>
   </div>
   <div [classList]="!imageIsLoaded && !isLoading ? 'd-block' : 'd-none'">

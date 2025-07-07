@@ -4,9 +4,8 @@ import {
   CUSTOM_ELEMENTS_SCHEMA,
   HostListener,
   OnInit,
-  QueryList,
   Renderer2,
-  ViewChildren,
+  ViewChild,
 } from '@angular/core';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
@@ -38,6 +37,8 @@ import { ModalComponent } from './components/modal/modal.component';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { ModalData } from './components/modal/interfaces/modal-data.interface';
 import { NewMissionModalComponent } from './components/new-mission-modal/new-mission-modal.component';
+import { ZoomControlComponent } from './components/zoom-control/zoom-control.component';
+import { ZoomEvent } from './components/pan-zoom-canvas/interfaces/zoom-event.interface';
 
 @Component({
   selector: 'app-root',
@@ -51,14 +52,25 @@ import { NewMissionModalComponent } from './components/new-mission-modal/new-mis
     MiniMapComponent,
     TranslateModule,
     MatDialogModule,
+    ZoomControlComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppComponent implements OnInit, AfterViewInit {
-  @ViewChildren(MapCanvasComponent)
-  mapCanvases?: QueryList<MapCanvasComponent>;
+  @ViewChild(MapCanvasComponent, { static: true })
+  mapCanvas!: MapCanvasComponent;
+
+  @ViewChild(MiniMapComponent, {
+    static: true,
+  })
+  minimap!: MiniMapComponent;
+
+  @ViewChild(ZoomControlComponent, {
+    static: true,
+  })
+  zoomControl!: ZoomControlComponent;
 
   ThemeMode = ThemeMode;
 
@@ -215,9 +227,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       ['false']: RenderMode.Colormap,
       ['true']: RenderMode.Heightmap,
     }[`${isDepthMap}`];
-    this.mapCanvases?.forEach((canvas) =>
-      canvas.selectRenderMode(this.renderMode)
-    );
+    this.mapCanvas.selectRenderMode(this.renderMode);
   }
 
   private setThemeMode(mode: ThemeMode) {
@@ -298,6 +308,10 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   onToolbarToggleChange(params: { checked: boolean; item: MenuItem }) {
     this.setRenderMode(params.checked);
+  }
+
+  onZoomChangeHandler(event: ZoomEvent) {
+    this.zoomControl.updateZoom();
   }
 
   @HostListener('window:contextmenu', ['$event'])

@@ -133,6 +133,7 @@ export const SideMenuSectionsData: SideMenuSection[] = [
     items: [
       {
         id: PreferenceIds.ShowAllObjects,
+        preferenceId: PreferenceIds.ShowAllObjects,
         icon: '',
         label: 'Show all objects',
         tooltip: 'Display all kinds of objects',
@@ -141,6 +142,7 @@ export const SideMenuSectionsData: SideMenuSection[] = [
       },
       {
         id: PreferenceIds.ShowStatic,
+        preferenceId: PreferenceIds.ShowStatic,
         icon: '',
         label: 'Show static',
         tooltip: 'Show only buildings and non-moving targets',
@@ -149,6 +151,7 @@ export const SideMenuSectionsData: SideMenuSection[] = [
       },
       {
         id: PreferenceIds.ShowLandVehicles,
+        preferenceId: PreferenceIds.ShowLandVehicles,
         icon: '',
         label: 'Show land vehicles',
         tooltip: 'Show ground vehicles only',
@@ -157,6 +160,7 @@ export const SideMenuSectionsData: SideMenuSection[] = [
       },
       {
         id: PreferenceIds.ShowAircrafts,
+        preferenceId: PreferenceIds.ShowAircrafts,
         icon: '',
         label: 'Show aircrafts',
         tooltip: 'Display fixed-wing aircrafts on the map',
@@ -165,6 +169,7 @@ export const SideMenuSectionsData: SideMenuSection[] = [
       },
       {
         id: PreferenceIds.ShowGoals,
+        preferenceId: PreferenceIds.ShowGoals,
         icon: '',
         label: 'Show goals',
         tooltip: 'Display of objectives required to complete the mission',
@@ -173,6 +178,7 @@ export const SideMenuSectionsData: SideMenuSection[] = [
       },
       {
         id: PreferenceIds.ShowWaypoints,
+        preferenceId: PreferenceIds.ShowWaypoints,
         icon: '',
         label: 'Show waypoints',
         tooltip: 'Displaying player and AI routes',
@@ -184,6 +190,7 @@ export const SideMenuSectionsData: SideMenuSection[] = [
       },
       {
         id: PreferenceIds.ShowEntireWorld,
+        preferenceId: PreferenceIds.ShowEntireWorld,
         icon: '',
         label: 'Show entire world',
         tooltip: 'Show the entire playing area',
@@ -192,6 +199,7 @@ export const SideMenuSectionsData: SideMenuSection[] = [
       },
       {
         id: PreferenceIds.ShowCoordsInMeters,
+        preferenceId: PreferenceIds.ShowCoordsInMeters,
         icon: '',
         label: 'Show coords in meters',
         tooltip: 'The cursor coordinates are shown in meters',
@@ -200,6 +208,7 @@ export const SideMenuSectionsData: SideMenuSection[] = [
       },
       {
         id: PreferenceIds.ShowDistanceBar,
+        preferenceId: PreferenceIds.ShowDistanceBar,
         icon: '',
         label: 'Show distance bar',
         tooltip: 'We show the reference distance with a measuring bar',
@@ -208,6 +217,7 @@ export const SideMenuSectionsData: SideMenuSection[] = [
       },
       {
         id: PreferenceIds.ShowTrueDirection,
+        preferenceId: PreferenceIds.ShowTrueDirection,
         icon: '',
         label: 'Show true direction',
         tooltip: 'Displaying the orientation of objects',
@@ -216,6 +226,7 @@ export const SideMenuSectionsData: SideMenuSection[] = [
       },
       {
         id: PreferenceIds.ShowZoomSpot,
+        preferenceId: PreferenceIds.ShowZoomSpot,
         icon: '',
         label: 'Show zoom spot',
         tooltip:

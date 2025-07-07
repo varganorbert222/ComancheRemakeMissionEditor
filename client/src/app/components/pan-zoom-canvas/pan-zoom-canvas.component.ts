@@ -2,11 +2,14 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  EventEmitter,
   HostBinding,
   HostListener,
   Input,
+  Output,
   ViewChild,
 } from '@angular/core';
+import { ZoomEvent } from './interfaces/zoom-event.interface';
 
 @Component({
   selector: 'app-pan-zoom-canvas',
@@ -23,13 +26,13 @@ export class PanZoomCanvasComponent implements AfterViewInit {
   @Input() height?: number;
   @Input() disableMouseEvents?: boolean = true;
   @Input() calcSizeFunc?: () => { width: number; height: number };
+  @Output() onZoomChange = new EventEmitter<ZoomEvent>();
 
-  private spaceIsPressed: boolean = false;
   private img!: CanvasImageSource;
   private ctx!: CanvasRenderingContext2D;
   private cachedPattern?: CanvasPattern;
 
-  private scale: number = 1;
+  private zoom: number = 1;
   private wx: number = 0;
   private wy: number = 0;
   private sx: number = 0;
@@ -43,23 +46,28 @@ export class PanZoomCanvasComponent implements AfterViewInit {
     down: false,
   };
 
+  getZoom(): number {
+    return this.zoom;
+  }
+
   ngAfterViewInit(): void {
     this.ctx = this.canvasRef.nativeElement.getContext('2d')!;
     this.resize();
+    this.isPanning = !this.disableMouseEvents;
   }
 
   private applyTransform(ctx: CanvasRenderingContext2D): void {
-    const dx = this.sx - this.scale * this.wx;
-    const dy = this.sy - this.scale * this.wy;
-    ctx.setTransform(this.scale, 0, 0, this.scale, dx, dy);
+    const dx = this.sx - this.zoom * this.wx;
+    const dy = this.sy - this.zoom * this.wy;
+    ctx.setTransform(this.zoom, 0, 0, this.zoom, dx, dy);
   }
 
   private zoomedXInv(screenX: number): number {
-    return (screenX - this.sx) / this.scale + this.wx;
+    return (screenX - this.sx) / this.zoom + this.wx;
   }
 
   private zoomedYInv(screenY: number): number {
-    return (screenY - this.sy) / this.scale + this.wy;
+    return (screenY - this.sy) / this.zoom + this.wy;
   }
 
   draw(): void {
@@ -78,10 +86,10 @@ export class PanZoomCanvasComponent implements AfterViewInit {
     this.applyTransform(ctx);
 
     // Nézetméret világkoordinátában
-    const viewWidth = canvas.width / this.scale;
-    const viewHeight = canvas.height / this.scale;
-    const viewLeft = this.wx - this.sx / this.scale;
-    const viewTop = this.wy - this.sy / this.scale;
+    const viewWidth = canvas.width / this.zoom;
+    const viewHeight = canvas.height / this.zoom;
+    const viewLeft = this.wx - this.sx / this.zoom;
+    const viewTop = this.wy - this.sy / this.zoom;
 
     // Lefedjük az egész aktuális viewport világterületet
     ctx.fillRect(viewLeft, viewTop, viewWidth, viewHeight);
@@ -104,7 +112,7 @@ export class PanZoomCanvasComponent implements AfterViewInit {
 
     const scaleX = canvas.width / image.naturalWidth;
     const scaleY = canvas.height / image.naturalHeight;
-    this.scale = Math.min(scaleX, scaleY);
+    this.zoom = Math.min(scaleX, scaleY);
 
     this.wx = image.naturalWidth / 2;
     this.wy = image.naturalHeight / 2;
@@ -121,7 +129,8 @@ export class PanZoomCanvasComponent implements AfterViewInit {
     canvasElement.height = height;
 
     if (this.img) {
-      this.setImage(this.img); // újraszámolja a scale-t és redraw
+      // újraszámolja a scale-t és redraw
+      this.setImage(this.img);
     }
 
     this.draw();
@@ -134,6 +143,34 @@ export class PanZoomCanvasComponent implements AfterViewInit {
     } else {
       this.resizeCanvas(this.width ?? 100, this.height ?? 100);
     }
+  }
+
+  resetZoom() {
+    const prevZoom: number = this.zoom;
+
+    this.zoom = 1;
+
+    this.onZoomChange.emit({
+      prevZoom: prevZoom,
+      currZoom: 1,
+      factor: 0,
+    });
+
+    this.draw();
+  }
+
+  zoomStep(delta: number) {
+    const prevZoom: number = this.zoom;
+    const zoomFactor = delta < 0 ? 1.1 : 1 / 1.1;
+    this.zoom = Math.max(0.1, Math.min(10, this.zoom * zoomFactor));
+
+    this.onZoomChange.emit({
+      prevZoom: prevZoom,
+      currZoom: this.zoom,
+      factor: zoomFactor,
+    });
+
+    this.draw();
   }
 
   @HostListener('wheel', ['$event'])
@@ -150,8 +187,7 @@ export class PanZoomCanvasComponent implements AfterViewInit {
     this.mouse.rx = this.zoomedXInv(this.mouse.x);
     this.mouse.ry = this.zoomedYInv(this.mouse.y);
 
-    const zoomFactor = event.deltaY < 0 ? 1.1 : 1 / 1.1;
-    this.scale = Math.max(0.1, Math.min(10, this.scale * zoomFactor));
+    this.zoomStep(event.deltaY);
 
     this.wx = this.mouse.rx;
     this.wy = this.mouse.ry;
@@ -161,43 +197,21 @@ export class PanZoomCanvasComponent implements AfterViewInit {
     this.mouse.rx = this.zoomedXInv(this.mouse.x);
     this.mouse.ry = this.zoomedYInv(this.mouse.y);
 
-    this.draw();
     event.preventDefault();
-  }
-
-  @HostListener('window:keydown', ['$event'])
-  onKeyDown(event: KeyboardEvent) {
-    if (event.code === 'F12') {
-      return;
-    }
-
-    event.stopPropagation();
-    event.preventDefault();
-
-    if (event.code === 'Space') {
-      this.spaceIsPressed = true;
-      this.isPanning = !this.disableMouseEvents;
-    }
-  }
-
-  @HostListener('window:keyup', ['$event'])
-  onKeyUp(event: KeyboardEvent) {
-    if (event.code === 'Space') {
-      this.spaceIsPressed = false;
-      this.isPanning = false;
-    }
   }
 
   @HostListener('mousedown', ['$event'])
   onMouseDown(event: MouseEvent) {
-    if (event.button !== 0 || !this.spaceIsPressed) {
-      return;
-    }
-
     if (this.disableMouseEvents) {
       return;
     }
-    this.mouse.down = true;
+
+    this.mouse.down = event.button === 2;
+
+    if (event.button === 1) {
+      this.resetZoom();
+    }
+
     this.updateMousePosition(event);
   }
 
@@ -212,7 +226,7 @@ export class PanZoomCanvasComponent implements AfterViewInit {
 
   @HostListener('mousemove', ['$event'])
   onMouseMove(event: MouseEvent) {
-    if (this.disableMouseEvents || !this.mouse.down || !this.spaceIsPressed) {
+    if (this.disableMouseEvents || !this.mouse.down) {
       return;
     }
 

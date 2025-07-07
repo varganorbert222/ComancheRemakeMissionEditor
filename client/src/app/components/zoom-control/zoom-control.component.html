@@ -1,0 +1,30 @@
+<div class="title">
+  <span>Zoom control</span>
+</div>
+<div class="content">
+  <div class="buttons">
+    <app-button
+      [icon]="'add'"
+      [isMini]="true"
+      [tooltip]="'Zoom in'"
+      (onClick)="onButtonClickedHandler('zoom-in')"
+    ></app-button>
+    <app-button
+      [icon]="'remove'"
+      [isMini]="true"
+      [tooltip]="'Zoom out'"
+      (onClick)="onButtonClickedHandler('zoom-out')"
+    ></app-button>
+    <app-button
+      [icon]="'refresh'"
+      [isMini]="true"
+      [tooltip]="'Reset'"
+      (onClick)="onButtonClickedHandler('zoom-reset')"
+    ></app-button>
+  </div>
+  <app-button
+    [height]="'31px'"
+    [isDisabled]="true"
+    [label]="`${this.zoom | number: '1.3-3' }X`"
+  ></app-button>
+</div>

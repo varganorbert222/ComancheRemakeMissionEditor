@@ -2,11 +2,13 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  EventEmitter,
   HostListener,
   Input,
   OnChanges,
   OnDestroy,
   OnInit,
+  Output,
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
@@ -16,6 +18,7 @@ import { MapCanvasData } from '../interfaces/map-canvas-data.interface';
 import { RenderMode } from './enums/render-mode.enum';
 import { BehaviorSubject, interval, Subscription } from 'rxjs';
 import { PanZoomCanvasComponent } from '../pan-zoom-canvas/pan-zoom-canvas.component';
+import { ZoomEvent } from '../pan-zoom-canvas/interfaces/zoom-event.interface';
 
 @Component({
   selector: 'app-map-canvas',
@@ -33,6 +36,7 @@ export class MapCanvasComponent
 
   @Input() mapCanvasData?: MapCanvasData | null | undefined;
   @Input() disableMouseEvents?: boolean = false;
+  @Output() onZoomChange = new EventEmitter<ZoomEvent>();
 
   isLoading$ = new BehaviorSubject<boolean>(true);
   imageIsLoaded$ = new BehaviorSubject<boolean>(false);
@@ -74,6 +78,10 @@ export class MapCanvasComponent
         canvasHeight ?? 100
       );
     }
+  }
+
+  getZoom(): number {
+    return this.cmcanvas.getZoom();
   }
 
   ngOnInit() {
@@ -133,6 +141,18 @@ export class MapCanvasComponent
     if (this.cmcanvas) {
       this.cmcanvas.draw();
     }
+  }
+
+  onZoomChangeHandler(event: ZoomEvent) {
+    this.onZoomChange.emit(event);
+  }
+
+  zoomStep(delta: number) {
+    if (delta === 0) {
+      this.cmcanvas.resetZoom();
+      return;
+    }
+    this.cmcanvas.zoomStep(delta);
   }
 
   @HostListener('window:resize', ['$event'])
