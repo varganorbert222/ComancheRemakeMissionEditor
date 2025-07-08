@@ -1,9 +1,9 @@
 import { MenuItemIds } from '../../../enums/menu-item-ids.enum';
 import { PreferenceIds } from '../../../enums/preference-ids.enum';
 import { SideMenuSectionIds } from '../../../enums/side-menu-section-ids.enum';
-import { MenuItemType } from '../../enums/menu-item-type.enum';
-import { MenuItem } from '../../interfaces/menu-item.interface';
-import { SideMenuSection } from '../interfaces/side-menu-section.interface';
+import { MenuItemType } from '../../../components/enums/menu-item-type.enum';
+import { MenuItem } from '../../../components/interfaces/menu-item.interface';
+import { SideMenuSection } from '../../../components/side-menu/interfaces/side-menu-section.interface';
 
 export const SideMenuSectionsData: SideMenuSection[] = [
   {

@@ -1,4 +1,4 @@
-import { SideMenuSectionsData } from '../src/app/components/side-menu/data/menu-data.data';
+import { SideMenuSectionsData } from '../src/app/services/menu-data/data/menu-data.data';
 
 function collectIds(data: any): string[] {
   const ids: string[] = [];

@@ -10,6 +10,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ToolbarData } from './interfaces/toolbar-data.interface';
 import { TranslateModule } from '@ngx-translate/core';
+import { LocIds } from '../../enums/loc-ids.enum';
 
 @Component({
   selector: 'app-toolbar',
@@ -33,6 +34,7 @@ export class ToolbarComponent {
     item: MenuItem;
   }>();
 
+  LocIds = LocIds;
   MenuItemType = MenuItemType;
 
   onButtonClick(item: MenuItem) {
