@@ -1,3 +1,25 @@
 {
-  "editor-title": "Mission Editor"
+  "editor-title": "Mission Editor",
+  "refresh-screen": "Refresh Screen",
+  "waypoint-manager": "Waypoint Manager",
+  "wind-manager": "Wind Manager",
+  "toggle-depth-map": "Toggle Depth Map",
+  "redraws-the-map-contents-on-screen": "Redraw the map contents on screen",
+  "edit-player-and-ai-waypoints": "Edit player and AI waypoints",
+  "edit-wind-positions-directions-and-strengths": "Edit wind positions, directions and strengths",
+  "the-editor-shows-the-colormap-or-heightmap-of-the-map": "The editor shows the colormap or heightmap of the map",
+  "zoom-control": "Zoom Control",
+  "switch-to-theme": "Switch to {x} theme",
+  "light": "light",
+  "dark": "dark",
+  "settings-were-saved-successfully": "Settings were saved successfully.",
+  "an-error-occurred-while-saving-the-settings": "An error occurred while saving the settings.",
+  "failed-to-save-settings": "Failed to save settings.",
+  "failed-to-load-settings": "Failed to load settings.",
+  "zoom-in": "Zoom in",
+  "zoom-out": "Zoom out",
+  "reset": "Reset",
+  "zoom-value": "Magnification level",
+  "language": "Language",
+  "unknown": "Unknown"
 }

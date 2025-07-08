@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   Component,
   EventEmitter,
   Input,
@@ -10,10 +9,13 @@ import {
 import { ThemeMode } from '../../enums/theme-mode.enum';
 import { BehaviorSubject } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { LocIds } from '../../enums/loc-ids.enum';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-footer',
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateModule, MatSelectModule],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss',
 })
@@ -21,13 +23,19 @@ export class FooterComponent implements OnChanges {
   @Input() themeMode: ThemeMode = ThemeMode.Light;
   @Output() onThemeModeChanged = new EventEmitter<ThemeMode>();
 
+  LocIds = LocIds;
   now: number = new Date().getFullYear();
-  title: string = 'Comanche Remake Mission Editor';
-  owner: string = 'varganorbert222';
 
   nextThemeMode$: BehaviorSubject<ThemeMode> = new BehaviorSubject<ThemeMode>(
     ThemeMode.Dark
   );
+
+  langSelectData = {
+    value: this.translate.getBrowserLang(),
+    values: this.translate.getLangs(),
+  };
+
+  constructor(private readonly translate: TranslateService) {}
 
   private getNextThemeMode(mode: ThemeMode) {
     return {
@@ -38,7 +46,6 @@ export class FooterComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.themeMode = changes['themeMode'].currentValue as ThemeMode;
-    // this.onThemeModeChanged.emit(this.themeMode);
     this.nextThemeMode$.next(this.getNextThemeMode(this.themeMode));
   }
 
@@ -46,5 +53,9 @@ export class FooterComponent implements OnChanges {
     this.themeMode = this.getNextThemeMode(this.themeMode);
     this.onThemeModeChanged.emit(this.themeMode);
     this.nextThemeMode$.next(this.getNextThemeMode(this.themeMode));
+  }
+
+  onLangSelectChange(event: MatSelectChange<string>) {
+    this.translate.use(event.value);
   }
 }

@@ -3,24 +3,32 @@ import { SideMenuSection } from '../../components/side-menu/interfaces/side-menu
 import { MenuItem } from '../../components/interfaces/menu-item.interface';
 import { SideMenuSectionsData } from './data/menu-data.data';
 import { ToolbarMenuData } from './data/toolbar-data.data';
+import { TranslateService } from '@ngx-translate/core';
+import { LocIds } from '../../enums/loc-ids.enum';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MenuDataService {
-  constructor() {}
+  constructor(private readonly translate: TranslateService) {}
 
   getMenuData(): SideMenuSection[] {
     return SideMenuSectionsData;
   }
 
   getToolbarData(): MenuItem[] {
-    return ToolbarMenuData.map(
-      (x) =>
-        ({
-          ...x,
-          label: '', // TODO: fordítás
-        } as MenuItem)
-    );
+    return ToolbarMenuData.map((x) => {
+      if (!x.label) {
+        console.warn('The menu item does not have a label.', x);
+      }
+      if (!x.tooltip) {
+        console.warn('The menu item does not have a tooltip.', x);
+      }
+      return {
+        ...x,
+        label: this.translate.instant(x.label ?? LocIds.Unknown),
+        tooltip: this.translate.instant(x.tooltip ?? LocIds.Unknown),
+      } as MenuItem;
+    });
   }
 }

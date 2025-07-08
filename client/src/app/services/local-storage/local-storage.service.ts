@@ -1,20 +1,29 @@
 import { Injectable } from '@angular/core';
 import { ToasterService } from '../toaster/toaster.service';
+import { LocIds } from '../../enums/loc-ids.enum';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LocalStorageService {
-  constructor(private readonly toaster: ToasterService) {}
+  constructor(
+    private readonly toaster: ToasterService,
+    private readonly translate: TranslateService
+  ) {}
 
   setItem<T>(key: string, value: T): boolean {
     try {
       const serialized = JSON.stringify(value);
       localStorage.setItem(key, serialized);
-      this.toaster.show('A beállítások mentése sikeresen megtörtént.');
+      this.toaster.show(
+        this.translate.instant(LocIds.SettingsWereSavedSuccessfully)
+      );
     } catch (e) {
-      console.warn('Hiba a mentés során:', e);
-      this.toaster.show('Hiba történt a beállítások mentése során.');
+      console.warn('Error during save to storage:', e);
+      this.toaster.show(
+        this.translate.instant(LocIds.AnErrorOccurredWhileSavingTheSettings)
+      );
       return false;
     }
     return true;
@@ -24,13 +33,15 @@ export class LocalStorageService {
     try {
       const item = localStorage.getItem(key);
       if (item) {
-        this.toaster.show('A beállítások betöltése sikeresen megtörtént.');
+        this.toaster.show(
+          this.translate.instant(LocIds.SettingsWereSavedSuccessfully)
+        );
         return JSON.parse(item) as T;
       }
       return null;
     } catch (e) {
-      console.warn('Nem sikerült beolvasni:', e);
-      this.toaster.show('A beállítások betöltése sikertelen.');
+      console.warn('Error during read from storage:', e);
+      this.toaster.show(this.translate.instant(LocIds.FailedToLoadSettings));
       return null;
     }
   }

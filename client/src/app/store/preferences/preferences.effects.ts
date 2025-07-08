@@ -7,13 +7,16 @@ import { Preferences } from '../../interfaces/preferences.interface';
 import { of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { PreferencesSelectors } from './preferences.selectors';
+import { TranslateService } from '@ngx-translate/core';
+import { LocIds } from '../../enums/loc-ids.enum';
 
 @Injectable()
 export class PreferencesEffects {
   constructor(
     private readonly actions$: Actions,
     private readonly localStorageService: LocalStorageService,
-    private readonly store: Store<{ preferences: Preferences }>
+    private readonly store: Store<{ preferences: Preferences }>,
+    private readonly translate: TranslateService
   ) {}
 
   loadPreferences$ = createEffect(() => {
@@ -63,7 +66,7 @@ export class PreferencesEffects {
             }
 
             return PreferencesActions.savePreferencesFailure({
-              error: 'Nem sikerült a beállításokat menteni.',
+              error: this.translate.instant(LocIds.FailedToSaveSettings),
             });
           })
         );

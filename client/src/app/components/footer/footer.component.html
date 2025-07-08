@@ -1,6 +1,22 @@
 <div class="container">
-  <span>&copy; {{ owner }} | {{ now }} | {{ title }}</span>
-  <span class="theme-label" (click)="onThemeModeClick()"
-    >Switch to {{ nextThemeMode$ | async }} mode</span
-  >
+  <div class="footer-text">
+    <span
+      >&copy; varganorbert222 | {{ now }} | Comanche Remake |
+      {{ LocIds.EditorTitle | translate }} | {{ LocIds.Language | translate }}:
+      <mat-select
+        [(value)]="langSelectData.value"
+        (selectionChange)="onLangSelectChange($event)"
+      >
+        @for (item of langSelectData.values; track $index) {
+        <mat-option [value]="item">{{ item | uppercase }}</mat-option>
+        }
+      </mat-select>
+    </span>
+  </div>
+  <span class="theme-label" (click)="onThemeModeClick()">{{
+    (LocIds.SwitchToTheme | translate).replace(
+      "{x}",
+      (nextThemeMode$ | async) ?? LocIds.Unknown | translate
+    )
+  }}</span>
 </div>

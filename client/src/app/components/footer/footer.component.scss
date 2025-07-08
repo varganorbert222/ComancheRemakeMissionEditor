@@ -22,3 +22,14 @@
 .theme-label:hover {
   text-decoration: underline;
 }
+
+.footer-text {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+mat-select {
+  min-width: 100px;
+  max-width: fit-content;
+}

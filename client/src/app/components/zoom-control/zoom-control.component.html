@@ -1,24 +1,24 @@
 <div class="title">
-  <span>Zoom control</span>
+  <span>{{ LocIds.ZoomControl | translate }}</span>
 </div>
 <div class="content">
   <div class="buttons">
     <app-button
       [icon]="'add'"
       [isMini]="true"
-      [tooltip]="'Zoom in'"
+      [tooltip]="LocIds.ZoomIn | translate"
       (onClick)="onButtonClickedHandler('zoom-in')"
     ></app-button>
     <app-button
       [icon]="'remove'"
       [isMini]="true"
-      [tooltip]="'Zoom out'"
+      [tooltip]="LocIds.ZoomOut | translate"
       (onClick)="onButtonClickedHandler('zoom-out')"
     ></app-button>
     <app-button
       [icon]="'refresh'"
       [isMini]="true"
-      [tooltip]="'Reset'"
+      [tooltip]="LocIds.Reset | translate"
       (onClick)="onButtonClickedHandler('zoom-reset')"
     ></app-button>
   </div>
@@ -26,5 +26,6 @@
     [height]="'31px'"
     [isDisabled]="true"
     [label]="`${this.zoom | number: '1.3-3' }X`"
+    [tooltip]="LocIds.ZoomValue | translate"
   ></app-button>
 </div>

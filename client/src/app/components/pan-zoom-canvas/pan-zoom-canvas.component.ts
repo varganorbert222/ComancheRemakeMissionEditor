@@ -6,7 +6,9 @@ import {
   HostBinding,
   HostListener,
   Input,
+  OnChanges,
   Output,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { ZoomEvent } from './interfaces/zoom-event.interface';
@@ -16,7 +18,7 @@ import { ZoomEvent } from './interfaces/zoom-event.interface';
   templateUrl: './pan-zoom-canvas.component.html',
   styleUrls: ['./pan-zoom-canvas.component.scss'],
 })
-export class PanZoomCanvasComponent implements AfterViewInit {
+export class PanZoomCanvasComponent implements AfterViewInit, OnChanges {
   @HostBinding('class.panning') isPanning = false;
 
   @ViewChild('canvas', { static: true })
@@ -53,6 +55,9 @@ export class PanZoomCanvasComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.ctx = this.canvasRef.nativeElement.getContext('2d')!;
     this.resize();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
     this.isPanning = !this.disableMouseEvents;
   }
 

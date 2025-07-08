@@ -20,7 +20,7 @@
   extended
   type="button"
   (click)="click($event)"
-  [matTooltip]="tooltip"
+  [matTooltip]="tooltip ?? LocIds.Unknown | translate"
   [ariaLabel]="label"
   [title]="label"
   [disabled]="isDisabled"
@@ -32,10 +32,12 @@
     <span class="button-content-icon">
       <mat-icon>{{ icon }}</mat-icon>
     </span>
-    } @if (label) {
-    <span class="button-content-label"
-      >{{ label }} @if (shortcut) { ({{ shortcut }}) }</span
-    >}
+    } @if (label || shortcut) {
+    <div class="button-content-label">
+      @if (label) {<span>{{ label }}</span
+      >} @if (shortcut) { <span>({{ shortcut }})</span> }
+    </div>
+    }
   </div>
 </button>
 }

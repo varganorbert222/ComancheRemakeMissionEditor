@@ -1,7 +1,9 @@
 import {
   ApplicationConfig,
   importProvidersFrom,
+  inject,
   provideZoneChangeDetection,
+  provideAppInitializer,
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
@@ -13,7 +15,11 @@ import { TerrainDataEffects } from './store/terrain-data/terrain-data.effects';
 import { PreferencesEffects } from './store/preferences/preferences.effects';
 import { PreferencesReducer } from './store/preferences/preferences.reducer';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import {
+  TranslateLoader,
+  TranslateModule,
+  TranslateService,
+} from '@ngx-translate/core';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (
   http: HttpClient
@@ -23,6 +29,12 @@ const appStateProviders = [
   provideState('terrainData', TerrainDataReducer.terrainDataReducer),
   provideState('preferences', PreferencesReducer.preferencesReducer),
 ];
+
+export function appTranslateInitializer(translate: TranslateService) {
+  const osLang: string = window.navigator.language.substring(0, 2);
+  translate.setDefaultLang(osLang);
+  return translate.use(osLang);
+}
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -39,6 +51,9 @@ export const appConfig: ApplicationConfig = {
         },
       }),
     ]),
+    provideAppInitializer(() =>
+      appTranslateInitializer(inject(TranslateService))
+    ),
     provideEffects([TerrainDataEffects, PreferencesEffects]),
     ...appStateProviders,
   ],

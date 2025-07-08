@@ -39,6 +39,8 @@ import { ModalData } from './components/modal/interfaces/modal-data.interface';
 import { NewMissionModalComponent } from './components/new-mission-modal/new-mission-modal.component';
 import { ZoomControlComponent } from './components/zoom-control/zoom-control.component';
 import { ZoomEvent } from './components/pan-zoom-canvas/interfaces/zoom-event.interface';
+import { MenuDataService } from './services/menu-data/menu-data.service';
+import { LocIds } from './enums/loc-ids.enum';
 
 @Component({
   selector: 'app-root',
@@ -99,7 +101,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   private renderMode: RenderMode = RenderMode.Empty;
 
   toolbarData: ToolbarData = {
-    items: ToolbarMenuData,
+    items: this.menuData.getToolbarData(),
     values: {
       [MenuItemIds.ToggleDepthMap]: this.renderMode === RenderMode.Heightmap,
     },
@@ -124,7 +126,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     private readonly store: Store<{ terrainData: TerrainData }>,
     private readonly renderer: Renderer2,
     private readonly translate: TranslateService,
-    private readonly dialog: MatDialog
+    private readonly dialog: MatDialog,
+    private readonly menuData: MenuDataService
   ) {
     this.initLanguage();
 
@@ -133,7 +136,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       .pipe(
         map((preferences: Preferences) => {
           return {
-            sections: SideMenuSectionsData,
+            sections: this.menuData.getMenuData(),
             values: preferences,
           };
         })
@@ -187,9 +190,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    this.translate.get('editor-title').subscribe((text) => {
-      this.setDocTitle(text);
-    });
+    this.setDocTitle(this.translate.instant(LocIds.EditorTitle));
     this.loadAppData();
   }
 
@@ -203,8 +204,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   private initLanguage() {
-    const osLang = navigator.language.substring(0, 2) || 'en';
-
+    const osLang = this.translate.getBrowserLang() ?? 'en';
     this.translate.addLangs(['en', 'hu']);
     this.translate.setDefaultLang(osLang);
     this.translate.use(osLang);

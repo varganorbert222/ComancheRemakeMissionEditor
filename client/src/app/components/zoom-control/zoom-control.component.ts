@@ -1,17 +1,20 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ButtonComponent } from '../button/button.component';
 import { DecimalPipe } from '@angular/common';
 import { MapCanvasComponent } from '../map-canvas/map-canvas.component';
+import { LocIds } from '../../enums/loc-ids.enum';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-zoom-control',
-  imports: [ButtonComponent, DecimalPipe],
+  imports: [ButtonComponent, DecimalPipe, TranslateModule],
   templateUrl: './zoom-control.component.html',
   styleUrl: './zoom-control.component.scss',
 })
 export class ZoomControlComponent {
   @Input() mapCanvas?: MapCanvasComponent;
 
+  LocIds = LocIds;
   zoom: number = 1;
 
   updateZoom() {

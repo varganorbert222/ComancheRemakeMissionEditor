@@ -11,18 +11,19 @@
     [disabled]="false"
     [matTooltip]="menuItem.tooltip"
     (change)="onToggleChange($event, menuItem)"
-    ><span class="toggle-label">{{ menuItem.label }}</span></mat-slide-toggle
+    ><span class="toggle-label">{{
+      menuItem.label ?? LocIds.Unknown | translate
+    }}</span></mat-slide-toggle
   >
   } @else if (menuItem.type === MenuItemType.Separator) {
   <div class="separator-vertical"></div>
   } @else {
   <app-button
-    [label]="menuItem.label"
+    [label]="menuItem.label ?? LocIds.Unknown | translate"
     [icon]="menuItem.icon"
     [shortcut]="menuItem.shortcut"
     [tooltip]="menuItem.tooltip"
     (onClick)="onButtonClick(menuItem)"
-    [width]="'100px'"
   ></app-button>
   } }
 </div>

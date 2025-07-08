@@ -1,3 +1,25 @@
 {
-  "editor-title": "Küldetés szerkesztő"
+  "editor-title": "Küldetés szerkesztő",
+  "refresh-screen": "Képernyő frissítése",
+  "waypoint-manager": "Útvonalpont kezelő",
+  "wind-manager": "Szélkezelő",
+  "toggle-depth-map": "Mélységtérkép",
+  "redraws-the-map-contents-on-screen": "A térkép tartalmának újrarajzolása a képernyőn",
+  "edit-player-and-ai-waypoints": "Játékos és MI útvonalpontok szerkesztése",
+  "edit-wind-positions-directions-and-strengths": "Szélhelyzetek, irányok és erősségek szerkesztése",
+  "the-editor-shows-the-colormap-or-heightmap-of-the-map": "A szerkesztő a térkép színképét vagy magasságtérképét jeleníti meg",
+  "zoom-control": "Nagyításvezérlés",
+  "switch-to-theme": "Váltás {x} témára",
+  "light": "világos",
+  "dark": "sötét",
+  "settings-were-saved-successfully": "A beállítások mentése sikeresen megtörtént.",
+  "an-error-occurred-while-saving-the-settings": "Hiba történt a beállítások mentése során.",
+  "failed-to-save-settings": "Nem sikerült a beállításokat menteni.",
+  "failed-to-load-settings": "A beállítások betöltése sikertelen.",
+  "zoom-in": "Nagyítás",
+  "zoom-out": "Kicsinyítés",
+  "reset": "Visszaállítás",
+  "zoom-value": "Nagyítás mértéke",
+  "language": "Nyelv",
+  "unknown": "Ismeretlen"
 }
