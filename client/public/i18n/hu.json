@@ -71,5 +71,8 @@
   "show-true-direction": "Valódi irány megjelenítése",
   "displaying-the-orientation-of-objects": "Az objektumok tájolásának megjelenítése",
   "show-zoom-spot": "Nagyított terület megjelenítése",
-  "display-of-the-currently-visible-map-detail-from-the-entire-playing-field": "A jelenleg látható térképrészlet megjelenítése az egész játéktéren"
+  "display-of-the-currently-visible-map-detail-from-the-entire-playing-field": "A jelenleg látható térképrészlet megjelenítése az egész játéktéren",
+
+  "ok": "Oké",
+  "cancel": "Mégsem"
 }

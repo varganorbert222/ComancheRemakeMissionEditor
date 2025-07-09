@@ -7,12 +7,12 @@ import {
 } from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
-import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
 import { LocIds } from '../../enums/loc-ids.enum';
 
 @Component({
   selector: 'app-button',
-  imports: [MatTooltipModule, MatIconModule, TranslateModule],
+  imports: [MatTooltipModule, MatIconModule, MatButtonModule],
   templateUrl: './button.component.html',
   styleUrl: './button.component.scss',
 })

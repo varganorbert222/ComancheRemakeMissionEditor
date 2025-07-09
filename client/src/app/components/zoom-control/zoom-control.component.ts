@@ -4,10 +4,11 @@ import { DecimalPipe } from '@angular/common';
 import { MapCanvasComponent } from '../map-canvas/map-canvas.component';
 import { LocIds } from '../../enums/loc-ids.enum';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-zoom-control',
-  imports: [ButtonComponent, DecimalPipe, TranslateModule],
+  imports: [ButtonComponent, DecimalPipe, TranslateModule, MatButtonModule],
   templateUrl: './zoom-control.component.html',
   styleUrl: './zoom-control.component.scss',
 })

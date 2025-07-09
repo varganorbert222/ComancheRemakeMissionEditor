@@ -71,5 +71,8 @@
   "show-true-direction": "Show true direction",
   "displaying-the-orientation-of-objects": "Displaying the orientation of objects",
   "show-zoom-spot": "Show zoom spot",
-  "display-of-the-currently-visible-map-detail-from-the-entire-playing-field": "Display of the currently visible map detail from the entire playing field"
+  "display-of-the-currently-visible-map-detail-from-the-entire-playing-field": "Display of the currently visible map detail from the entire playing field",
+
+  "ok": "Ok",
+  "cancel": "Cancel"
 }

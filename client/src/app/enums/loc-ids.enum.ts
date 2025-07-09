@@ -76,4 +76,7 @@ export enum LocIds {
   ShowTrueDirectionTooltip = 'displaying-the-orientation-of-objects',
   ShowZoomSpot = 'show-zoom-spot',
   ShowZoomSpotTooltip = 'display-of-the-currently-visible-map-detail-from-the-entire-playing-field',
+
+  Ok = 'ok',
+  Cancel = 'cancel',
 }

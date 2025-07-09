@@ -7,10 +7,17 @@ import {
 import { ModalData } from './interfaces/modal-data.interface';
 import { ModalButton } from './interfaces/modal-button.interface';
 import { NgComponentOutlet } from '@angular/common';
+import { ButtonComponent } from '../button/button.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-modal',
-  imports: [MatDialogModule, NgComponentOutlet],
+  imports: [
+    MatDialogModule,
+    NgComponentOutlet,
+    ButtonComponent,
+    TranslateModule,
+  ],
   templateUrl: './modal.component.html',
   styleUrl: './modal.component.scss',
 })

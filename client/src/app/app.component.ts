@@ -23,24 +23,21 @@ import { InspectorComponent } from './components/inspector/inspector.component';
 import { CommonModule } from '@angular/common';
 import { SideMenuData } from './components/side-menu/interfaces/side-menu-data.interface';
 import { PreferencesSelectors } from './store/preferences/preferences.selectors';
-import { SideMenuSectionsData } from './services/menu-data/data/menu-data.data';
 import { Preferences } from './interfaces/preferences.interface';
 import { MenuItem } from './components/interfaces/menu-item.interface';
 import { PreferencesActions } from './store/preferences/preferences.actions';
 import { ToolbarData } from './components/toolbar/interfaces/toolbar-data.interface';
-import { ToolbarMenuData } from './services/menu-data/data/toolbar-data.data';
 import { MenuItemIds } from './enums/menu-item-ids.enum';
 import { MiniMapComponent } from './components/mini-map/mini-map.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { TranslateService } from '@ngx-translate/core';
-import { ModalComponent } from './components/modal/modal.component';
-import { MatDialogModule, MatDialog } from '@angular/material/dialog';
-import { ModalData } from './components/modal/interfaces/modal-data.interface';
+import { MatDialogModule } from '@angular/material/dialog';
 import { NewMissionModalComponent } from './components/new-mission-modal/new-mission-modal.component';
 import { ZoomControlComponent } from './components/zoom-control/zoom-control.component';
 import { ZoomEvent } from './components/pan-zoom-canvas/interfaces/zoom-event.interface';
 import { MenuDataService } from './services/menu-data/menu-data.service';
 import { LocIds } from './enums/loc-ids.enum';
+import { DialogService } from './services/dialog/dialog.service';
 
 @Component({
   selector: 'app-root',
@@ -126,7 +123,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     private readonly store: Store<{ terrainData: TerrainData }>,
     private readonly renderer: Renderer2,
     private readonly translate: TranslateService,
-    private readonly dialog: MatDialog,
+    private readonly dialog: DialogService,
     private readonly menuData: MenuDataService
   ) {
     this.initLanguage();
@@ -256,20 +253,18 @@ export class AppComponent implements OnInit, AfterViewInit {
     const item: MenuItem = params.item;
 
     if (id === MenuItemIds.NewMission) {
-      this.dialog.open(ModalComponent, {
-        data: {
-          title: 'New Mission',
-          contentComponent: NewMissionModalComponent,
-          buttons: [
-            {
-              label: 'Ok',
-              color: 'primary',
-              action: () => this.onNewMission(),
-            },
-            { label: 'Cancel', color: 'warn', closeOnClick: true },
-          ],
-        },
-      } as ModalData);
+      this.dialog.open({
+        title: LocIds.NewMission,
+        component: NewMissionModalComponent,
+        buttons: [
+          {
+            label: LocIds.Ok,
+            color: 'primary',
+            action: () => this.onNewMission(),
+          },
+          { label: LocIds.Cancel, color: 'warn', closeOnClick: true },
+        ],
+      });
 
       return;
     }

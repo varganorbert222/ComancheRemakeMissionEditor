@@ -4,14 +4,12 @@
 
 <mat-dialog-content>
   <ng-container
-    *ngComponentOutlet="modalData.contentComponent; injector: modalData.data"
+    *ngComponentOutlet="modalData.component; injector: modalData.data"
   ></ng-container>
 </mat-dialog-content>
 
 <mat-dialog-actions class="buttons">
   @for (button of modalData.buttons || defaultButtons; track $index) {
-  <button mat-button type="button" (click)="onButtonClick(button)">
-    {{ button.label }}
-  </button>
+    <app-button [label]="button.label | translate" (onClick)="onButtonClick(button)"></app-button>
   }
 </mat-dialog-actions>

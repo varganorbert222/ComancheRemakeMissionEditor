@@ -1,7 +1,6 @@
 @if (isMini) {
 <button
-  matMiniFab
-  type="button"
+  mat-icon-button
   (click)="click($event)"
   [matTooltip]="tooltip"
   [ariaLabel]="label"
@@ -16,11 +15,9 @@
 </button>
 } @else {
 <button
-  mat-fab
-  extended
-  type="button"
+  mat-flat-button
   (click)="click($event)"
-  [matTooltip]="tooltip ?? LocIds.Unknown | translate"
+  [matTooltip]="tooltip"
   [ariaLabel]="label"
   [title]="label"
   [disabled]="isDisabled"
