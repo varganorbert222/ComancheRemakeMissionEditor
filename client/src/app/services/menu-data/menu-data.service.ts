@@ -13,22 +13,39 @@ export class MenuDataService {
   constructor(private readonly translate: TranslateService) {}
 
   getMenuData(): SideMenuSection[] {
-    return SideMenuSectionsData;
+    return (
+      SideMenuSectionsData.map((x) => {
+        return {
+          ...x,
+          title: this.translate.instant(x.title ?? LocIds.Unknown),
+          items:
+            x.items?.map((y) => {
+              return {
+                ...y,
+                label: this.translate.instant(y.label ?? LocIds.Unknown),
+                tooltip: this.translate.instant(y.tooltip ?? LocIds.Unknown),
+              } as MenuItem;
+            }) ?? [],
+        } as SideMenuSection;
+      }) ?? []
+    );
   }
 
   getToolbarData(): MenuItem[] {
-    return ToolbarMenuData.map((x) => {
-      if (!x.label) {
-        console.warn('The menu item does not have a label.', x);
-      }
-      if (!x.tooltip) {
-        console.warn('The menu item does not have a tooltip.', x);
-      }
-      return {
-        ...x,
-        label: this.translate.instant(x.label ?? LocIds.Unknown),
-        tooltip: this.translate.instant(x.tooltip ?? LocIds.Unknown),
-      } as MenuItem;
-    });
+    return (
+      ToolbarMenuData.map((x) => {
+        if (!x.label) {
+          console.warn('The menu item does not have a label.', x);
+        }
+        if (!x.tooltip) {
+          console.warn('The menu item does not have a tooltip.', x);
+        }
+        return {
+          ...x,
+          label: this.translate.instant(x.label ?? LocIds.Unknown),
+          tooltip: this.translate.instant(x.tooltip ?? LocIds.Unknown),
+        } as MenuItem;
+      }) ?? []
+    );
   }
 }

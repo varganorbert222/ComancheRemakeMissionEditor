@@ -16,6 +16,8 @@
   "an-error-occurred-while-saving-the-settings": "Hiba történt a beállítások mentése során.",
   "failed-to-save-settings": "Nem sikerült a beállításokat menteni.",
   "failed-to-load-settings": "A beállítások betöltése sikertelen.",
+
+  "view": "Nézet",
   "zoom-in": "Nagyítás",
   "zoom-out": "Kicsinyítés",
   "reset": "Visszaállítás",
@@ -23,6 +25,7 @@
   "language": "Nyelv",
   "unknown": "Ismeretlen",
 
+  "mission": "Küldetés",
   "new-mission": "Új küldetés",
   "create-a-new-mission": "Új küldetés létrehozása",
   "file-open": "Megnyitás",
@@ -38,6 +41,7 @@
   "export-mission-data": "Adatok exportálása",
   "export-mission-data-to-game": "Küldetésadatok exportálása a játékba",
 
+  "object": "Objektum",
   "open-object-file": "Objektumfájl megnyitása",
   "save-object-file": "Objektumfájl mentése",
   "save-as-object-file": "Objektumfájl mentése másként",
@@ -45,6 +49,7 @@
   "select-base-class-tooltip": "Ctrl+Z",
   "clear-all-objects-instances": "Minden objektumpéldány törlése",
 
+  "preferences": "Beállítások",
   "show-all-objects": "Minden objektum megjelenítése",
   "display-all-kinds-of-objects": "Mindenféle objektum megjelenítése",
   "show-static": "Statikus objektumok megjelenítése",

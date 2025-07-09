@@ -17,12 +17,12 @@ export class LocalStorageService {
       const serialized = JSON.stringify(value);
       localStorage.setItem(key, serialized);
       this.toaster.show(
-        this.translate.instant(LocIds.SettingsWereSavedSuccessfully)
+        this.translate.instant(LocIds.SettingsSavedSuccessfully)
       );
     } catch (e) {
       console.warn('Error during save to storage:', e);
       this.toaster.show(
-        this.translate.instant(LocIds.AnErrorOccurredWhileSavingTheSettings)
+        this.translate.instant(LocIds.ErrorWhileSavingSettings)
       );
       return false;
     }
@@ -34,7 +34,7 @@ export class LocalStorageService {
       const item = localStorage.getItem(key);
       if (item) {
         this.toaster.show(
-          this.translate.instant(LocIds.SettingsWereSavedSuccessfully)
+          this.translate.instant(LocIds.SettingsSavedSuccessfully)
         );
         return JSON.parse(item) as T;
       }

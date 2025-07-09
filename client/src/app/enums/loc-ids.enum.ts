@@ -18,6 +18,7 @@ export enum LocIds {
   FailedToSaveSettings = 'failed-to-save-settings',
   FailedToLoadSettings = 'failed-to-load-settings',
 
+  View = 'view',
   ZoomIn = 'zoom-in',
   ZoomOut = 'zoom-out',
   Reset = 'reset',
@@ -26,6 +27,7 @@ export enum LocIds {
   Unknown = 'unknown',
 
   // 📁 Mission
+  Mission = 'mission',
   NewMission = 'new-mission',
   NewMissionTooltip = 'create-a-new-mission',
   FileOpen = 'file-open',
@@ -42,6 +44,7 @@ export enum LocIds {
   ExportMissionDataTooltip = 'export-mission-data-to-game',
 
   // 🧱 Object
+  Object = 'object',
   OpenObjectFile = 'open-object-file',
   SaveObjectFile = 'save-object-file',
   SaveAsObjectFile = 'save-as-object-file',
@@ -50,6 +53,7 @@ export enum LocIds {
   ClearAllObjectsInstances = 'clear-all-objects-instances',
 
   // ⚙️ Preferences
+  Preferences = 'preferences',
   ShowAllObjects = 'show-all-objects',
   ShowAllObjectsTooltip = 'display-all-kinds-of-objects',
   ShowStatic = 'show-static',

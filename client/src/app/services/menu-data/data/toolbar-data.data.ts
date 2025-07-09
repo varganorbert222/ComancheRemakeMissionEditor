@@ -7,17 +7,17 @@ export const ToolbarMenuData: MenuItem[] = [
   {
     icon: 'refresh',
     label: LocIds.RefreshScreen,
-    tooltip: LocIds.RedrawsTheMapContentsOnScreen,
+    tooltip: LocIds.RefreshScreenTooltip,
   },
   {
     icon: 'polyline',
     label: LocIds.WaypointManager,
-    tooltip: LocIds.EditPlayerAndAIWaypoints,
+    tooltip: LocIds.WaypointManagerTooltip,
   },
   {
     icon: 'air',
     label: LocIds.WindManager,
-    tooltip: LocIds.EditWindPositionsDirectionsAndStrengths,
+    tooltip: LocIds.WindManagerTooltip,
   },
   {
     type: MenuItemType.Separator,
@@ -26,6 +26,6 @@ export const ToolbarMenuData: MenuItem[] = [
     id: MenuItemIds.ToggleDepthMap,
     label: LocIds.ToggleDepthMap,
     type: MenuItemType.Toggle,
-    tooltip: LocIds.TheEditorShowsTheColormapOrHeightmapOfTheMap,
+    tooltip: LocIds.ToggleDepthMapTooltip,
   },
 ] as MenuItem[];

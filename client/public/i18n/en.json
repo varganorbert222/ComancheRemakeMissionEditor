@@ -16,6 +16,8 @@
   "an-error-occurred-while-saving-the-settings": "An error occurred while saving the settings.",
   "failed-to-save-settings": "Failed to save settings.",
   "failed-to-load-settings": "Failed to load settings.",
+
+  "view": "View",
   "zoom-in": "Zoom in",
   "zoom-out": "Zoom out",
   "reset": "Reset",
@@ -23,6 +25,7 @@
   "language": "Language",
   "unknown": "Unknown",
 
+  "mission": "Mission",
   "new-mission": "New",
   "create-a-new-mission": "Create a new mission",
   "file-open": "Open",
@@ -38,6 +41,7 @@
   "export-mission-data": "Export data",
   "export-mission-data-to-game": "Export mission data to game",
 
+  "object": "Object",
   "open-object-file": "Open object file",
   "save-object-file": "Save object file",
   "save-as-object-file": "Save as object file",
@@ -45,6 +49,7 @@
   "select-base-class-tooltip": "Ctrl+Z",
   "clear-all-objects-instances": "Clear all objects instances",
 
+  "preferences": "Preferences",
   "show-all-objects": "Show all objects",
   "display-all-kinds-of-objects": "Display all kinds of objects",
   "show-static": "Show static",
