@@ -94,22 +94,26 @@ export const SideMenuSectionsData: SideMenuSection[] = [
     title: LocIds.View,
     items: [
       {
+        id: MenuItemIds.ZoomIn,
         icon: 'add',
         label: LocIds.ZoomIn,
         shortcut: '+',
       },
       {
+        id: MenuItemIds.ZoomOut,
         icon: 'remove',
         label: LocIds.ZoomOut,
         shortcut: '-',
       },
       {
+        id: MenuItemIds.Reset,
         icon: 'refresh',
         label: LocIds.Reset,
         shortcut: '*',
       },
       { type: MenuItemType.Separator },
       {
+        id: MenuItemIds.RedrawScreen,
         icon: 'refresh',
         label: LocIds.RefreshScreen,
         tooltip: LocIds.RefreshScreenTooltip,

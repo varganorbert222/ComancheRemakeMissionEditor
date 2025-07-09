@@ -292,6 +292,22 @@ export class AppComponent implements OnInit, AfterViewInit {
     if (id === MenuItemIds.ExportMissionData) {
       return;
     }
+    if (id === MenuItemIds.ZoomIn) {
+      this.mapCanvas.zoomStep(-1);
+      return;
+    }
+    if (id === MenuItemIds.ZoomOut) {
+      this.mapCanvas.zoomStep(1);
+      return;
+    }
+    if (id === MenuItemIds.Reset) {
+      this.mapCanvas.zoomStep(0);
+      return;
+    }
+    if (id === MenuItemIds.RedrawScreen) {
+      this.mapCanvas.draw();
+      return;
+    }
   }
 
   onMenuItemToggleChange(params: { checked: boolean; item: MenuItem }) {

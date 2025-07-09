@@ -7,5 +7,9 @@ export enum MenuItemIds {
   ExportMission = 'export_mission',
   EditMission = 'edit_mission',
   ExportMissionData = 'export_mission_data',
+  ZoomIn = 'zoom_in',
+  ZoomOut = 'zoom_out',
+  Reset = 'reset',
+  RedrawScreen = 'redraw_screen',
   Unknown = 'unknown',
 }
