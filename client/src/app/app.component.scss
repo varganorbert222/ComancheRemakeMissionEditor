@@ -1,13 +1,23 @@
-@use "variables" as vars;
+@use 'variables' as vars;
+
+.editor-container,
+.toolbar,
+.sidebar,
+.map-area,
+.inspector,
+.footer {
+  background: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+}
 
 .editor-container {
   display: grid;
   grid-template-rows: vars.$toolbar-height auto vars.$footer-height;
   grid-template-columns: vars.$side-menu-width auto vars.$inspector-menu-width;
   grid-template-areas:
-    "toolbar toolbar toolbar"
-    "sidebar map-area inspector"
-    "footer footer footer";
+    'toolbar toolbar toolbar'
+    'sidebar map-area inspector'
+    'footer footer footer';
   height: 100%;
 
   .toolbar {
