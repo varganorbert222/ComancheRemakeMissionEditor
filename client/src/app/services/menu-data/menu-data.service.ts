@@ -5,6 +5,7 @@ import { SideMenuSectionsData } from './data/menu-data.data';
 import { ToolbarMenuData } from './data/toolbar-data.data';
 import { TranslateService } from '@ngx-translate/core';
 import { LocIds } from '../../enums/loc-ids.enum';
+import { MenuItemType } from '../../components/enums/menu-item-type.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -12,20 +13,41 @@ import { LocIds } from '../../enums/loc-ids.enum';
 export class MenuDataService {
   constructor(private readonly translate: TranslateService) {}
 
+  private translateItem(item: MenuItem) {
+    if (item.type === MenuItemType.Separator) {
+      return item;
+    }
+
+    const label: string = item.label ?? LocIds.Unknown;
+    const tooltip: string = item.tooltip ?? LocIds.Unknown;
+
+    if (!item.label) {
+      console.warn('The menu item does not have a label.', item);
+    }
+    if (!item.tooltip) {
+      console.warn('The menu item does not have a tooltip.', item);
+    }
+
+    return {
+      ...item,
+      label: this.translate.instant(label),
+      tooltip: this.translate.instant(tooltip),
+    } as MenuItem;
+  }
+
   getMenuData(): SideMenuSection[] {
     return (
       SideMenuSectionsData.map((x) => {
+        const title: string = x.title ?? LocIds.Unknown;
+
+        if (!x.title) {
+          console.warn('The menu section does not have a title.', x);
+        }
+
         return {
           ...x,
-          title: this.translate.instant(x.title ?? LocIds.Unknown),
-          items:
-            x.items?.map((y) => {
-              return {
-                ...y,
-                label: this.translate.instant(y.label ?? LocIds.Unknown),
-                tooltip: this.translate.instant(y.tooltip ?? LocIds.Unknown),
-              } as MenuItem;
-            }) ?? [],
+          title: this.translate.instant(title),
+          items: x.items?.map((y) => this.translateItem(y)) ?? [],
         } as SideMenuSection;
       }) ?? []
     );
@@ -34,17 +56,7 @@ export class MenuDataService {
   getToolbarData(): MenuItem[] {
     return (
       ToolbarMenuData.map((x) => {
-        if (!x.label) {
-          console.warn('The menu item does not have a label.', x);
-        }
-        if (!x.tooltip) {
-          console.warn('The menu item does not have a tooltip.', x);
-        }
-        return {
-          ...x,
-          label: this.translate.instant(x.label ?? LocIds.Unknown),
-          tooltip: this.translate.instant(x.tooltip ?? LocIds.Unknown),
-        } as MenuItem;
+        return this.translateItem(x);
       }) ?? []
     );
   }
