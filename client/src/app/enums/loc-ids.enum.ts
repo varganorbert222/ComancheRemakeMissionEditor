@@ -49,7 +49,7 @@ export enum LocIds {
   SaveObjectFile = 'save-object-file',
   SaveAsObjectFile = 'save-as-object-file',
   SelectBaseClass = 'select-base-class',
-  SelectBaseClassTooltip = 'ctrl-z',
+  SelectBaseClassTooltip = 'select-base-class-tooltip',
   ClearAllObjectsInstances = 'clear-all-objects-instances',
 
   // ⚙️ Preferences

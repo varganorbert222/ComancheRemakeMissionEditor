@@ -1,7 +1,7 @@
 @for (menuSection of sideMenuData?.sections; track $index) {
 <mat-expansion-panel class="panel">
   <mat-expansion-panel-header>
-    <mat-panel-title>{{ menuSection.title }}</mat-panel-title>
+    <mat-panel-title>{{ menuSection.title ?? LocIds.Unknown | translate }}</mat-panel-title>
   </mat-expansion-panel-header>
   @for (menuItem of menuSection.items; track $index) {
   <div class="item">
@@ -15,15 +15,15 @@
       labelPosition="after"
       [checked]="sideMenuData?.values?.[menuItem?.id ?? 'unknown_id'] ?? true"
       [disabled]="false"
-      [matTooltip]="menuItem.tooltip"
+      [matTooltip]="menuItem.tooltip ?? LocIds.Unknown | translate"
       (change)="onToggleChange($event, menuItem)"
-      ><span class="toggle-label">{{ menuItem.label }}</span></mat-slide-toggle
+      ><span class="toggle-label">{{ menuItem.label ?? LocIds.Unknown | translate }}</span></mat-slide-toggle
     >} @else {
     <app-button
-      [label]="menuItem.label"
+      [label]="menuItem.label ?? LocIds.Unknown | translate"
       [icon]="menuItem.icon"
       [shortcut]="menuItem.shortcut"
-      [tooltip]="menuItem.tooltip"
+      [tooltip]="menuItem.tooltip ?? LocIds.Unknown | translate"
       (onClick)="onButtonClick(menuItem)"
       [width]="'100%'"
     ></app-button>

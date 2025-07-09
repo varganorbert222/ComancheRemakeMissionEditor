@@ -46,7 +46,7 @@
   "save-object-file": "Objektumfájl mentése",
   "save-as-object-file": "Objektumfájl mentése másként",
   "select-base-class": "Alaposztály kiválasztása",
-  "select-base-class-tooltip": "Ctrl+Z",
+  "select-base-class-tooltip": "",
   "clear-all-objects-instances": "Minden objektumpéldány törlése",
 
   "preferences": "Beállítások",

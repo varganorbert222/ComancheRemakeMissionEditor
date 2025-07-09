@@ -10,6 +10,8 @@ import { MenuItem } from '../interfaces/menu-item.interface';
 import { ButtonComponent } from '../button/button.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SideMenuData } from './interfaces/side-menu-data.interface';
+import { TranslateModule } from '@ngx-translate/core';
+import { LocIds } from '../../enums/loc-ids.enum';
 
 @Component({
   selector: 'app-side-menu',
@@ -19,11 +21,13 @@ import { SideMenuData } from './interfaces/side-menu-data.interface';
     MatExpansionModule,
     ButtonComponent,
     MatTooltipModule,
+    TranslateModule,
   ],
   templateUrl: './side-menu.component.html',
   styleUrl: './side-menu.component.scss',
 })
 export class SideMenuComponent {
+  LocIds = LocIds;
   MenuItemType = MenuItemType;
 
   @Input() sideMenuData?: SideMenuData | null | undefined;

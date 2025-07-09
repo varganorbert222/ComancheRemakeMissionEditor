@@ -9,7 +9,7 @@
     labelPosition="after"
     [checked]="toolbarData?.values?.[menuItem?.id ?? 'unknown_id'] ?? true"
     [disabled]="false"
-    [matTooltip]="menuItem.tooltip"
+    [matTooltip]="menuItem.tooltip ?? LocIds.Unknown | translate"
     (change)="onToggleChange($event, menuItem)"
     ><span class="toggle-label">{{
       menuItem.label ?? LocIds.Unknown | translate
@@ -22,7 +22,7 @@
     [label]="menuItem.label ?? LocIds.Unknown | translate"
     [icon]="menuItem.icon"
     [shortcut]="menuItem.shortcut"
-    [tooltip]="menuItem.tooltip"
+    [tooltip]="menuItem.tooltip ?? LocIds.Unknown | translate"
     (onClick)="onButtonClick(menuItem)"
   ></app-button>
   } }

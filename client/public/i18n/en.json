@@ -46,7 +46,7 @@
   "save-object-file": "Save object file",
   "save-as-object-file": "Save as object file",
   "select-base-class": "Select base class",
-  "select-base-class-tooltip": "Ctrl+Z",
+  "select-base-class-tooltip": "",
   "clear-all-objects-instances": "Clear all objects instances",
 
   "preferences": "Preferences",
