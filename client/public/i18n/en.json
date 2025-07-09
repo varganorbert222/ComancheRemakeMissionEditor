@@ -16,7 +16,6 @@
   "an-error-occurred-while-saving-the-settings": "An error occurred while saving the settings.",
   "failed-to-save-settings": "Failed to save settings.",
   "failed-to-load-settings": "Failed to load settings.",
-
   "view": "View",
   "zoom-in": "Zoom in",
   "zoom-out": "Zoom out",
@@ -24,7 +23,6 @@
   "zoom-value": "Magnification level",
   "language": "Language",
   "unknown": "Unknown",
-
   "mission": "Mission",
   "new-mission": "New",
   "create-a-new-mission": "Create a new mission",
@@ -40,7 +38,6 @@
   "edit-mission-parameters": "Edit mission parameters",
   "export-mission-data": "Export data",
   "export-mission-data-to-game": "Export mission data to game",
-
   "object": "Object",
   "open-object-file": "Open object file",
   "save-object-file": "Save object file",
@@ -48,7 +45,6 @@
   "select-base-class": "Select base class",
   "select-base-class-tooltip": "",
   "clear-all-objects-instances": "Clear all objects instances",
-
   "preferences": "Preferences",
   "show-all-objects": "Show all objects",
   "display-all-kinds-of-objects": "Display all kinds of objects",
@@ -72,7 +68,6 @@
   "displaying-the-orientation-of-objects": "Displaying the orientation of objects",
   "show-zoom-spot": "Show zoom spot",
   "display-of-the-currently-visible-map-detail-from-the-entire-playing-field": "Display of the currently visible map detail from the entire playing field",
-
   "ok": "Ok",
   "cancel": "Cancel"
 }

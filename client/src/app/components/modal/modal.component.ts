@@ -9,6 +9,7 @@ import { ModalButton } from './interfaces/modal-button.interface';
 import { NgComponentOutlet } from '@angular/common';
 import { ButtonComponent } from '../button/button.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { LocIds } from '../../enums/loc-ids.enum';
 
 @Component({
   selector: 'app-modal',
@@ -23,8 +24,13 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class ModalComponent {
   defaultButtons: ModalButton[] = [
-    { label: 'Mégsem', color: 'warn', closeOnClick: true },
-    { label: 'OK', color: 'primary', closeOnClick: true },
+    { icon: 'block', label: LocIds.Cancel, color: 'warn', closeOnClick: true },
+    {
+      icon: 'add_task',
+      label: LocIds.Ok,
+      color: 'primary',
+      closeOnClick: true,
+    },
   ];
 
   constructor(

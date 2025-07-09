@@ -42,6 +42,36 @@ html {
       density: 0,
     )
   );
+  @include mat.fab-overrides(
+    (
+      container-shape: 4px,
+      container-elevation-shadow: none,
+      focus-container-elevation-shadow: none,
+      hover-container-elevation-shadow: none,
+      pressed-container-elevation-shadow: none,
+    )
+  );
+  @include mat.button-overrides(
+    (
+      filled-container-shape: 4px,
+    )
+  );
+  @include mat.slide-toggle-overrides(
+    (
+      handle-shape: 4px,
+      track-shape: 4px,
+    )
+  );
+  @include mat.expansion-overrides(
+    (
+      container-shape: 4px,
+    )
+  );
+  @include mat.dialog-overrides(
+    (
+      container-shape: 4px,
+    )
+  );
 }
 
 body.dark-mode {

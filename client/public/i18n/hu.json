@@ -16,7 +16,6 @@
   "an-error-occurred-while-saving-the-settings": "Hiba történt a beállítások mentése során.",
   "failed-to-save-settings": "Nem sikerült a beállításokat menteni.",
   "failed-to-load-settings": "A beállítások betöltése sikertelen.",
-
   "view": "Nézet",
   "zoom-in": "Nagyítás",
   "zoom-out": "Kicsinyítés",
@@ -24,7 +23,6 @@
   "zoom-value": "Nagyítás mértéke",
   "language": "Nyelv",
   "unknown": "Ismeretlen",
-
   "mission": "Küldetés",
   "new-mission": "Új küldetés",
   "create-a-new-mission": "Új küldetés létrehozása",
@@ -40,7 +38,6 @@
   "edit-mission-parameters": "Küldetés paramétereinek szerkesztése",
   "export-mission-data": "Adatok exportálása",
   "export-mission-data-to-game": "Küldetésadatok exportálása a játékba",
-
   "object": "Objektum",
   "open-object-file": "Objektumfájl megnyitása",
   "save-object-file": "Objektumfájl mentése",
@@ -48,7 +45,6 @@
   "select-base-class": "Alaposztály kiválasztása",
   "select-base-class-tooltip": "",
   "clear-all-objects-instances": "Minden objektumpéldány törlése",
-
   "preferences": "Beállítások",
   "show-all-objects": "Minden objektum megjelenítése",
   "display-all-kinds-of-objects": "Mindenféle objektum megjelenítése",
@@ -72,7 +68,6 @@
   "displaying-the-orientation-of-objects": "Az objektumok tájolásának megjelenítése",
   "show-zoom-spot": "Nagyított terület megjelenítése",
   "display-of-the-currently-visible-map-detail-from-the-entire-playing-field": "A jelenleg látható térképrészlet megjelenítése az egész játéktéren",
-
   "ok": "Oké",
   "cancel": "Mégsem"
 }

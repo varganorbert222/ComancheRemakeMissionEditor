@@ -11,11 +11,7 @@ export class DialogService {
 
   open(modalData: ModalData) {
     this.dialog.open(ModalComponent, {
-      data: {
-        title: modalData.title,
-        contentComponent: modalData.component,
-        buttons: modalData.buttons,
-      } as MatDialogConfig,
-    } as ModalData);
+      data: modalData,
+    });
   }
 }

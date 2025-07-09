@@ -103,6 +103,11 @@ export const SideMenuSectionsData: SideMenuSection[] = [
         label: LocIds.ZoomOut,
         shortcut: '-',
       },
+      {
+        icon: 'refresh',
+        label: LocIds.Reset,
+        shortcut: '*',
+      },
       { type: MenuItemType.Separator },
       {
         icon: 'refresh',

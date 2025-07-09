@@ -22,13 +22,19 @@
   &-label {
     width: 100%;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: 0.25rem;
   }
 }
 
 button {
+  padding: 4px;
+
+  ::ng-deep .mdc-button__label {
+    width: 100%;
+  }
+
   cursor: pointer;
 }
 

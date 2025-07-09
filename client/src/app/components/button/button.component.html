@@ -1,6 +1,25 @@
+<ng-template #buttonContent>
+  <div class="button-content">
+    @if (icon) {
+    <span class="button-content-icon">
+      <mat-icon>{{ icon }}</mat-icon>
+    </span>
+    } @if (label || shortcut) {
+    <div
+      class="button-content-label"
+      [style.justify-content]="shortcut ? 'space-between' : 'center'"
+    >
+      @if (label) {<span>{{ label }}</span
+      >} @if (shortcut) { <span>({{ shortcut }})</span> }
+    </div>
+    }
+  </div>
+</ng-template>
+
 @if (isMini) {
 <button
-  mat-icon-button
+  type="button"
+  mat-fab
   (click)="click($event)"
   [matTooltip]="tooltip"
   [ariaLabel]="label"
@@ -8,13 +27,15 @@
   [disabled]="isDisabled"
   [style.width]="width"
   [style.height]="height"
+  [style.min-width]="minWidth"
+  [style.min-height]="minHeight"
+  [color]="color"
 >
-  <span class="button-content-icon">
-    <mat-icon>{{ icon }}</mat-icon>
-  </span>
+  <ng-container *ngTemplateOutlet="buttonContent"></ng-container>
 </button>
 } @else {
 <button
+  type="button"
   mat-flat-button
   (click)="click($event)"
   [matTooltip]="tooltip"
@@ -23,18 +44,10 @@
   [disabled]="isDisabled"
   [style.width]="width"
   [style.height]="height"
+  [style.min-width]="minWidth"
+  [style.min-height]="minHeight"
+  [color]="color"
 >
-  <div class="button-content">
-    @if (icon) {
-    <span class="button-content-icon">
-      <mat-icon>{{ icon }}</mat-icon>
-    </span>
-    } @if (label || shortcut) {
-    <div class="button-content-label">
-      @if (label) {<span>{{ label }}</span
-      >} @if (shortcut) { <span>({{ shortcut }})</span> }
-    </div>
-    }
-  </div>
+  <ng-container *ngTemplateOutlet="buttonContent"></ng-container>
 </button>
 }

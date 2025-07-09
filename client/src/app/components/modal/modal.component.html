@@ -10,6 +10,11 @@
 
 <mat-dialog-actions class="buttons">
   @for (button of modalData.buttons || defaultButtons; track $index) {
-    <app-button [label]="button.label | translate" (onClick)="onButtonClick(button)"></app-button>
+  <app-button
+    [icon]="button.icon"
+    [label]="button.label | translate"
+    [color]="button.color"
+    (onClick)="onButtonClick(button)"
+  ></app-button>
   }
 </mat-dialog-actions>

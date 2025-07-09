@@ -258,11 +258,17 @@ export class AppComponent implements OnInit, AfterViewInit {
         component: NewMissionModalComponent,
         buttons: [
           {
+            icon: 'add_task',
             label: LocIds.Ok,
             color: 'primary',
             action: () => this.onNewMission(),
           },
-          { label: LocIds.Cancel, color: 'warn', closeOnClick: true },
+          {
+            icon: 'block',
+            label: LocIds.Cancel,
+            color: 'warn',
+            closeOnClick: true,
+          },
         ],
       });
 
