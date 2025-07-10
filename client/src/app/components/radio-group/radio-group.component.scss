@@ -1,10 +1,11 @@
 .radio-group {
-  display: flex;
+  display: grid;
+  grid-template-columns: 200px auto;
+  grid-template-rows: auto;
+  gap: 1rem;
   align-items: center;
-  width: 100%;
-  justify-content: end;
 
-  &-label {
-    margin-right: 0.5rem;
+  .radio-group-label {
+    text-align: end;
   }
 }

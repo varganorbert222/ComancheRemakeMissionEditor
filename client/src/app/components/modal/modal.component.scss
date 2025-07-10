@@ -1,5 +1,19 @@
 @use "../../variables" as vars;
 
+:host {
+  .mat-mdc-dialog-title,
+  .mat-mdc-dialog-content,
+  .mat-mdc-dialog-actions {
+    border: vars.$border;
+  }
+
+  .mat-mdc-dialog-content {
+    border-top: none;
+    border-bottom: none;
+    padding: 24px;
+  }
+}
+
 .buttons {
   gap: 1rem;
 }

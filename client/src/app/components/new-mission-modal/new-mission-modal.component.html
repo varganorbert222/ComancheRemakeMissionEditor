@@ -1,12 +1,69 @@
-<h4>Selected Terrain Type</h4>
-<app-select-group [inputGroupData]="mapTypeData"></app-select-group>
+<h2 class="dialog-title">New Mission Configuration</h2>
+
+<div class="select">
+  <h4>Selected Terrain Type</h4>
+  <app-select-group [inputGroupData]="mapTypeData"></app-select-group>
+</div>
 
 <div class="form-section">
   <h3 class="form-section-title">Load Out Variables</h3>
+
   <app-radio-group [inputGroupData]="realisticLoadoutData"></app-radio-group>
   <app-radio-group [inputGroupData]="efamsData"></app-radio-group>
-  <mat-form-field class="form-input">
-    <mat-label>8</mat-label>
-    <input aria-label="Hard Points Available" matInput disabled="true" />
-  </mat-form-field>
+
+  <div class="input">
+    <h4>Hard Points Available</h4>
+    <mat-form-field class="form-input">
+      <input matInput value="8" disabled />
+    </mat-form-field>
+  </div>
+
+  <div class="input">
+    <h4>Cannon Rounds</h4>
+    <mat-form-field class="form-input">
+      <input matInput value="500" />
+    </mat-form-field>
+    <mat-hint>500 max</mat-hint>
+  </div>
+
+  <div class="input">
+    <h4>Rockets</h4>
+    <mat-form-field class="form-input">
+      <input matInput value="8" />
+    </mat-form-field>
+    <mat-hint>4 / HP</mat-hint>
+  </div>
+
+  <div class="input">
+    <h4>HellFires</h4>
+    <mat-form-field class="form-input">
+      <input matInput value="2" />
+    </mat-form-field>
+    <mat-hint>1 / HP</mat-hint>
+  </div>
+
+  <div class="input">
+    <h4>Stingers</h4>
+    <mat-form-field class="form-input">
+      <input matInput value="4" />
+    </mat-form-field>
+    <mat-hint>2 / HP</mat-hint>
+  </div>
+
+  <div class="input">
+    <h4>Artillery</h4>
+    <mat-form-field class="form-input">
+      <mat-label>Artillery</mat-label>
+      <input matInput value="0" />
+    </mat-form-field>
+    <mat-hint>255 max</mat-hint>
+  </div>
+</div>
+
+<div class="form-section">
+  <h3 class="form-section-title">Mission Variables</h3>
+
+  <app-radio-group [inputGroupData]="hitpointsData"></app-radio-group>
+  <app-radio-group [inputGroupData]="lineOfSightData"></app-radio-group>
+  <app-radio-group [inputGroupData]="weatherData"></app-radio-group>
 </div>

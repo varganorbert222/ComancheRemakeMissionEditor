@@ -46,4 +46,36 @@ export class NewMissionModalComponent {
     ],
     value: 'no',
   };
+
+  hitpointsData: InputGroupData = {
+    id: 'player-hitpoints',
+    label: 'Player Hitpoints',
+    data: [
+      { value: 'low', name: 'Low' },
+      { value: 'medium', name: 'Medium' },
+      { value: 'high', name: 'High' },
+    ],
+    value: 'low',
+  };
+
+  lineOfSightData: InputGroupData = {
+    id: 'line-of-sight',
+    label: 'Line of Sight',
+    data: [
+      { value: 'yes', name: 'Yes' },
+      { value: 'no', name: 'No' },
+    ],
+    value: 'yes',
+  };
+
+  weatherData: InputGroupData = {
+    id: 'weather-condition',
+    label: 'Weather Condition',
+    data: [
+      { value: 'none', name: 'None' },
+      { value: 'rain', name: 'Rain' },
+      { value: 'snow', name: 'Snow' },
+    ],
+    value: 'none',
+  };
 }

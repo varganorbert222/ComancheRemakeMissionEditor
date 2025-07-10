@@ -1,5 +1,5 @@
-@use "@angular/material" as mat;
-@use "../theme-colors" as custom;
+@use "@angular/material" as material;
+@use "../theme-colors" as theme;
 
 @property --_w {
   syntax: "<length>";
@@ -27,11 +27,11 @@ h1 {
 html {
   font-family: sans-serif, "Roboto";
   color-scheme: light;
-  @include mat.theme(
+  @include material.theme(
     (
       color: (
-        primary: custom.$primary-palette,
-        tertiary: custom.$tertiary-palette,
+        primary: theme.$primary-palette,
+        tertiary: theme.$tertiary-palette,
       ),
       typography: (
         plain-family: Roboto,
@@ -43,7 +43,7 @@ html {
       density: 0,
     )
   );
-  @include mat.fab-overrides(
+  @include material.fab-overrides(
     (
       container-shape: 4px,
       container-elevation-shadow: none,
@@ -52,23 +52,23 @@ html {
       pressed-container-elevation-shadow: none,
     )
   );
-  @include mat.button-overrides(
+  @include material.button-overrides(
     (
       filled-container-shape: 4px,
     )
   );
-  @include mat.slide-toggle-overrides(
+  @include material.slide-toggle-overrides(
     (
       handle-shape: 4px,
       track-shape: 4px,
     )
   );
-  @include mat.expansion-overrides(
+  @include material.expansion-overrides(
     (
       container-shape: 4px,
     )
   );
-  @include mat.dialog-overrides(
+  @include material.dialog-overrides(
     (
       container-shape: 4px,
     )
